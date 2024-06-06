@@ -2,7 +2,9 @@
 
 This project uses Sentinel-2 satellite data to threshold band 8 NIR into water and non-water pixels. It then calculates the flooded acreage within predefined units and generates reports with spatial and tabular data.
 
-The purpose of this application is two-fold: Currently the requirement to quantify flooded acreage in Blackrock Waterfowl Management Area has been implemented by field workers physically walking the wetted extent with a handheld GPS which can take up to 8 days in the field every time it is needed. The current requirements of the project mandate this be done around the November 1, and March 1 time periods. This application provides this information instantly, and furthermore we can obtain acreage estimates every five days or whenever cloud-free Sentinel scenes are available. Sentinel 2 provides 10m resolution in Band 8 near-infrared, whereas Landsat resolution is 30m. The improved resolution of Sentinel over Landsat and improvements in availability of this imagery from earth engine's archive drove the development of this work. There are thousands of papers, dozens of water indices used to quantify open water, yet they all use some combination of near infrared, short-wave infrared, or ratios of these. Here a simple thresholding of NIR is where I've started and it yields good results with a few validation points that will be obtained for the official Nov 1 and Mar 1 time periods to help calibrate the threshold for reporting purposes.
+Currently the requirement to quantify flooded acreage in Blackrock Waterfowl Management Area has been implemented by field workers physically walking the wetted extent with a handheld GPS which can take up to 8 person days in the field every time it is needed. The current requirements of the project mandate this be done around the November 1, and March 1 time periods. The purpose of this application is two-fold: 1) provide mandated flooded acreage estimates instantaneously for the Nov 1 and Mar 1 periods, rather than multiple days of fied work, and 2) obtain acreage estimates throughout the year, every five days or whenever cloud-free Sentinel scenes are available. 
+
+Sentinel 2 provides 10m resolution in Band 8 near-infrared, whereas Landsat resolution is 30m. The improved resolution of Sentinel over Landsat and improvements in availability of this imagery from earth engine's archive drove the development of this work. There are thousands of papers, and dozens of water indices used to quantify open water, yet they all use some combination of near infrared, short-wave infrared, or ratios of these. Here a simple thresholding of NIR is where I've started and it yields good results with a few validation points that will be obtained for the official Nov 1 and Mar 1 time periods to help calibrate the threshold for reporting purposes.
 
 ## Example Report
 
@@ -228,6 +230,32 @@ html_report = f"""
 with open(report_filename, "w") as file:
     file.write(html_report)
 
+### Running the CLI Python Script
+
+You can also generate the flood report directly from the command line using the provided Python script.
+
+1. Ensure your virtual environment is activated:
+    ```sh
+    source flood_app_env/bin/activate  # On Windows use `flood_app_env\Scripts\activate`
+    ```
+
+2. Run the script with the desired start date and threshold value:
+    ```sh
+    python flood_report.py <start_date> <threshold>
+    ```
+
+For example:
+```sh
+python flood_report.py 2024-03-01 0.16
+```
+
+This will output the number of images in the collection, a table of the flooded acreage per unit, and save the map, CSV file, and HTML report in the respective directories.
+
+## Example Output
+
+Here's an example of what you might see when you run the script:
+
+![Example Report](images/cli_python_with_parameters.png)
 
 ## Technical Notes
 
@@ -239,3 +267,4 @@ with open(report_filename, "w") as file:
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
+
