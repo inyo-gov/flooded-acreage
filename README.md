@@ -176,7 +176,6 @@ html_report = f"""
             padding: 10px;
             border-top: 1px solid #000;
         }}
-        /*----CHANGE---- Increase font size and add line above totals row */
         table {{
             width: 90%;
             font-size: 50px;
@@ -225,6 +224,7 @@ html_report = f"""
 </body>
 </html>
 """
+```
 
 # Save the report to an HTML file
 with open(report_filename, "w") as file:
