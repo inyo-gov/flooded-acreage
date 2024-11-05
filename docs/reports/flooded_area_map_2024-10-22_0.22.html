@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_8ebe5749f3690c6819344f5de885bbf6 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.css"/>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_8ebe5749f3690c6819344f5de885bbf6" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_8ebe5749f3690c6819344f5de885bbf6 = L.map(
+                "map_8ebe5749f3690c6819344f5de885bbf6",
+                {
+                    center: [36.8795, -118.202],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 12,
+                    zoomControl: true,
+                    preferCanvas: false,
+                    eeInitialize: true,
+                    addGoogleMap: false,
+                    pluginLatlngpopup: false,
+                    pluginFullscreen: true,
+                    pluginDraw: true,
+                    DrawExport: false,
+                    pluginMinimap: false,
+                    locateControl: false,
+                    searchControl: true,
+                    layersControl: true,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_71b339b69146f80e670574ce0bd0826e = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_71b339b69146f80e670574ce0bd0826e.addTo(map_8ebe5749f3690c6819344f5de885bbf6);
+        
+    
+            L.control.fullscreen(
+                {"forceSeparateButton": false, "position": "topleft", "title": "Full Screen", "titleCancel": "Exit Full Screen"}
+            ).addTo(map_8ebe5749f3690c6819344f5de885bbf6);
+        
+    
+            var options = {
+              position: "topleft",
+              draw: {},
+              edit: {},
+            }
+            // FeatureGroup is to store editable layers.
+            var drawnItems_draw_control_03f5cb676b9f2e56c9d0cf47ea6f6c1e = new L.featureGroup().addTo(
+                map_8ebe5749f3690c6819344f5de885bbf6
+            );
+            options.edit.featureGroup = drawnItems_draw_control_03f5cb676b9f2e56c9d0cf47ea6f6c1e;
+            var draw_control_03f5cb676b9f2e56c9d0cf47ea6f6c1e = new L.Control.Draw(
+                options
+            ).addTo( map_8ebe5749f3690c6819344f5de885bbf6 );
+            map_8ebe5749f3690c6819344f5de885bbf6.on(L.Draw.Event.CREATED, function(e) {
+                var layer = e.layer,
+                    type = e.layerType;
+                var coords = JSON.stringify(layer.toGeoJSON());
+                layer.on('click', function() {
+                    alert(coords);
+                    console.log(coords);
+                });
+                drawnItems_draw_control_03f5cb676b9f2e56c9d0cf47ea6f6c1e.addLayer(layer);
+             });
+            map_8ebe5749f3690c6819344f5de885bbf6.on('draw:created', function(e) {
+                drawnItems_draw_control_03f5cb676b9f2e56c9d0cf47ea6f6c1e.addLayer(e.layer);
+            });
+            
+        
+    
+
+            var geocoderOpts_geocoder_a1af4256867f13f24801f3c75ffc8f85 = {"collapsed": true, "defaultMarkGeocode": true, "position": "topleft", "provider": "nominatim", "providerOptions": {}, "zoom": 11};
+
+            // note: geocoder name should start with lowercase
+            var geocoderName_geocoder_a1af4256867f13f24801f3c75ffc8f85 = geocoderOpts_geocoder_a1af4256867f13f24801f3c75ffc8f85["provider"];
+
+            var customGeocoder_geocoder_a1af4256867f13f24801f3c75ffc8f85 = L.Control.Geocoder[ geocoderName_geocoder_a1af4256867f13f24801f3c75ffc8f85 ](
+                geocoderOpts_geocoder_a1af4256867f13f24801f3c75ffc8f85['providerOptions']
+            );
+            geocoderOpts_geocoder_a1af4256867f13f24801f3c75ffc8f85["geocoder"] = customGeocoder_geocoder_a1af4256867f13f24801f3c75ffc8f85;
+
+            L.Control.geocoder(
+                geocoderOpts_geocoder_a1af4256867f13f24801f3c75ffc8f85
+            ).on('markgeocode', function(e) {
+                var zoom = geocoderOpts_geocoder_a1af4256867f13f24801f3c75ffc8f85['zoom'] || map_8ebe5749f3690c6819344f5de885bbf6.getZoom();
+                map_8ebe5749f3690c6819344f5de885bbf6.setView(e.geocode.center, zoom);
+            }).addTo(map_8ebe5749f3690c6819344f5de885bbf6);
+
+        
+    
+            map_8ebe5749f3690c6819344f5de885bbf6.fitBounds(
+                [[36.8795, -118.202], [36.8795, -118.202]],
+                {"maxZoom": 12}
+            );
+        
+    
+            var tile_layer_da37f0e05df0662ffecaaccb6a6edb43 = L.tileLayer(
+                "https://earthengine.googleapis.com/v1/projects/ee-icwd-2023/maps/e8686f8ce8d18fd2dea4f309deb0229f-1ab532ba46c4f37a0dfc7b0796284fe5/tiles/{z}/{x}/{y}",
+                {"attribution": "Google Earth Engine", "detectRetina": false, "maxNativeZoom": 24, "maxZoom": 24, "minZoom": 0, "noWrap": false, "opacity": 1.0, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_da37f0e05df0662ffecaaccb6a6edb43.addTo(map_8ebe5749f3690c6819344f5de885bbf6);
+        
+    
+            var tile_layer_a1b1ef69c3b4e7b1f28465006d49baf2 = L.tileLayer(
+                "https://earthengine.googleapis.com/v1/projects/ee-icwd-2023/maps/a6f3483d01352d7f1516bafd87728a9f-00bcbc00b5cd6c720eeb5a54b6fd9e89/tiles/{z}/{x}/{y}",
+                {"attribution": "Google Earth Engine", "detectRetina": false, "maxNativeZoom": 24, "maxZoom": 24, "minZoom": 0, "noWrap": false, "opacity": 1.0, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_a1b1ef69c3b4e7b1f28465006d49baf2.addTo(map_8ebe5749f3690c6819344f5de885bbf6);
+        
+    
+            var tile_layer_16a8d9e8b21553092b8a88a721a5399d = L.tileLayer(
+                "https://earthengine.googleapis.com/v1/projects/ee-icwd-2023/maps/e940670f0933a3d80a2089e475ff38d6-587331e0e8585740bc2a347e09765a1c/tiles/{z}/{x}/{y}",
+                {"attribution": "Google Earth Engine", "detectRetina": false, "maxNativeZoom": 24, "maxZoom": 24, "minZoom": 0, "noWrap": false, "opacity": 1.0, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_16a8d9e8b21553092b8a88a721a5399d.addTo(map_8ebe5749f3690c6819344f5de885bbf6);
+        
+    
+            var marker_03c868f31514ccc295bcdbd24e44644b = L.marker(
+                [36.86044066484152, -118.19616961810209],
+                {}
+            ).addTo(map_8ebe5749f3690c6819344f5de885bbf6);
+        
+    
+        var popup_e70ac500163d15f0a6a6ef44e6f12a80 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_6860a7b244b1e2e632c4391db1fa2829 = $(`<div id="html_6860a7b244b1e2e632c4391db1fa2829" style="width: 100.0%; height: 100.0%;">Thibaut: 191.16 Acres</div>`)[0];
+                popup_e70ac500163d15f0a6a6ef44e6f12a80.setContent(html_6860a7b244b1e2e632c4391db1fa2829);
+            
+        
+
+        marker_03c868f31514ccc295bcdbd24e44644b.bindPopup(popup_e70ac500163d15f0a6a6ef44e6f12a80)
+        ;
+
+        
+    
+    
+            var marker_38c597634aeffd23fdd5380b026aa0ea = L.marker(
+                [36.91846697002981, -118.20809887168937],
+                {}
+            ).addTo(map_8ebe5749f3690c6819344f5de885bbf6);
+        
+    
+        var popup_641f1a039cba9e3802780bbfd1b1115c = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_85d92d9b9b550cc243bb4830727fbd3d = $(`<div id="html_85d92d9b9b550cc243bb4830727fbd3d" style="width: 100.0%; height: 100.0%;">Drew: 31.36 Acres</div>`)[0];
+                popup_641f1a039cba9e3802780bbfd1b1115c.setContent(html_85d92d9b9b550cc243bb4830727fbd3d);
+            
+        
+
+        marker_38c597634aeffd23fdd5380b026aa0ea.bindPopup(popup_641f1a039cba9e3802780bbfd1b1115c)
+        ;
+
+        
+    
+    
+            var marker_d8447942059b6deccc3c988cb604d508 = L.marker(
+                [36.89979855072214, -118.19586436691745],
+                {}
+            ).addTo(map_8ebe5749f3690c6819344f5de885bbf6);
+        
+    
+        var popup_80e3b6646ba1f8ca689030d5ca4b627a = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_81b3160bfba81549c38a11dd07b0e391 = $(`<div id="html_81b3160bfba81549c38a11dd07b0e391" style="width: 100.0%; height: 100.0%;">Waggonner: 126.27 Acres</div>`)[0];
+                popup_80e3b6646ba1f8ca689030d5ca4b627a.setContent(html_81b3160bfba81549c38a11dd07b0e391);
+            
+        
+
+        marker_d8447942059b6deccc3c988cb604d508.bindPopup(popup_80e3b6646ba1f8ca689030d5ca4b627a)
+        ;
+
+        
+    
+    
+            var marker_c9ac9906c278c8d0dbdeaa4c84ac1e32 = L.marker(
+                [36.89781800267362, -118.21569918171215],
+                {}
+            ).addTo(map_8ebe5749f3690c6819344f5de885bbf6);
+        
+    
+        var popup_0b1236a225f7b1861a0cc0f6cda55199 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_a6f794ce688e88ce1e1db660fe4530c3 = $(`<div id="html_a6f794ce688e88ce1e1db660fe4530c3" style="width: 100.0%; height: 100.0%;">West Winterton: 57.28 Acres</div>`)[0];
+                popup_0b1236a225f7b1861a0cc0f6cda55199.setContent(html_a6f794ce688e88ce1e1db660fe4530c3);
+            
+        
+
+        marker_c9ac9906c278c8d0dbdeaa4c84ac1e32.bindPopup(popup_0b1236a225f7b1861a0cc0f6cda55199)
+        ;
+
+        
+    
+    
+            var marker_7f4b8d395660f7a4c3f1a70bc27ae917 = L.marker(
+                [36.90110531089543, -118.20920202369373],
+                {}
+            ).addTo(map_8ebe5749f3690c6819344f5de885bbf6);
+        
+    
+        var popup_56fa3f18be9ff8ecf14816e7372cec2d = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_6e5e637b893e073c4a55f65d79e9038b = $(`<div id="html_6e5e637b893e073c4a55f65d79e9038b" style="width: 100.0%; height: 100.0%;">East Winterton: 0.77 Acres</div>`)[0];
+                popup_56fa3f18be9ff8ecf14816e7372cec2d.setContent(html_6e5e637b893e073c4a55f65d79e9038b);
+            
+        
+
+        marker_7f4b8d395660f7a4c3f1a70bc27ae917.bindPopup(popup_56fa3f18be9ff8ecf14816e7372cec2d)
+        ;
+
+        
+    
+    
+            var marker_2bb124ce7c5a776547d52226dfb15f9a = L.marker(
+                [36.878012701624925, -118.20090485228432],
+                {}
+            ).addTo(map_8ebe5749f3690c6819344f5de885bbf6);
+        
+    
+        var popup_0d366b4d56bb608dd9fccc61e4c8c437 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_a2baf99329a5f8198e281060dfc463bc = $(`<div id="html_a2baf99329a5f8198e281060dfc463bc" style="width: 100.0%; height: 100.0%;">South Winterton: 51.60 Acres</div>`)[0];
+                popup_0d366b4d56bb608dd9fccc61e4c8c437.setContent(html_a2baf99329a5f8198e281060dfc463bc);
+            
+        
+
+        marker_2bb124ce7c5a776547d52226dfb15f9a.bindPopup(popup_0d366b4d56bb608dd9fccc61e4c8c437)
+        ;
+
+        
+    
+    
+            var marker_48d65742a82804b2440303485089913f = L.marker(
+                [36.87867846980565, -118.21664203614019],
+                {}
+            ).addTo(map_8ebe5749f3690c6819344f5de885bbf6);
+        
+    
+        var popup_e1d932af89178da659339eae703ca73a = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c8a5493ef03e81c11dbd6331cf654242 = $(`<div id="html_c8a5493ef03e81c11dbd6331cf654242" style="width: 100.0%; height: 100.0%;">Thibaut Ponds: 35.01 Acres</div>`)[0];
+                popup_e1d932af89178da659339eae703ca73a.setContent(html_c8a5493ef03e81c11dbd6331cf654242);
+            
+        
+
+        marker_48d65742a82804b2440303485089913f.bindPopup(popup_e1d932af89178da659339eae703ca73a)
+        ;
+
+        
+    
+    
+            var layer_control_2c9e6bfcd4919e675eadb0a001b059fb_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_71b339b69146f80e670574ce0bd0826e,
+                },
+                overlays :  {
+                    "False-Color Composite" : tile_layer_da37f0e05df0662ffecaaccb6a6edb43,
+                    "Flooded Pixels" : tile_layer_a1b1ef69c3b4e7b1f28465006d49baf2,
+                    "Unit Boundaries" : tile_layer_16a8d9e8b21553092b8a88a721a5399d,
+                },
+            };
+            let layer_control_2c9e6bfcd4919e675eadb0a001b059fb = L.control.layers(
+                layer_control_2c9e6bfcd4919e675eadb0a001b059fb_layers.base_layers,
+                layer_control_2c9e6bfcd4919e675eadb0a001b059fb_layers.overlays,
+                {"autoZIndex": true, "collapsed": true, "position": "topright"}
+            ).addTo(map_8ebe5749f3690c6819344f5de885bbf6);
+
+        
+</script>
+</html>

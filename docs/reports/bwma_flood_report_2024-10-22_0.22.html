@@ -1,0 +1,135 @@
+
+    <html>
+    <head>
+        <title>BWMA Flooded Extent: 2024-10-22</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+            .container {
+                display: flex;
+                justify-content: space-between;
+            }
+            .left {
+                width: 25%;
+            }
+            .right {
+                width: 75%;
+                text-align: center;
+            }
+            h1, h2 {
+                text-align: center;
+            }
+            .notes {
+                margin-top: 20px;
+                padding: 10px;
+                border-top: 1px solid #000;
+            }
+            table {
+                width: 90%;
+                font-size: 50px;
+                border-collapse: collapse;
+            }
+            th, td {
+                padding: 20px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+            th {
+                text-align: right;
+                font-size: 30px;
+            }
+            td:nth-child(2) {
+                text-align: right;
+            }
+            tr:last-child {
+                font-weight: bold;
+                font-size: 80px;
+            }
+            tr:last-child td {
+                border-top: 3px solid #000;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>BWMA Flooded Acres and Extent: 2024-10-22</h1>
+        <div class="container">
+            <div class="left">
+                <h2>Flooded Acres</h2>
+                <style type="text/css">
+#T_73102 th {
+  text-align: center;
+  font-size: 14px;
+}
+#T_73102 td:nth-child(1) {
+  text-align: left;
+  font-size: 12px;
+}
+#T_73102 td:nth-child(2) {
+  text-align: right;
+  font-size: 12px;
+}
+#T_73102_row7_col0, #T_73102_row7_col1 {
+  font-weight: bold;
+  font-size: 14px;
+}
+</style>
+<table id="T_73102">
+  <thead>
+    <tr>
+      <th id="T_73102_level0_col0" class="col_heading level0 col0" >BWMA Unit</th>
+      <th id="T_73102_level0_col1" class="col_heading level0 col1" >Acres</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td id="T_73102_row0_col0" class="data row0 col0" >Thibaut</td>
+      <td id="T_73102_row0_col1" class="data row0 col1" >191</td>
+    </tr>
+    <tr>
+      <td id="T_73102_row1_col0" class="data row1 col0" >Drew</td>
+      <td id="T_73102_row1_col1" class="data row1 col1" >31</td>
+    </tr>
+    <tr>
+      <td id="T_73102_row2_col0" class="data row2 col0" >Waggonner</td>
+      <td id="T_73102_row2_col1" class="data row2 col1" >126</td>
+    </tr>
+    <tr>
+      <td id="T_73102_row3_col0" class="data row3 col0" >West Winterton</td>
+      <td id="T_73102_row3_col1" class="data row3 col1" >57</td>
+    </tr>
+    <tr>
+      <td id="T_73102_row4_col0" class="data row4 col0" >East Winterton</td>
+      <td id="T_73102_row4_col1" class="data row4 col1" >1</td>
+    </tr>
+    <tr>
+      <td id="T_73102_row5_col0" class="data row5 col0" >South Winterton</td>
+      <td id="T_73102_row5_col1" class="data row5 col1" >52</td>
+    </tr>
+    <tr>
+      <td id="T_73102_row6_col0" class="data row6 col0" >Thibaut Ponds</td>
+      <td id="T_73102_row6_col1" class="data row6 col1" >35</td>
+    </tr>
+    <tr>
+      <td id="T_73102_row7_col0" class="data row7 col0" >Total</td>
+      <td id="T_73102_row7_col1" class="data row7 col1" >493</td>
+    </tr>
+  </tbody>
+</table>
+
+            </div>
+            <div class="right">
+                <h2>Spatial Extent</h2>
+                <p>Imagery Date: 2024-10-22</p>
+                <iframe src="flooded_area_map_2024-10-22_0.22.html" width="90%" height="500"></iframe>
+            </div>
+        </div>
+        <div class="notes">
+            <h3>Technical Notes</h3>
+            <p>Flooded acres were calculated from Sentinel-2 Surface Reflectance imagery using the Earth Engine Python API in a Jupyter notebook.  Sentinel-2 (S2) is a wide-swath, high-resolution, multispectral imaging mission with a global 5-day revisit frequency.</p>
+            <p>The S2 Multispectral Instrument (MSI) samples 13 spectral bands: Visible and NIR at 10 meters, red edge and SWIR at 20 meters, and atmospheric bands at 60 meters spatial resolution. The Near Infrared (NIR) band was used to identify flooded areas by applying a threshold to isolate water.</p>
+            <p>The results are validated during routine field checks throughout the seasonal flooding cycle September through April.</p>
+        </div>
+    </body>
+    </html>
+    

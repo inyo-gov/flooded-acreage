@@ -8,6 +8,10 @@ import geemap.foliumap as geemap
 from datetime import datetime, timedelta
 import os
 
+# Example terminal command
+# > python flood_report.py '2024-10-22' .22
+# > python flood_report.py '2024-11-01' .22
+
 def main(start_date, threshold):
     # Initialize Earth Engine
     ee.Initialize()
@@ -24,12 +28,21 @@ def main(start_date, threshold):
     # Create a bounding box geometry
     bounding_box_geometry = ee.Geometry.Polygon(bbox)
 
+
+    # Define visualization parameters for a better false-color composite
+    false_color_vis = {
+        'min': 0,
+        'max': 3000,
+        'bands': ['B11', 'B8', 'B4'],  # SWIR1, NIR, Red
+        'gamma': 1.4
+    }
+
     # Filter Sentinel-2 surface reflectance imagery and extract dates, pixel size
     sentinel_collection = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED') \
         .filterBounds(bounding_box_geometry) \
         .filterDate(start_date, end_date) \
         .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 30)) \
-        .select(['B8', 'SCL'])
+        .select(['B4','B8', 'SCL','B11'])
 
     size = sentinel_collection.size().getInfo()
     print(f"Number of images in collection: {size}")
@@ -43,7 +56,7 @@ def main(start_date, threshold):
     image_date_str = pd.to_datetime(image_date, unit='ms').strftime('%Y-%m-%d')
 
     # Define the subdirectory for HTML maps and reports
-    html_subdirectory = "flood_reports/html_reports_maps"
+    html_subdirectory = "docs/reports"
     os.makedirs(html_subdirectory, exist_ok=True)
 
     # Define filenames with unique names based on the image date
@@ -111,13 +124,24 @@ def main(start_date, threshold):
         'flooded_percentage': total_flooded_percentage
     }])
 
-    units_df_properties_reduced = pd.concat([units_df_properties_reduced, totals], ignore_index=True)
+
+    # Add totals row only once
+    units_df_properties_reduced = pd.concat([units_df_properties_reduced.dropna(), totals], ignore_index=True)
     units_df_properties_reduced = units_df_properties_reduced.round(2)
+
+    # Debugging: print the cleaned DataFrame to ensure no duplicates
     print(units_df_properties_reduced.to_string(index=False))
+
+    # units_df_properties_reduced = pd.concat([units_df_properties_reduced, totals], ignore_index=True)
+    # units_df_properties_reduced = units_df_properties_reduced.round(2)
+  
 
     # Create and Save HTML Map
     clipped_binary_image = binary_image.clip(units)
     Map = geemap.Map(center=[36.8795, -118.202], zoom=12)
+    # Add the false-color composite to the map
+    Map.addLayer(sentinel_collection.median(), false_color_vis, 'False-Color Composite')
+
     Map.addLayer(clipped_binary_image, {'palette': ['blue'], 'opacity': 0.5}, 'Flooded Pixels')
     units_style = {'color': 'red', 'fillColor': '00000000'}
     Map.addLayer(units_with_calculations.style(**units_style), {}, 'Unit Boundaries')
@@ -138,6 +162,7 @@ def main(start_date, threshold):
         ).add_to(Map)
 
     Map.add_child(folium.LayerControl())
+
     Map.save(map_filename)
     print(f"Map saved to {map_filename}")
 
@@ -154,9 +179,9 @@ def main(start_date, threshold):
     units_df_properties_reduced = units_df_properties_reduced[['Flood_Unit', 'acres_flooded']]
     units_df_properties_reduced.columns = ['BWMA Unit', 'Acres']
     units_df_properties_reduced['Acres'] = units_df_properties_reduced['Acres'].round(0).astype(int)
-    total_acres = units_df_properties_reduced['Acres'].sum()
-    totals_row = pd.DataFrame([{'BWMA Unit': 'Total', 'Acres': total_acres}])
-    units_df_properties_reduced = pd.concat([units_df_properties_reduced, totals_row], ignore_index=True)
+    # total_acres = units_df_properties_reduced['Acres'].sum()
+    # totals_row = pd.DataFrame([{'BWMA Unit': 'Total', 'Acres': total_acres}])
+    # units_df_properties_reduced = pd.concat([units_df_properties_reduced, totals_row], ignore_index=True)
 
     html_table_simple = (
         units_df_properties_reduced.style
@@ -242,7 +267,7 @@ def main(start_date, threshold):
             <h3>Technical Notes</h3>
             <p>Flooded acres were calculated from Sentinel-2 Surface Reflectance imagery using the Earth Engine Python API in a Jupyter notebook.  Sentinel-2 (S2) is a wide-swath, high-resolution, multispectral imaging mission with a global 5-day revisit frequency.</p>
             <p>The S2 Multispectral Instrument (MSI) samples 13 spectral bands: Visible and NIR at 10 meters, red edge and SWIR at 20 meters, and atmospheric bands at 60 meters spatial resolution. The Near Infrared (NIR) band was used to identify flooded areas by applying a threshold to isolate water.</p>
-            <p>The results are validated during routine field checks throughout the seasonal flooding cycle September through April.</p>
+            <p>The flooded extent estimates are validated during routine field checks throughout the seasonal flooding cycle September through April.</p>
         </div>
     </body>
     </html>

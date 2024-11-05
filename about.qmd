@@ -1,0 +1,11 @@
+---
+title: "About"
+---
+
+Technical Notes
+
+-   Flooded acres were calculated from Sentinel-2 Surface Reflectance imagery using the Earth Engine Python API. Sentinel-2 (S2) is a wide-swath, high-resolution, multispectral imaging mission with a global 5-day revisit frequency. The S2 Multispectral Instrument (MSI) samples 13 spectral bands: Visible and NIR at 10 meters, red edge and SWIR at 20 meters, and atmospheric bands at 60 meters spatial resolution.
+
+-   The Near Infrared (NIR) band with 10m pixel resolution was used to identify flooded areas by applying a reflectance threshold to isolate water from surrounding vegetation. The flooded extent predictions are verified in the field during avian surveys throughout the seasonal flooding cycle September through April.
+
+-   [jupyter notebook](flood_app.html)
