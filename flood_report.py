@@ -4,9 +4,11 @@ import geopandas as gpd
 import geemap
 import pandas as pd
 import folium
+from folium.raster_layers import ImageOverlay
 import geemap.foliumap as geemap
 from datetime import datetime, timedelta
 import os
+import imageio.v2 as imageio
 
 # Example terminal command
 # > python flood_report.py '2024-10-22' .22
@@ -14,12 +16,15 @@ import os
 
 def main(start_date, threshold):
     # Initialize Earth Engine
+    print("Initializing Earth Engine...")
     ee.Initialize()
 
     # Compute the end date by adding days to the start date
     end_date = (datetime.strptime(start_date, '%Y-%m-%d') + timedelta(days=15)).strftime('%Y-%m-%d')
+    print(f"Date range: {start_date} to {end_date}")
 
     # Define the bounding box coordinates
+    print("Defining bounding box and geometry...")
     bbox = [[-118.23240736400778, 36.84651455123723],
             [-118.17232588207419, 36.84651455123723],
             [-118.17232588207419, 36.924364295139625],
@@ -28,8 +33,8 @@ def main(start_date, threshold):
     # Create a bounding box geometry
     bounding_box_geometry = ee.Geometry.Polygon(bbox)
 
-
     # Define visualization parameters for a better false-color composite
+    print("Setting false-color visualization parameters...")
     false_color_vis = {
         'min': 0,
         'max': 3000,
@@ -38,6 +43,7 @@ def main(start_date, threshold):
     }
 
     # Filter Sentinel-2 surface reflectance imagery and extract dates, pixel size
+    print("Filtering Sentinel-2 collection...")
     sentinel_collection = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED') \
         .filterBounds(bounding_box_geometry) \
         .filterDate(start_date, end_date) \
@@ -51,11 +57,14 @@ def main(start_date, threshold):
     pixel_size = sentinel_collection.first().select('B8').projection().nominalScale().getInfo()
 
     # Extract the date information
+    print("Extracting image date information...")
     image_info = sentinel_collection.first().getInfo()
     image_date = image_info['properties']['system:time_start']
     image_date_str = pd.to_datetime(image_date, unit='ms').strftime('%Y-%m-%d')
+    print(f"Image date: {image_date_str}")
 
     # Define the subdirectory for HTML maps and reports
+    print("Setting up directories and filenames...")
     html_subdirectory = "docs/reports"
     os.makedirs(html_subdirectory, exist_ok=True)
 
@@ -68,14 +77,104 @@ def main(start_date, threshold):
         is_cloud = cloud_prob.eq(9)
         return image.updateMask(is_cloud.Not())
 
-    cloud_free_composite = sentinel_collection.map(mask_clouds).median()
+    # Mask clouds and compute composite
+    print("Creating cloud-free composite and binary image...")
+    cloud_free_composite = sentinel_collection.map(lambda img: img.updateMask(img.select('SCL').neq(9))).median()
     binary_image = cloud_free_composite.select('B8').divide(10000).lt(threshold).selfMask()
+    
+    # Convert flooded areas to vector (GeoJSON format)
+    print("Vectorizing flooded areas...")
+    flooded_vectors = binary_image.reduceToVectors(
+        geometryType='polygon',
+        reducer=ee.Reducer.countEvery(),
+        scale=10,
+        geometry=bounding_box_geometry,
+        maxPixels=1e8
+    )
+
+    
+    # # Export flooded areas as GeoJSON
+    # geojson_filename = "docs/reports/flooded_areas.geojson"
+    # print("Exporting flooded areas as GeoJSON...")
+    # geemap.ee_export_vector(flooded_vectors, filename=geojson_filename)
+    # print(f"Flooded areas exported to {geojson_filename}")
+
+
+    # Define export file paths with date and threshold
+    print("Exporting false-color and flooded pixels images...")
+    false_color_filename_tif = f"docs/reports/false_color_composite_{image_date_str}_{threshold}.tif"
+    # flooded_pixels_filename_tif = f"docs/reports/flooded_pixels_{image_date_str}_{threshold}.tif"
+    
+    
+    # Export false-color composite as TIF with the correct bands
+    false_color_image = cloud_free_composite.select(['B11', 'B8', 'B4']).visualize(**false_color_vis)
+    
+    geemap.ee_export_image(false_color_image, filename=false_color_filename_tif, scale=10, region=bbox)
+    print("False-color composite exported.")
+
+    # # Step 1: Select the 'B8' band and multiply by 255 for visualization scaling
+    # flooded_pixels_band = binary_image.select('B8').multiply(255)
+
+    # # Step 2: Rename the band to ensure compatibility with visualize
+    # flooded_pixels_band = flooded_pixels_band.rename(['visualized'])
+
+    # Create the visualized image for flooded pixels only with a transparent background
+    # Apply selfMask() and visualize the binary image for flooded areas only
+    flooded_pixels_visualized = binary_image.selfMask().visualize(
+        palette=['blue'],  # Set only flooded areas to blue
+        min=0, max=1  # This limits values to binary (0 or 1) for transparency
+    )
+
+   
+
+    # Step 4: Export the visualized image with transparency for non-flooded areas
+    # geemap.ee_export_image(flooded_pixels_visualized, filename=flooded_pixels_filename_tif, scale=10, region=bbox)
+    # print("Flooded pixels image exported.")
+
+
+    false_color_filename_png = f"docs/reports/false_color_composite_{image_date_str}_{threshold}.png"
+    # flooded_pixels_filename_png = f"docs/reports/flooded_pixels_{image_date_str}_{threshold}.png"
+    
+    # Read the TIFF file and save it as PNG
+    false_color_image = imageio.imread(false_color_filename_tif)
+    imageio.imwrite(false_color_filename_png, false_color_image)
+    print(f"False-color PNG saved at {false_color_filename_png}")
+
+    # print("Converting TIFs to PNGs...")
+    # Convert the TIFF file to PNG, explicitly ensuring transparency
+    # flooded_pixels_image = imageio.imread(flooded_pixels_filename_tif)
+    # imageio.imwrite(flooded_pixels_filename_png, flooded_pixels_image, format='PNG')
+
+    
+    # print(f"Flooded pixels PNG saved at {flooded_pixels_filename_png}")
+
 
     # Load units from geojson and convert to Earth Engine geometry
+    print("Loading units from geojson...")
     gdf = gpd.read_file("data/unitsBwma2800.geojson")
     units = geemap.geopandas_to_ee(gdf)
     units = units.filterBounds(bounding_box_geometry)
     units_clipped = units.map(lambda feature: feature.intersection(bounding_box_geometry))
+
+    # units_flattened = units_clipped.flatten()
+        
+    # Clip the binary flooded image to the flattened unit boundaries
+    clipped_flooded_image = binary_image.clipToCollection(units_clipped)
+
+    # Vectorize the clipped flooded areas to GeoJSON polygons
+    flooded_clipped_vectors = clipped_flooded_image.reduceToVectors(
+        geometryType='polygon',
+        reducer=ee.Reducer.countEvery(),
+        scale=10,
+        geometry=bounding_box_geometry,
+        maxPixels=1e8
+    )
+
+    # Export the clipped flooded polygons as GeoJSON
+    clipped_flooded_geojson_path = f"docs/reports/clipped_flooded_areas_{image_date_str}_{threshold}.geojson"
+    geemap.ee_export_vector(flooded_clipped_vectors, filename=clipped_flooded_geojson_path)
+    print(f"Clipped flooded polygons exported to {clipped_flooded_geojson_path}")
+
 
     def compute_area(feature):
         return feature.set({'unit_acres': feature.geometry().area().divide(4046.86)})
@@ -94,15 +193,23 @@ def main(start_date, threshold):
         flooded_percentage = ee.Number(flooded_pixels).divide(total_pixels).multiply(100)
         unit_name = feature.get('Flood_Unit')
         label = ee.String(unit_name).cat(': ').cat(flooded_area_acres.format('%.2f')).cat(' Acres')
+        centroid = feature.geometry().centroid().coordinates()  # Compute centroid here
         return feature.set({
             'total_pixels': total_pixels,
             'flooded_pixels': flooded_pixels,
             'acres_flooded': flooded_area_acres,
             'flooded_percentage': flooded_percentage,
-            'label': label
+            'label': label,
+            'centroid': centroid  # Store the centroid
         })
-
+    print("Calculating areas and flooded pixels...")
     units_with_calculations = units_with_area.map(compute_refined_flood_area)
+    print("Areas and flooded pixels calculated.")
+
+    # Export subunit polygons as GeoJSON
+    print("Exporting subunit polygons as GeoJSON...")
+    geemap.ee_export_vector(units_with_calculations, filename="docs/reports/subunits.geojson")
+    print("Subunits exported as GeoJSON.")
 
     # Convert EE feature collection to Pandas DataFrame
     units_df_properties_reduced = pd.DataFrame(units_with_calculations.getInfo()['features'])
@@ -132,34 +239,107 @@ def main(start_date, threshold):
     # Debugging: print the cleaned DataFrame to ensure no duplicates
     print(units_df_properties_reduced.to_string(index=False))
 
-    # units_df_properties_reduced = pd.concat([units_df_properties_reduced, totals], ignore_index=True)
-    # units_df_properties_reduced = units_df_properties_reduced.round(2)
-  
-
     # Create and Save HTML Map
+    print("Creating and saving the HTML map with overlays...")
     clipped_binary_image = binary_image.clip(units)
-    Map = geemap.Map(center=[36.8795, -118.202], zoom=12)
-    # Add the false-color composite to the map
-    Map.addLayer(sentinel_collection.median(), false_color_vis, 'False-Color Composite')
 
-    Map.addLayer(clipped_binary_image, {'palette': ['blue'], 'opacity': 0.5}, 'Flooded Pixels')
-    units_style = {'color': 'red', 'fillColor': '00000000'}
-    Map.addLayer(units_with_calculations.style(**units_style), {}, 'Unit Boundaries')
+    # Define the filenames for the overlays, matching the export paths
+    false_color_image_path = f"docs/reports/false_color_composite_{image_date_str}_{threshold}.png"
+    # flooded_pixels_image_path = f"docs/reports/flooded_pixels_{image_date_str}_{threshold}.png"
 
-    labels = units_with_calculations.aggregate_array('label').getInfo()
+    # Create the map with a center point
+    Map = folium.Map(location=[36.8795, -118.202], zoom_start=12)
 
-    def get_centroid(feature):
-        return feature.geometry().centroid().coordinates()
+    # Add static image overlay for False Color Composite with dynamic path
+    Map.add_child(ImageOverlay(
+        name="False Color Composite",
+        image=false_color_image_path,
+        bounds=[[36.84651455123723, -118.23240736400778], [36.924364295139625, -118.17232588207419]],
+        opacity=1
+    ))
 
-    centroids = units_with_calculations.map(lambda f: f.set('centroid', get_centroid(f)))
-    centroid_info = centroids.aggregate_array('centroid').getInfo()
+    # Add static image overlay for Flooded Pixels with dynamic path
+    # Map.add_child(ImageOverlay(
+    #     name="Flooded Pixels",
+    #     image=flooded_pixels_image_path,
+    #     bounds=[[36.84651455123723, -118.23240736400778], [36.924364295139625, -118.17232588207419]],
+    #     opacity=1
+    # ))
 
-    for label, centroid in zip(labels, centroid_info):
-        folium.Marker(
-            location=[centroid[1], centroid[0]],
-            icon=None,
-            popup=label
-        ).add_to(Map)
+    # # Add flooded areas GeoJSON layer with blue fill
+    # Map.add_child(folium.GeoJson(
+    #     geojson_filename,
+    #     name="Flooded Areas",
+    #     style_function=lambda feature: {
+    #         'fillColor': 'blue',
+    #         'color': 'blue',
+    #         'weight': 0.5,
+    #         'fillOpacity': 0.6
+    #     }
+    # ))
+
+    # Add clipped flooded polygons to the folium map
+    Map.add_child(folium.GeoJson(
+        clipped_flooded_geojson_path,
+        name="Flooded Areas (Clipped)",
+        style_function=lambda x: {
+            "color": "blue",
+            "weight": 1,
+            "fillColor": "blue",
+            "fillOpacity": 0.5
+        }
+    ))
+
+    #units_style = {'color': 'red', 'fillColor': '00000000'}
+    # Map.addLayer(units_with_calculations.style(**units_style), {}, 'Unit Boundaries')
+
+    # Add subunit polygons as GeoJSON (exported to a local file, if necessary)
+    Map.add_child(folium.GeoJson(
+    "docs/reports/subunits.geojson", 
+    name="Unit Boundaries", 
+    style_function=lambda x: {
+        "color": "red",  # Boundary color
+        "weight": 2,
+        "fillColor": "#00000000",  # Transparent fill
+        "fillOpacity": 0  # Ensures fill is transparent
+    }
+    ))
+
+    # Adding static labels and popups for each unit at the pre-computed centroid
+    for feature in units_with_calculations.getInfo()['features']:
+        unit_name = feature['properties']['Flood_Unit']
+        label = feature['properties']['label']
+        centroid = feature['properties']['centroid']
+
+        # Ensure centroid coordinates are valid before adding
+        if isinstance(centroid, list) and len(centroid) == 2:
+            # Static label using DivIcon for always visible text
+            folium.map.Marker(
+                location=[centroid[1], centroid[0]],  # Latitude, Longitude
+                icon=folium.DivIcon(html=f"""<div style="font-size: 12px; color: black;">{unit_name}</div>""")
+            ).add_to(Map)
+
+            # Popup with detailed information (e.g., acreage)
+            folium.Marker(
+                location=[centroid[1], centroid[0]],  # Latitude, Longitude
+                popup=label
+            ).add_to(Map)
+
+# working but out for now 11/12
+    # labels = units_with_calculations.aggregate_array('label').getInfo()
+
+    # def get_centroid(feature):
+    #     return feature.geometry().centroid().coordinates()
+
+    # centroids = units_with_calculations.map(lambda f: f.set('centroid', get_centroid(f)))
+    # centroid_info = centroids.aggregate_array('centroid').getInfo()
+
+    # for label, centroid in zip(labels, centroid_info):
+    #     folium.Marker(
+    #         location=[centroid[1], centroid[0]],
+    #         icon=None,
+    #         popup=label
+    #     ).add_to(Map)
 
     Map.add_child(folium.LayerControl())
 
@@ -171,6 +351,7 @@ def main(start_date, threshold):
     os.makedirs(csv_subdirectory, exist_ok=True)
 
     # Save the DataFrame to a CSV file
+    print("Generating CSV report...")
     csv_filename = os.path.join(csv_subdirectory, f'flood_report_data_{image_date_str}_{threshold}.csv')
     units_df_properties_reduced.to_csv(csv_filename, index=False)
     print(f"CSV file saved to {csv_filename}")
@@ -272,6 +453,7 @@ def main(start_date, threshold):
     </body>
     </html>
     """
+    print("Generating CSV and HTML report for flood data...")
     with open(report_filename, "w") as file:
         file.write(html_report)
     print(f"Report saved to {report_filename}")

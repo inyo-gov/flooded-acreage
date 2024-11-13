@@ -1,10 +1,10 @@
 ---
-title: "Flood Report Dashboard"
+title: "Blackrock Waterfowl Management Area - Wetted Extent"
 format: html
 ---
 
 
-### Flood Report Links
+### Report Links
 
 ```{r, echo=FALSE, results='asis'}
 # Define the directory containing the HTML reports (relative to the Quarto project root)
@@ -13,17 +13,16 @@ report_dir <- "docs/reports"
 # List only HTML reports with the bwma_flood_report prefix and generate links
 html_files <- list.files(report_dir, pattern = "^bwma_flood_report.*\\.html$", full.names = FALSE)
 
-# Generate markdown links for each report
-# report_links <- paste0("- [", html_files, "]("reports", "/", html_files, ")")
-
-report_links <- paste0("- [", html_files, "](", report_dir, "/", html_files, ")")
+# Generate markdown links for each report with target="_blank"
+report_links <- paste0("- <a href='", report_dir, "/", html_files, "' target='_blank'>", html_files, "</a>")
 cat(report_links, sep = "\n")
 
 
 ```
 
-Selected Report Preview
+### Selected Report Preview
+
 Below is a preview of a default flood report. Click on any report link above to view it directly in a new tab.
 
-<!-- HTML iframe to embed a specific report --> <iframe src="docs/reports/bwma_flood_report_2024-11-03_0.22.html" width="100%" height="800px" style="border: none;" id="report-frame"></iframe> 
+<!-- HTML iframe to embed a specific report --> <iframe src="docs/reports/bwma_flood_report_2024-11-08_0.22.html" width="100%" height="800px" style="border: none;" id="report-frame"></iframe> 
 
