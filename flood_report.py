@@ -92,14 +92,6 @@ def main(start_date, threshold):
         maxPixels=1e8
     )
 
-    
-    # # Export flooded areas as GeoJSON
-    # geojson_filename = "docs/reports/flooded_areas.geojson"
-    # print("Exporting flooded areas as GeoJSON...")
-    # geemap.ee_export_vector(flooded_vectors, filename=geojson_filename)
-    # print(f"Flooded areas exported to {geojson_filename}")
-
-
     # Define export file paths with date and threshold
     print("Exporting false-color and flooded pixels images...")
     false_color_filename_tif = f"docs/reports/false_color_composite_{image_date_str}_{threshold}.tif"
@@ -112,25 +104,12 @@ def main(start_date, threshold):
     geemap.ee_export_image(false_color_image, filename=false_color_filename_tif, scale=10, region=bbox)
     print("False-color composite exported.")
 
-    # # Step 1: Select the 'B8' band and multiply by 255 for visualization scaling
-    # flooded_pixels_band = binary_image.select('B8').multiply(255)
-
-    # # Step 2: Rename the band to ensure compatibility with visualize
-    # flooded_pixels_band = flooded_pixels_band.rename(['visualized'])
-
     # Create the visualized image for flooded pixels only with a transparent background
     # Apply selfMask() and visualize the binary image for flooded areas only
     flooded_pixels_visualized = binary_image.selfMask().visualize(
         palette=['blue'],  # Set only flooded areas to blue
         min=0, max=1  # This limits values to binary (0 or 1) for transparency
     )
-
-   
-
-    # Step 4: Export the visualized image with transparency for non-flooded areas
-    # geemap.ee_export_image(flooded_pixels_visualized, filename=flooded_pixels_filename_tif, scale=10, region=bbox)
-    # print("Flooded pixels image exported.")
-
 
     false_color_filename_png = f"docs/reports/false_color_composite_{image_date_str}_{threshold}.png"
     # flooded_pixels_filename_png = f"docs/reports/flooded_pixels_{image_date_str}_{threshold}.png"
@@ -139,15 +118,6 @@ def main(start_date, threshold):
     false_color_image = imageio.imread(false_color_filename_tif)
     imageio.imwrite(false_color_filename_png, false_color_image)
     print(f"False-color PNG saved at {false_color_filename_png}")
-
-    # print("Converting TIFs to PNGs...")
-    # Convert the TIFF file to PNG, explicitly ensuring transparency
-    # flooded_pixels_image = imageio.imread(flooded_pixels_filename_tif)
-    # imageio.imwrite(flooded_pixels_filename_png, flooded_pixels_image, format='PNG')
-
-    
-    # print(f"Flooded pixels PNG saved at {flooded_pixels_filename_png}")
-
 
     # Load units from geojson and convert to Earth Engine geometry
     print("Loading units from geojson...")
@@ -258,26 +228,7 @@ def main(start_date, threshold):
         opacity=1
     ))
 
-    # Add static image overlay for Flooded Pixels with dynamic path
-    # Map.add_child(ImageOverlay(
-    #     name="Flooded Pixels",
-    #     image=flooded_pixels_image_path,
-    #     bounds=[[36.84651455123723, -118.23240736400778], [36.924364295139625, -118.17232588207419]],
-    #     opacity=1
-    # ))
-
-    # # Add flooded areas GeoJSON layer with blue fill
-    # Map.add_child(folium.GeoJson(
-    #     geojson_filename,
-    #     name="Flooded Areas",
-    #     style_function=lambda feature: {
-    #         'fillColor': 'blue',
-    #         'color': 'blue',
-    #         'weight': 0.5,
-    #         'fillOpacity': 0.6
-    #     }
-    # ))
-
+    
     # Add clipped flooded polygons to the folium map
     Map.add_child(folium.GeoJson(
         clipped_flooded_geojson_path,
@@ -289,9 +240,6 @@ def main(start_date, threshold):
             "fillOpacity": 0.5
         }
     ))
-
-    #units_style = {'color': 'red', 'fillColor': '00000000'}
-    # Map.addLayer(units_with_calculations.style(**units_style), {}, 'Unit Boundaries')
 
     # Add subunit polygons as GeoJSON (exported to a local file, if necessary)
     Map.add_child(folium.GeoJson(
@@ -325,21 +273,6 @@ def main(start_date, threshold):
                 popup=label
             ).add_to(Map)
 
-# working but out for now 11/12
-    # labels = units_with_calculations.aggregate_array('label').getInfo()
-
-    # def get_centroid(feature):
-    #     return feature.geometry().centroid().coordinates()
-
-    # centroids = units_with_calculations.map(lambda f: f.set('centroid', get_centroid(f)))
-    # centroid_info = centroids.aggregate_array('centroid').getInfo()
-
-    # for label, centroid in zip(labels, centroid_info):
-    #     folium.Marker(
-    #         location=[centroid[1], centroid[0]],
-    #         icon=None,
-    #         popup=label
-    #     ).add_to(Map)
 
     Map.add_child(folium.LayerControl())
 
@@ -360,9 +293,6 @@ def main(start_date, threshold):
     units_df_properties_reduced = units_df_properties_reduced[['Flood_Unit', 'acres_flooded']]
     units_df_properties_reduced.columns = ['BWMA Unit', 'Acres']
     units_df_properties_reduced['Acres'] = units_df_properties_reduced['Acres'].round(0).astype(int)
-    # total_acres = units_df_properties_reduced['Acres'].sum()
-    # totals_row = pd.DataFrame([{'BWMA Unit': 'Total', 'Acres': total_acres}])
-    # units_df_properties_reduced = pd.concat([units_df_properties_reduced, totals_row], ignore_index=True)
 
     html_table_simple = (
         units_df_properties_reduced.style
@@ -446,9 +376,13 @@ def main(start_date, threshold):
         </div>
         <div class="notes">
             <h3>Technical Notes</h3>
-            <p>Flooded acres were calculated from Sentinel-2 Surface Reflectance imagery using the Earth Engine Python API in a Jupyter notebook.  Sentinel-2 (S2) is a wide-swath, high-resolution, multispectral imaging mission with a global 5-day revisit frequency.</p>
-            <p>The S2 Multispectral Instrument (MSI) samples 13 spectral bands: Visible and NIR at 10 meters, red edge and SWIR at 20 meters, and atmospheric bands at 60 meters spatial resolution. The Near Infrared (NIR) band was used to identify flooded areas by applying a threshold to isolate water.</p>
-            <p>The flooded extent estimates are validated during routine field checks throughout the seasonal flooding cycle September through April.</p>
+            <p>Flooded acres were calculated from Sentinel-2 Surface Reflectance imagery using the Earth Engine Python API.  Sentinel-2 (S2) is a wide-swath, high-resolution, multispectral imaging mission with a global 5-day revisit frequency.</p>
+            <p>Visible and NIR at 10 meters, red edge and SWIR at 20 meters, and atmospheric bands at 60 meters spatial resolution. The Near Infrared (NIR) band was used to identify flooded areas by applying a threshold to isolate water.</p>
+            <p>Vectorized flooded extent boundaries can be downloaded as a GeoJSON file <a href="clipped_flooded_areas_{image_date_str}_{threshold}.geojson" download>here</a>.</p>
+            <p>Flooded acreage for each waterfowl unit can be downloaded as a CSV file <a href="csv_output/flood_report_data_{image_date_str}_{threshold}.geojson" download>here</a>.</p>
+
+            flood_report_data_2024-11-08_0.22.csv
+        </div>
         </div>
     </body>
     </html>
