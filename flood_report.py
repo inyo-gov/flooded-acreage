@@ -375,13 +375,12 @@ def main(start_date, threshold):
             </div>
         </div>
         <div class="notes">
-            <h3>Technical Notes</h3>
-            <p>Flooded acres were calculated from Sentinel-2 Surface Reflectance imagery using the Earth Engine Python API.  Sentinel-2 (S2) is a wide-swath, high-resolution, multispectral imaging mission with a global 5-day revisit frequency.</p>
-            <p>Visible and NIR at 10 meters, red edge and SWIR at 20 meters, and atmospheric bands at 60 meters spatial resolution. The Near Infrared (NIR) band was used to identify flooded areas by applying a threshold to isolate water.</p>
-            <p>Vectorized flooded extent boundaries can be downloaded as a GeoJSON file <a href="clipped_flooded_areas_{image_date_str}_{threshold}.geojson" download>here</a>.</p>
-            <p>Flooded acreage for each waterfowl unit can be downloaded as a CSV file <a href="csv_output/flood_report_data_{image_date_str}_{threshold}.geojson" download>here</a>.</p>
-
-            flood_report_data_2024-11-08_0.22.csv
+            <h3>Technical Notes and Links</h3>
+            <p>Flooded acres were calculated from Sentinel-2 Surface Reflectance imagery using the Earth Engine Python API.</p>
+            <p>NIR band was used to identify flooded areas by applying a threshold to isolate water.</p>
+            <p>Vectorized flooded extent boundaries - GeoJSON <a href="clipped_flooded_areas_{image_date_str}_{threshold}.geojson" download>here</a>.</p>
+            <p>Flooded extent CSV <a href="csv_output/flood_report_data_{image_date_str}_{threshold}.geojson" download>here</a>.</p>
+            <p>Sentinel 2 false color composite GeoTIFF <a href="false_color_composite_{image_date_str}_{threshold}.tif" download>here</a>.</p>
         </div>
         </div>
     </body>
