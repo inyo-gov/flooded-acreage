@@ -17,7 +17,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -84,11 +84,11 @@ ul.task-list li input[type="checkbox"] {
   <li class="nav-item">
     <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
  <span class="menu-text">Home</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
     <a class="nav-link" href="./about.html" rel="" target="">
  <span class="menu-text">About</span></a>
-  </li>
+  </li>  
 </ul>
             <div class="quarto-navbar-tools ms-auto">
 </div>
@@ -103,7 +103,7 @@ ul.task-list li input[type="checkbox"] {
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
-
+   
   <ul>
   <li><a href="#report-links" id="toc-report-links" class="nav-link active" data-scroll-target="#report-links">Report Links</a></li>
   <li><a href="#selected-report-preview" id="toc-selected-report-preview" class="nav-link" data-scroll-target="#selected-report-preview">Selected Report Preview</a></li>
@@ -122,11 +122,11 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 </header>
 
@@ -139,13 +139,17 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="docs/reports/bwma_flood_report_2024-11-13_0.22.html" target="_blank">bwma_flood_report_2024-11-13_0.22.html</a></li>
 <li><a href="docs/reports/bwma_flood_report_2024-11-16_0.22.html" target="_blank">bwma_flood_report_2024-11-16_0.22.html</a></li>
 <li><a href="docs/reports/bwma_flood_report_2024-11-18_0.22.html" target="_blank">bwma_flood_report_2024-11-18_0.22.html</a></li>
+<li><a href="docs/reports/bwma_flood_report_2024-11-28_0.21.html" target="_blank">bwma_flood_report_2024-11-28_0.21.html</a></li>
+<li><a href="docs/reports/bwma_flood_report_2024-12-06_0.2.html" target="_blank">bwma_flood_report_2024-12-06_0.2.html</a></li>
+<li><a href="docs/reports/bwma_flood_report_2025-02-21_0.16.html" target="_blank">bwma_flood_report_2025-02-21_0.16.html</a></li>
+<li><a href="docs/reports/bwma_flood_report_2025-03-01_0.16.html" target="_blank">bwma_flood_report_2025-03-01_0.16.html</a></li>
 </ul>
 </section>
 <section id="selected-report-preview" class="level3">
 <h3 class="anchored" data-anchor-id="selected-report-preview">Selected Report Preview</h3>
 <p>Below is a preview of a default flood report. Click on any report link above to view it directly in a new tab.</p>
 <!-- HTML iframe to embed a specific report -->
-<iframe src="docs/reports/bwma_flood_report_2024-11-08_0.22.html" width="100%" height="800px" style="border: none;" id="report-frame">
+<iframe src="docs/reports/bwma_flood_report_2025-03-01_0.16.html" width="100%" height="800px" style="border: none;" id="report-frame">
 </iframe>
 
 
@@ -171,7 +175,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       toggleBodyColorMode(bsSheetEl);
     }
   }
-  toggleBodyColorPrimary();
+  toggleBodyColorPrimary();  
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -181,7 +185,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   anchorJS.add('.anchored');
   const isCodeAnnotation = (el) => {
     for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {
+      if (clz.startsWith('code-annotation-')) {                     
         return true;
       }
     }
@@ -212,11 +216,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
       button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button,
-        { trigger: "manual",
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
           offset: [0, -8]});
-      tooltip.show();
+      tooltip.show();    
     }
     setTimeout(function() {
       if (tooltip) {
@@ -246,7 +250,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       theme: 'quarto',
       placement: 'bottom-start'
     };
-    window.tippy(el, config);
+    window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
   for (var i=0; i<noterefs.length; i++) {
@@ -291,7 +295,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             height = bottom - top;
           }
           if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it
+            // cook up a div (if necessary) and position it 
             let div = window.document.getElementById("code-annotation-line-highlight");
             if (div === null) {
               div = window.document.createElement("div");
