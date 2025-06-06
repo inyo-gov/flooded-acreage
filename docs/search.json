@@ -2,9 +2,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Blackrock Waterfowl Management Area - Flooded Acreage",
+    "title": "Blackrock Waterfowl Management Area",
     "section": "",
-    "text": "Report Links\n\nbwma_flood_report_2024-09-22_0.18.html\nbwma_flood_report_2024-10-22_0.22.html\nbwma_flood_report_2024-11-03_0.22.html\nbwma_flood_report_2024-11-08_0.22.html\nbwma_flood_report_2024-11-13_0.22.html\nbwma_flood_report_2024-11-16_0.22.html\nbwma_flood_report_2024-11-18_0.22.html\nbwma_flood_report_2024-11-28_0.21.html\nbwma_flood_report_2024-12-06_0.2.html\nbwma_flood_report_2025-01-05_0.2.html\nbwma_flood_report_2025-02-21_0.16.html\nbwma_flood_report_2025-03-01_0.16.html\nbwma_flood_report_2025-03-08_0.18.html\nbwma_flood_report_2025-03-15_0.2.html\n\n\n\nSelected Report Preview\nBelow is a preview of a default flood report. Click on any report link above to view it directly in a new tab."
+    "text": "fy_label\nJul\nAug\nSep\nOct\nNov\nDec\nJan\nFeb\nMar\nApr\nMay\nJun\n\n\n\n\n2024-25\n\n\n22\n22\n03\n06\n05\n21\n01\n04\n02\n04"
   },
   {
     "objectID": "flood_app.html",
@@ -26,5 +26,12 @@
     "title": "flooded-acreage",
     "section": "",
     "text": "import imageio\n\n# Read the TIFF file\ntiff_image = imageio.imread(\"docs/reports/false_color_composite_2024-11-08_0.22.tif\")\n\nC:\\Users\\znelson\\AppData\\Local\\Temp\\ipykernel_13404\\1139790178.py:4: DeprecationWarning: Starting with ImageIO v3 the behavior of this function will switch to that of iio.v3.imread. To keep the current behavior (and make this warning disappear) use `import imageio.v2 as imageio` or call `imageio.v2.imread` directly.\n  tiff_image = imageio.imread(\"docs/reports/false_color_composite_2024-11-08_0.22.tif\")\n\n\n\n\n# Save the image as a PNG file\nimageio.imwrite(\"docs/reports/false_color_composite_2024-11-08_0.22.png\", tiff_image)"
+  },
+  {
+    "objectID": "index.html#read-all-of-the-csv-exports-into-monthly_raw",
+    "href": "index.html#read-all-of-the-csv-exports-into-monthly_raw",
+    "title": "Blackrock Waterfowl Management Area - Flooded Acreage",
+    "section": "",
+    "text": "fiscal_year\nJul\nAug\nSep\nOct\nNov\nDec\nJan\nFeb\nMar\nApr\nMay\nJun\n\n\n\n\n2025\n\n\nSeptember 22\nOctober 22\nNovember 03, November 08, November 13, November 16, November 18, November 28\nDecember 06\nJanuary 05\nFebruary 21\nMarch 01, March 08, March 15 , March 26\nApril 04\nMay 02, May 20\nJune 04\n\n\n\n\n\n\n\n\n# (A) Fix spelling typo and “floor” each report_date to the first of that month\nmonthly_fixed &lt;- monthly_raw %&gt;%\n  mutate(\n    Flood_Unit = recode(Flood_Unit,\n                       \"Waggonner\" = \"Waggoner\",\n                       .default    = Flood_Unit),\n    month_date = floor_date(report_date, unit = \"month\")\n  )\n\n# (B) Compute average flooded acres per (Flood_Unit × month_date)\nmonthly_avg &lt;- monthly_fixed %&gt;% filter(Flood_Unit != \"Total\") %&gt;% \n  group_by(Flood_Unit, month_date) %&gt;%\n  summarize(\n    avg_acres = mean(acres_flooded, na.rm = TRUE),\n    .groups   = \"drop\"\n  )\n\n# (C) Plot as stacked bars plus dashed “500 ac target” line from Nov 1 → Mar 1\nggplot(monthly_avg, aes(x = month_date, y = avg_acres, fill = Flood_Unit)) +\n  geom_col() +\n  geom_segment(\n    aes(\n      x    = as.Date(\"2024-11-01\"),\n      xend = as.Date(\"2025-03-01\"),\n      y    = 500,\n      yend = 500\n    ),\n    color     = \"black\",\n    linetype  = \"dashed\",\n    size      = 0.7\n  ) +\n  annotate(\n    \"text\",\n    x     = as.Date(\"2025-01-01\"),\n    y     = 510,             # just above the dashed line\n    label = \"500 ac target\",\n    size  = 3.5,\n    hjust = 0.5\n  ) +\n  scale_x_date(\n    limits      = as.Date(c(\"2024-09-01\", \"2025-06-01\")),\n    date_breaks = \"1 month\",\n    date_labels = \"%b '%y\"   # “Sep '24”, “Oct '24”, … “Jun '25”\n  ) +\n  labs(\n    title = \"Average Flooded Acres by Unit (Sep 2024–Jun 2025)\",\n    x     = \"Month\",\n    y     = \"Average Acres Flooded\"\n  ) +\n  theme_minimal() +\n  theme(\n    axis.text.x = element_text(angle = 45, hjust = 1)\n  )\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead.\n\n\nWarning: Removed 14 rows containing missing values (`geom_col()`).\n\n\n\n\n\nBelow is a preview of a default flood report. Click on any report link above to view it directly in a new tab."
   }
 ]
