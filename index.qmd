@@ -147,7 +147,7 @@ knitr::kable(
 
 ```
 
-<!-- HTML iframe to embed a specific report --> <iframe src="docs/reports/bwma_flood_report_2025-06-04_0.1.html" width="100%" height="800px" style="border: none;" id="report-frame"></iframe> 
+<!-- HTML iframe to embed a specific report --> <iframe src="docs/reports/bwma_flood_report_2025-08-02_0.1.html" width="100%" height="800px" style="border: none;" id="report-frame"></iframe> 
 
 
 
@@ -180,7 +180,7 @@ monthly_avg %>% ggplot(aes(x = month_date, y = avg_acres, fill = Flood_Unit)) +
   geom_segment(
     aes(
       x    = as.Date("2024-11-01"),
-      xend = as.Date("2025-03-01"),
+      xend = as.Date("2025-09-01"), #update monthly
       y    = 500,
       yend = 500
     ),
@@ -192,19 +192,19 @@ monthly_avg %>% ggplot(aes(x = month_date, y = avg_acres, fill = Flood_Unit)) +
     "text",
     x     = as.Date("2025-01-01"),
     y     = 530,            # slight offset above 500
-    label = "500 ac target",
+    label = "500 ac target (Nov 1 → Mar 1)",
     size  = 3.5,
     hjust = 0.5
   ) +
   scale_x_date(
-    limits      = as.Date(c("2024-08-01", "2025-07-01")),
+    limits      = as.Date(c("2024-08-01", "2025-09-01")), # update monthly
     date_breaks = "1 month",
     date_labels = "%b '%y"   # e.g. "Sep '24", "Oct '24", … "Jun '25"
   ) +
   labs(
-    title = "Average Flooded Acres by Unit (Sep 2024–Jun 2025)",
+    title = "Monthly Flooded Acres by Unit", # update on new calendar year
     x     = "Month",
-    y     = "Average Acres Flooded"
+    y     = "Acres Flooded"
   ) +
   theme_minimal() +
   theme(
