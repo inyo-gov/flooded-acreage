@@ -371,7 +371,7 @@ def main(start_date, threshold):
             <div class="right">
                 <h2>Spatial Extent</h2>
                 <p>Imagery Date: {image_date_str}</p>
-                <iframe src="./flooded_area_map_{image_date_str}_{threshold}.html" width="90%" height="500"></iframe>
+                <iframe src="reports/flooded_area_map_{image_date_str}_{threshold}.html" width="90%" height="500"></iframe>
             </div>
         </div>
         <div class="notes">
