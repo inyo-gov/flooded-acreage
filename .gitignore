@@ -1,7 +1,6 @@
 # local data and report directories
 data/
 docs/scratch.html
-docs/reports/
 flood_reports/
 scratch.ipynb
 flood_app.ipynb

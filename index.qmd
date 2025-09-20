@@ -54,7 +54,7 @@ library(knitr)
 library(stringr)
 
 # 4a. Point to your folder of report HTMLs
-report_dir <- "docs/reports"
+report_dir <- "reports"
 
 # 4b. Grab all filenames matching “bwma_flood_report_YYYY-MM-DD_*.html”
 html_files <- list.files(
