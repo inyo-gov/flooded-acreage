@@ -280,7 +280,7 @@ def main(start_date, threshold):
     print(f"Map saved to {map_filename}")
 
     # Define the subdirectory for CSV output
-    csv_subdirectory = "flood_reports/csv_output"
+    csv_subdirectory = "docs/csv_output"
     os.makedirs(csv_subdirectory, exist_ok=True)
 
     # Save the DataFrame to a CSV file
@@ -379,7 +379,7 @@ def main(start_date, threshold):
             <p>Flooded acres were calculated from Sentinel-2 Surface Reflectance imagery using the Earth Engine Python API.</p>
             <p>NIR band was used to identify flooded areas by applying a threshold to isolate water.</p>
             <p>Vectorized flooded extent boundaries - GeoJSON <a href="clipped_flooded_areas_{image_date_str}_{threshold}.geojson" download>here</a>.</p>
-            <p>Flooded extent CSV <a href="csv_output/flood_report_data_{image_date_str}_{threshold}.csv" download>here</a>.</p>
+            <p>Flooded extent CSV <a href="../csv_output/flood_report_data_{image_date_str}_{threshold}.csv" download>here</a>.</p>
             <p>Sentinel 2 false color composite GeoTIFF <a href="false_color_composite_{image_date_str}_{threshold}.tif" download>here</a>.</p>
         </div>
         </div>

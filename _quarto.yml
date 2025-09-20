@@ -3,23 +3,32 @@ project:
   output-dir: docs
 
 website:
-  title: "flooded-acreage"
+  title: "Flooded Acreage Monitoring"
   navbar:
+    title: "Flooded Acreage Monitoring"
+    logo: inyo_logo.png
     left:
-      - href: index.qmd
-        text: Home
-      - href: about.qmd
+      - href: index.html
+        text: Dashboard
+      - href: about.html
         text: About
+      - icon: github
+        href: https://github.com/inyo-gov/flooded-acreage
+    background: dark
+    search: true
 
 format:
   html:
-    theme: cosmo
+    theme: bootstrap
+    linkcolor: "#2E86AB"
     css: styles.css
-    toc: true
-    grid:
-      sidebar-width: 100px
-      body-width: 1300px
-      margin-width: 100px
-      gutter-width: 1.5rem
+    toc: false
+    code-fold: true
+    code-tools: true
+    fig-responsive: true
+    table-responsive: false
+    fig-dir: figure-html
+    subtitle: "Blackrock Waterfowl Management Area"
+    footer: "© 2025 Inyo County, California. All rights reserved."
 
 

@@ -1,1 +1,454 @@
-/* css styles */
+/* Custom styles for Revegetation Projects website */
+
+/* Global font consistency */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 600;
+}
+
+/* Ensure consistent font rendering across all pages */
+.quarto-title-block,
+.quarto-title-meta,
+.page-layout-article {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Table responsiveness improvements */
+.table-responsive {
+  overflow-x: visible !important;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1rem;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 100% !important;
+}
+
+/* Full width table containers */
+.container-fluid,
+.container,
+.quarto-container {
+  max-width: none !important;
+  width: 100% !important;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Ensure main content area uses full width */
+main {
+  max-width: none !important;
+  width: 100% !important;
+}
+
+/* Full width page layout */
+.page-layout-article,
+.quarto-title-block,
+.quarto-title-meta {
+  max-width: none !important;
+  width: 100% !important;
+}
+
+/* Remove any Bootstrap container constraints */
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.col-12, .col-md-12, .col-lg-12 {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+/* Full width for DT tables */
+.dataTables_wrapper {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* Force full width on all table containers */
+.table-responsive,
+.dataTables_wrapper,
+.dataTables_scroll,
+.dataTables_scrollBody,
+table,
+.dataTables_wrapper .dataTables_scrollBody table,
+.dataTables_wrapper table {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 100% !important;
+}
+
+/* Override any Bootstrap or Quarto width constraints */
+.quarto-container-fluid,
+.quarto-container,
+.container-fluid,
+.container,
+.quarto-container-fluid .container,
+.quarto-container .container {
+  max-width: none !important;
+  width: 100% !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+/* Force full width on all possible container classes */
+[class*="container"],
+[class*="quarto-container"],
+[class*="page-layout"] {
+  max-width: none !important;
+  width: 100% !important;
+}
+
+/* DT table improvements */
+.dataTables_wrapper {
+  overflow-x: auto;
+}
+
+.dataTables_wrapper .dataTables_scroll {
+  overflow-x: auto;
+}
+
+/* Ensure tables fit comfortably on page */
+table {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+  table-layout: auto !important;
+}
+
+/* Override Bootstrap table defaults */
+.table {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 100% !important;
+  margin-bottom: 0 !important;
+}
+
+/* Improve table cell padding for better readability */
+.table td, .table th {
+  padding: 0.5rem 0.75rem;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Allow some table cells to wrap when needed */
+.table td.wrap-text {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+/* DT table specific improvements */
+.DTFC_LeftWrapper table,
+.DTFC_RightWrapper table {
+  border-collapse: collapse;
+}
+
+/* Force DT tables to use full width with compact styling */
+.dataTables_wrapper {
+  width: 100% !important;
+  max-width: none !important;
+  overflow: visible !important;
+  min-width: 1000px !important;
+  font-size: 0.85rem !important;
+}
+
+.dataTables_wrapper table {
+  font-size: 0.85rem !important;
+  line-height: 1.2 !important;
+}
+
+.dataTables_wrapper th,
+.dataTables_wrapper td {
+  padding: 4px 6px !important;
+  font-size: 0.85rem !important;
+  white-space: nowrap !important;
+}
+
+/* Quarto column-screen layout with margin */
+.column-screen {
+  width: 95% !important;
+  max-width: none !important;
+  margin: 0 auto !important;
+  padding: 0 20px !important;
+}
+
+.dataTables_wrapper .dataTables_scroll {
+  width: 100% !important;
+  max-width: none !important;
+  overflow: visible !important;
+  min-width: 1000px !important;
+}
+
+.dataTables_wrapper .dataTables_scrollBody {
+  width: 100% !important;
+  max-width: none !important;
+  overflow: visible !important;
+  min-width: 1000px !important;
+}
+
+.dataTables_wrapper table {
+  width: 100% !important;
+  max-width: none !important;
+  table-layout: fixed !important;
+  min-width: 1000px !important;
+}
+
+/* Improve button spacing in DT tables */
+.dataTables_wrapper .dt-buttons {
+  margin-bottom: 1rem;
+}
+
+.dataTables_wrapper .dt-buttons .btn {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Better mobile responsiveness */
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: 0.8rem;
+  }
+  
+  .dataTables_wrapper {
+    font-size: 0.8rem;
+  }
+  
+  .dataTables_wrapper .dataTables_length,
+  .dataTables_wrapper .dataTables_filter {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Print/PDF specific styles */
+@media print {
+  .table-responsive {
+    overflow: visible !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  .dataTables_wrapper {
+    overflow: visible !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  table {
+    width: 100% !important;
+    max-width: 100% !important;
+    table-layout: fixed !important;
+    font-size: 0.8rem !important;
+  }
+  
+  .table td, .table th {
+    padding: 0.25rem 0.5rem !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    font-size: 0.8rem !important;
+  }
+  
+  /* Hide DT controls for print */
+  .dataTables_length,
+  .dataTables_filter,
+  .dataTables_info,
+  .dataTables_paginate,
+  .dt-buttons {
+    display: none !important;
+  }
+  
+  /* Ensure full width containers for print */
+  .container,
+  .container-fluid,
+  .quarto-container,
+  .quarto-container-fluid {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
+
+/* Improve histogram container */
+.histogram-container {
+  margin: 2rem 0;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+  border: 1px solid #e9ecef;
+}
+
+/* Better figure styling */
+.figure {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.figure img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.375rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Improve code block styling */
+pre {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+/* Better alert styling */
+.alert {
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Custom navbar styling for blue theme */
+.navbar {
+  background-color: #2E86AB !important;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  color: white !important;
+}
+
+.navbar-nav .nav-link {
+  color: white !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #e9ecef !important;
+}
+
+.navbar-text {
+  color: white !important;
+}
+
+.navbar-brand img {
+  height: 40px;
+  max-height: 40px;
+  width: auto;
+  margin-right: 10px;
+  object-fit: contain;
+  background-color: white;
+  border-radius: 4px;
+  padding: 2px;
+  /* Add white background to make logo visible on dark navbar */
+}
+
+/* Better card styling */
+.card {
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  margin-bottom: 1.5rem;
+}
+
+/* Improve sidebar styling */
+.sidebar {
+  background-color: #f8f9fa;
+  border-right: 1px solid #e9ecef;
+}
+
+/* Better link styling */
+a {
+  color: #2E86AB;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #1e5a73;
+  text-decoration: underline;
+}
+
+/* Improve button styling */
+.btn {
+  border-radius: 0.375rem;
+  font-weight: 500;
+}
+
+/* Better form styling */
+.form-control {
+  border-radius: 0.375rem;
+  border: 1px solid #ced4da;
+}
+
+.form-control:focus {
+  border-color: #2E86AB;
+  box-shadow: 0 0 0 0.2rem rgba(46, 134, 171, 0.25);
+}
+
+/* Footer styling */
+footer {
+  margin-top: 3rem;
+  padding: 2rem 0;
+  border-top: 1px solid #e9ecef;
+  background-color: #f8f9fa;
+  text-align: center;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* Data disclaimer styling */
+.alert-disclaimer {
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  color: #856404;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 2rem 0;
+}
+
+/* Hide Quarto navigation envelope artifacts */
+#quarto-navigation-envelope {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+.quarto-markdown-envelope-contents {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Hide any elements with quarto-markdown-envelope in their class */
+[class*="quarto-markdown-envelope"] {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Force tables to break out of containers and use full viewport width */
+.full-width-table {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(-50vw + 50%) !important;
+  margin-right: calc(-50vw + 50%) !important;
+  position: relative !important;
+  left: 50% !important;
+  right: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+.full-width-table .dataTables_wrapper {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(-50vw + 50%) !important;
+  margin-right: calc(-50vw + 50%) !important;
+}
+
