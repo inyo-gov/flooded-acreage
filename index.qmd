@@ -21,12 +21,6 @@ csv_files <- list.files(
   full.names = TRUE
 )
 
-# Debug: Check if files are found
-cat("CSV directory:", csv_dir, "\n")
-cat("CSV files found:", length(csv_files), "\n")
-if(length(csv_files) > 0) {
-  cat("First file:", csv_files[1], "\n")
-}
 
 # 1c. Read each CSV, parse the date from its filename, and bind them together
 monthly_raw <- lapply(csv_files, function(path) {
