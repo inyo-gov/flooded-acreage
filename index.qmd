@@ -166,13 +166,13 @@ monthly_fixed <- monthly_raw %>%
     month_date = floor_date(report_date, unit = "month")
   )
 
-# 3b. Compute average flooded acres per (Flood_Unit × month_date)
+# 3b. Compute latest flooded acres per (Flood_Unit × month_date)
 monthly_avg <- monthly_fixed %>% filter(Flood_Unit != "Total") %>% 
   group_by(Flood_Unit, month_date) %>%
-  summarize(
-    avg_acres = mean(acres_flooded, na.rm = TRUE),
-    .groups   = "drop"
-  )
+  slice_max(report_date, n = 1, with_ties = FALSE) %>%
+  ungroup() %>%
+  select(Flood_Unit, month_date, acres_flooded) %>%
+  rename(avg_acres = acres_flooded)
 
 # 3c. Plot stacked bars + a dashed "500 ac target" line from Nov 1 → Mar 1
 monthly_avg %>% ggplot(aes(x = month_date, y = avg_acres, fill = Flood_Unit)) +
@@ -197,9 +197,9 @@ monthly_avg %>% ggplot(aes(x = month_date, y = avg_acres, fill = Flood_Unit)) +
     hjust = 0.5
   ) +
   scale_x_date(
-    limits      = as.Date(c("2024-08-01", "2025-09-01")), # update monthly
+    limits      = c(min(monthly_avg$month_date) - 15, max(monthly_avg$month_date) + 15), # dynamic limits
     date_breaks = "1 month",
-    date_labels = "%b '%y"   # e.g. "Sep '24", "Oct '24", … "Jun '25"
+    date_labels = "%b '%y"   # e.g. "Sep '24", "Oct '24", … "Sep '25"
   ) +
   labs(
     title = "Monthly Flooded Acres by Unit", # update on new calendar year
