@@ -13,7 +13,6 @@ The project includes a comprehensive dashboard that displays:
 - **Time Series Plot**: Monthly flooded acreage trends by unit
 - **Interactive Table**: Links to all historical reports organized by fiscal year
 - **Current Report Display**: Embedded iframe showing the most recent flood report
-- **Professional Interface**: Inyo County branded dashboard with navigation
 
 Access the dashboard at: `docs/index.html`
 
