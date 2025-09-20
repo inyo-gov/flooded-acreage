@@ -5,5 +5,12 @@
     "title": "Blackrock Waterfowl Management Area",
     "section": "",
     "text": "fy_label\nJul\nAug\nSep\nOct\nNov\nDec\nJan\nFeb\nMar\nApr\nMay\nJun\n\n\n\n\n2024-25\n\n\n22\n22\n03\n06\n05\n21\n01\n04\n02\n04\n\n\n2025-26\n01\n02\n17"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Technical Notes\n\nFlooded acres were calculated from Sentinel-2 Surface Reflectance imagery using the Earth Engine Python API. Sentinel-2 (S2) is a wide-swath, high-resolution, multispectral imaging mission with a global 5-day revisit frequency. The S2 Multispectral Instrument (MSI) samples 13 spectral bands: Visible and NIR at 10 meters, red edge and SWIR at 20 meters, and atmospheric bands at 60 meters spatial resolution.\nThe Near Infrared (NIR) band with 10m pixel resolution was used to identify flooded areas by applying a reflectance threshold to isolate water from surrounding vegetation. The flooded extent predictions are verified in the field during avian surveys throughout the seasonal flooding cycle September through April."
   }
 ]
