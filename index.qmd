@@ -12,7 +12,7 @@ library(stringr)
 library(lubridate)
 
 # 1a. Point to the folder containing your flood_report CSVs
-csv_dir <- "data/csv_output"
+csv_dir <- "docs/csv_output"
 
 # 1b. List all matching CSV files (e.g. "flood_report_data_2024-09-22_0.21.csv")
 csv_files <- list.files(
@@ -20,6 +20,13 @@ csv_files <- list.files(
   pattern    = "^flood_report_data_[0-9]{4}-[0-9]{2}-[0-9]{2}_.*\\.csv$",
   full.names = TRUE
 )
+
+# Debug: Check if files are found
+cat("CSV directory:", csv_dir, "\n")
+cat("CSV files found:", length(csv_files), "\n")
+if(length(csv_files) > 0) {
+  cat("First file:", csv_files[1], "\n")
+}
 
 # 1c. Read each CSV, parse the date from its filename, and bind them together
 monthly_raw <- lapply(csv_files, function(path) {
@@ -53,7 +60,7 @@ library(knitr)
 library(stringr)
 
 # 4a. Point to your folder of report HTMLs
-report_dir <- "reports"
+report_dir <- "docs/reports"
 
 # 4b. Grab all filenames matching “bwma_flood_report_YYYY-MM-DD_*.html”
 html_files <- list.files(
