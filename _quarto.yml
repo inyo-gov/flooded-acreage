@@ -1,6 +1,11 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - flood_reports/csv_output/**
+    - flood_reports/reports/**
+execute:
+  dir: project
 
 website:
   title: "Flooded Acreage Monitoring"
@@ -28,7 +33,6 @@ format:
     fig-responsive: true
     table-responsive: false
     fig-dir: figure-html
-    subtitle: "Blackrock Waterfowl Management Area"
     footer: "© 2025 Inyo County, California. All rights reserved."
 
 

@@ -47,7 +47,7 @@ def main(start_date, threshold):
     sentinel_collection = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED') \
         .filterBounds(bounding_box_geometry) \
         .filterDate(start_date, end_date) \
-        .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 30)) \
+        .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 50)) \
         .select(['B4','B8', 'SCL','B11'])
 
     size = sentinel_collection.size().getInfo()
@@ -65,7 +65,7 @@ def main(start_date, threshold):
 
     # Define the subdirectory for HTML maps and reports
     print("Setting up directories and filenames...")
-    html_subdirectory = "docs/reports"
+    html_subdirectory = "flood_reports/reports"
     os.makedirs(html_subdirectory, exist_ok=True)
 
     # Define filenames with unique names based on the image date
@@ -94,7 +94,7 @@ def main(start_date, threshold):
 
     # Define export file paths with date and threshold
     print("Exporting false-color and flooded pixels images...")
-    false_color_filename_tif = f"docs/reports/false_color_composite_{image_date_str}_{threshold}.tif"
+    false_color_filename_tif = f"flood_reports/reports/false_color_composite_{image_date_str}_{threshold}.tif"
     # flooded_pixels_filename_tif = f"docs/reports/flooded_pixels_{image_date_str}_{threshold}.tif"
     
     
@@ -111,7 +111,7 @@ def main(start_date, threshold):
         min=0, max=1  # This limits values to binary (0 or 1) for transparency
     )
 
-    false_color_filename_png = f"docs/reports/false_color_composite_{image_date_str}_{threshold}.png"
+    false_color_filename_png = f"flood_reports/reports/false_color_composite_{image_date_str}_{threshold}.png"
     # flooded_pixels_filename_png = f"docs/reports/flooded_pixels_{image_date_str}_{threshold}.png"
     
     # Read the TIFF file and save it as PNG
@@ -141,7 +141,7 @@ def main(start_date, threshold):
     )
 
     # Export the clipped flooded polygons as GeoJSON
-    clipped_flooded_geojson_path = f"docs/reports/clipped_flooded_areas_{image_date_str}_{threshold}.geojson"
+    clipped_flooded_geojson_path = f"flood_reports/reports/clipped_flooded_areas_{image_date_str}_{threshold}.geojson"
     geemap.ee_export_vector(flooded_clipped_vectors, filename=clipped_flooded_geojson_path)
     print(f"Clipped flooded polygons exported to {clipped_flooded_geojson_path}")
 
@@ -178,7 +178,7 @@ def main(start_date, threshold):
 
     # Export subunit polygons as GeoJSON
     print("Exporting subunit polygons as GeoJSON...")
-    geemap.ee_export_vector(units_with_calculations, filename="docs/reports/subunits.geojson")
+    geemap.ee_export_vector(units_with_calculations, filename="flood_reports/reports/subunits.geojson")
     print("Subunits exported as GeoJSON.")
 
     # Convert EE feature collection to Pandas DataFrame
@@ -214,13 +214,14 @@ def main(start_date, threshold):
     clipped_binary_image = binary_image.clip(units)
 
     # Define the filenames for the overlays, matching the export paths
-    false_color_image_path = f"docs/reports/false_color_composite_{image_date_str}_{threshold}.png"
+    false_color_image_path = f"flood_reports/reports/false_color_composite_{image_date_str}_{threshold}.png"
     # flooded_pixels_image_path = f"docs/reports/flooded_pixels_{image_date_str}_{threshold}.png"
 
     # Create the map with a center point
     Map = folium.Map(location=[36.8795, -118.202], zoom_start=12)
 
     # Add static image overlay for False Color Composite with dynamic path
+    # Use full path for creation, but the map will work with relative paths when served
     Map.add_child(ImageOverlay(
         name="False Color Composite",
         image=false_color_image_path,
@@ -243,7 +244,7 @@ def main(start_date, threshold):
 
     # Add subunit polygons as GeoJSON (exported to a local file, if necessary)
     Map.add_child(folium.GeoJson(
-    "docs/reports/subunits.geojson", 
+        "flood_reports/reports/subunits.geojson",
     name="Unit Boundaries", 
     style_function=lambda x: {
         "color": "red",  # Boundary color
@@ -280,7 +281,7 @@ def main(start_date, threshold):
     print(f"Map saved to {map_filename}")
 
     # Define the subdirectory for CSV output
-    csv_subdirectory = "docs/csv_output"
+    csv_subdirectory = "flood_reports/csv_output"
     os.makedirs(csv_subdirectory, exist_ok=True)
 
     # Save the DataFrame to a CSV file

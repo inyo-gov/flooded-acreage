@@ -1,7 +1,8 @@
 ---
-title: "Blackrock Waterfowl Management Area"
 format: html
 ---
+
+# Blackrock Waterfowl Management Area
 
 
 
@@ -12,7 +13,7 @@ library(stringr)
 library(lubridate)
 
 # 1a. Point to the folder containing your flood_report CSVs
-csv_dir <- "docs/csv_output"
+csv_dir <- "flood_reports/csv_output"
 
 # 1b. List all matching CSV files (e.g. "flood_report_data_2024-09-22_0.21.csv")
 csv_files <- list.files(
@@ -54,7 +55,7 @@ library(knitr)
 library(stringr)
 
 # 4a. Point to your folder of report HTMLs
-report_dir <- "reports"
+report_dir <- "flood_reports/reports"
 
 # 4b. Grab all filenames matching “bwma_flood_report_YYYY-MM-DD_*.html”
 html_files <- list.files(
@@ -143,15 +144,11 @@ knitr::kable(
   wide_tbl,
   format     = "html",
   escape     = FALSE,
+  caption    = "Monthly Reports",
   table.attr = "class='table table-striped'"
 )
 
 ```
-
-<!-- HTML iframe to embed a specific report --> <iframe src="reports/bwma_flood_report_2025-09-17_0.15.html" width="100%" height="800px" style="border: none;" id="report-frame"></iframe> 
-
-
-
 
 ```{r monthly_flooded_acres, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
 library(dplyr)
@@ -168,7 +165,9 @@ monthly_fixed <- monthly_raw %>%
   )
 
 # 3b. Compute latest flooded acres per (Flood_Unit × month_date)
+# Filter to start from September 2024
 monthly_avg <- monthly_fixed %>% filter(Flood_Unit != "Total") %>% 
+  filter(month_date >= as.Date("2024-09-01")) %>%
   group_by(Flood_Unit, month_date) %>%
   slice_max(report_date, n = 1, with_ties = FALSE) %>%
   ungroup() %>%
@@ -181,7 +180,7 @@ monthly_avg %>% ggplot(aes(x = month_date, y = avg_acres, fill = Flood_Unit)) +
   geom_segment(
     aes(
       x    = as.Date("2024-11-01"),
-      xend = as.Date("2025-09-01"), #update monthly
+      xend = as.Date("2025-10-01"), #update monthly
       y    = 500,
       yend = 500
     ),
@@ -203,7 +202,7 @@ monthly_avg %>% ggplot(aes(x = month_date, y = avg_acres, fill = Flood_Unit)) +
     date_labels = "%b '%y"   # e.g. "Sep '24", "Oct '24", … "Sep '25"
   ) +
   labs(
-    title = "Monthly Flooded Acres by Unit", # update on new calendar year
+    title = "Monthly Flooded Acreage by Unit", # update on new calendar year
     x     = "Month",
     y     = "Acres Flooded"
   ) +
@@ -214,3 +213,7 @@ monthly_avg %>% ggplot(aes(x = month_date, y = avg_acres, fill = Flood_Unit)) +
   )
 
 ```
+
+## Most Recent Report
+
+<!-- HTML iframe to embed a specific report --> <iframe src="flood_reports/reports/bwma_flood_report_2025-09-29_0.15.html" width="100%" height="1000px" style="border: none;" id="report-frame"></iframe>
