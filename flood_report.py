@@ -15,9 +15,9 @@ import imageio.v2 as imageio
 # > python flood_report.py '2024-11-01' .22
 
 def main(start_date, threshold):
-    # Initialize Earth Engine
+    # Initialize Earth Engine with registered project
     print("Initializing Earth Engine...")
-    ee.Initialize()
+    ee.Initialize(project='ee-zjn-2022')
 
     # Compute the end date by adding days to the start date
     end_date = (datetime.strptime(start_date, '%Y-%m-%d') + timedelta(days=15)).strftime('%Y-%m-%d')
