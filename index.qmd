@@ -218,4 +218,4 @@ monthly_avg %>% ggplot(aes(x = month_date, y = avg_acres, fill = Flood_Unit)) +
 
 ## Most Recent Report
 
-<!-- HTML iframe to embed a specific report --> <iframe src="reports/bwma_flood_report_2025-11-10_0.21.html" width="100%" height="1000px" style="border: none;" id="report-frame"></iframe>
+<!-- HTML iframe to embed a specific report --> <iframe src="reports/bwma_flood_report_2025-12-01_0.16.html" width="100%" height="1000px" style="border: none;" id="report-frame"></iframe>
