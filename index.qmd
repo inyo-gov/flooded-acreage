@@ -167,11 +167,13 @@ monthly_fixed <- monthly_raw %>%
   )
 
 # 3b. Compute latest flooded acres per (Flood_Unit × month_date)
+# Uses the MOST RECENT date within each month (not the first date)
+# This ensures the plot shows the most current data available for each month
 # Filter to start from September 2024
 monthly_avg <- monthly_fixed %>% filter(Flood_Unit != "Total") %>% 
   filter(month_date >= as.Date("2024-09-01")) %>%
   group_by(Flood_Unit, month_date) %>%
-  slice_max(report_date, n = 1, with_ties = FALSE) %>%
+  slice_max(report_date, n = 1, with_ties = FALSE) %>%  # Gets most recent date per month
   ungroup() %>%
   select(Flood_Unit, month_date, acres_flooded) %>%
   rename(avg_acres = acres_flooded)
