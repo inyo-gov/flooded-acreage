@@ -395,6 +395,44 @@ Here's an example of what you might see when you run the script:
 - **Reports**: Individual HTML reports are generated for each analysis, with CSV data export capabilities.
 - **Field Validation**: Results are validated during routine field checks throughout the seasonal flooding cycle (September through April). Field data collection in ArcGIS Online will inform future threshold calibration and relative elevation analysis needs.
 
+## Model Validation
+
+The flood mapping model is validated using field-collected GPS points from biologists during bird surveys.
+
+### Field Data Collection
+
+Biologists collect GPS points (yes/no flooded) using ArcGIS Online during regular bird surveys. See `docs/field_validation_protocol.md` for detailed collection guidelines.
+
+### Running Validation Analysis
+
+After exporting validation data from ArcGIS Online to GeoJSON or CSV:
+
+```sh
+python validate_flood_model.py <validation_data> <report_date> [--threshold]
+```
+
+Example:
+```sh
+python validate_flood_model.py data/validation/validation_points_2025-12-08.geojson 2025-12-08 --threshold 0.18
+```
+
+This generates:
+- **Validation Report (HTML)**: Accuracy metrics, confusion matrix, spatial analysis
+- **Validation Points CSV**: Point-by-point comparison of observed vs predicted
+- **Validation Map (HTML)**: Interactive map showing correct/incorrect predictions
+
+### Validation Metrics
+
+The validation analysis calculates:
+- Overall Accuracy
+- Precision (of predicted flooded, how many are actually flooded?)
+- Recall/Sensitivity (of actually flooded, how many did we detect?)
+- Specificity (of actually dry, how many did we correctly identify?)
+- F1 Score
+- Accuracy by unit
+
+Results help calibrate the NIR threshold and improve model performance over time.
+
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
