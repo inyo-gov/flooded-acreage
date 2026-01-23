@@ -99,8 +99,11 @@ def main(validation_data_path, report_date, threshold=None, output_dir=None):
         Directory for output files (default: flood_reports/validation)
     """
     # Initialize Earth Engine
+    # Project ID can be set via EARTH_ENGINE_PROJECT_ID environment variable
+    # Falls back to default if not set
+    project_id = os.getenv('EARTH_ENGINE_PROJECT_ID', 'ee-zjn-2022')
     print("Initializing Earth Engine...")
-    ee.Initialize(project='ee-zjn-2022')
+    ee.Initialize(project=project_id)
     
     # Set output directory
     if output_dir is None:

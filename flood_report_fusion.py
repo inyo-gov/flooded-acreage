@@ -144,8 +144,11 @@ def main(start_date, s2_threshold, dry_start, dry_end, dvv_thresh=-1.5, vv_vh_ra
         S1 orbit pass direction: 'ASCENDING' or 'DESCENDING'
     """
     # Initialize Earth Engine
+    # Project ID can be set via EARTH_ENGINE_PROJECT_ID environment variable
+    # Falls back to default if not set
+    project_id = os.getenv('EARTH_ENGINE_PROJECT_ID', 'ee-zjn-2022')
     print("Initializing Earth Engine...")
-    ee.Initialize(project='ee-zjn-2022')
+    ee.Initialize(project=project_id)
 
     print(f"Processing fused flood report for date: {start_date}")
     print(f"Fusion mode: {fusion_mode}")

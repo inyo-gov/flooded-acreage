@@ -16,8 +16,11 @@ import imageio.v2 as imageio
 
 def main(start_date, threshold):
     # Initialize Earth Engine with registered project
+    # Project ID can be set via EARTH_ENGINE_PROJECT_ID environment variable
+    # Falls back to default if not set
+    project_id = os.getenv('EARTH_ENGINE_PROJECT_ID', 'ee-zjn-2022')
     print("Initializing Earth Engine...")
-    ee.Initialize(project='ee-zjn-2022')
+    ee.Initialize(project=project_id)
 
     # Compute the end date by adding days to the start date
     end_date = (datetime.strptime(start_date, '%Y-%m-%d') + timedelta(days=15)).strftime('%Y-%m-%d')

@@ -90,6 +90,16 @@ The analysis calculates the area of flooded pixels within predefined units and g
    earthengine authenticate
    ```
 
+5. (Optional) Set Earth Engine Project ID:
+
+   If you want to use a different Google Cloud project, set the environment variable:
+   
+   ```sh
+   export EARTH_ENGINE_PROJECT_ID=your-project-id
+   ```
+   
+   If not set, scripts will use the default project ID. Note: Project IDs are identifiers, not secrets, but you can keep them private by using this environment variable.
+
 ## Usage
 
 ### Generate Sentinel-2 Flood Report

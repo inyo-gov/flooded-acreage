@@ -37,8 +37,11 @@ def main(start_date, dry_start, dry_end, dvv_thresh=-1.5, vv_vh_ratio_max=3, orb
         Orbit pass direction: 'ASCENDING' or 'DESCENDING'
     """
     # Initialize Earth Engine with registered project
+    # Project ID can be set via EARTH_ENGINE_PROJECT_ID environment variable
+    # Falls back to default if not set
+    project_id = os.getenv('EARTH_ENGINE_PROJECT_ID', 'ee-zjn-2022')
     print("Initializing Earth Engine...")
-    ee.Initialize(project='ee-zjn-2022')
+    ee.Initialize(project=project_id)
 
     # Compute the end date for wet period (same as S2: start_date + 15 days)
     wet_end = (datetime.strptime(start_date, '%Y-%m-%d') + timedelta(days=15)).strftime('%Y-%m-%d')
