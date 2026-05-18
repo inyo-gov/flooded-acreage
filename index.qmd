@@ -54,10 +54,10 @@ library(tidyr)
 library(knitr)
 library(stringr)
 
-# 4a. Point to your folder of report HTMLs for scanning
-#     Use docs/reports for scanning during render, but links use "reports" for GitHub Pages
-report_scan_dir <- "docs/reports"
-report_link_dir <- "reports"
+# 4a. Scan source reports (flood_reports/reports) so table populates during render.
+#     Links use "flood_reports/reports" — matches project resources copied into docs/.
+report_scan_dir <- "flood_reports/reports"
+report_link_dir <- "flood_reports/reports"
 
 # 4b. Grab all filenames matching "bwma_flood_report_YYYY-MM-DD_*.html"
 html_files <- list.files(
@@ -131,15 +131,12 @@ wide_tbl <- df_one_per_month %>%
   select(fy_label, month_for_fy, full_link) %>%
   pivot_wider(
     names_from  = month_for_fy,
-    values_from = full_link
+    values_from = full_link,
+    names_expand = TRUE
   ) %>%
   arrange(fy_label) %>%
-  # 4h. Explicitly choose Jul→Jun order for the columns:
-  select(
-    fy_label,
-    Jul,  Aug,  Sep,  Oct,  Nov,  Dec,
-    Jan,  Feb,  Mar,  Apr,  May,  Jun
-  )
+  # 4h. Jul→Jun order (use any_of() so missing months don't break if no data)
+  select(fy_label, any_of(c("Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun")))
 
 # 4i. Render as an HTML table (escape=FALSE so the <a> HTML works)
 knitr::kable(
@@ -220,4 +217,5 @@ monthly_avg %>% ggplot(aes(x = month_date, y = avg_acres, fill = Flood_Unit)) +
 
 ## Most Recent Report
 
-<!-- HTML iframe to embed a specific report --> <iframe src="reports/bwma_flood_report_2026-03-16_0.14.html" width="100%" height="1000px" style="border: none;" id="report-frame"></iframe>
+<!-- Latest monthly run: May 2026 scene (threshold 0.14). April: flood_reports/reports/bwma_flood_report_2026-04-02_0.14.html -->
+<!-- HTML iframe to embed a specific report --> <iframe src="flood_reports/reports/bwma_flood_report_2026-05-07_0.14.html" width="100%" height="1000px" style="border: none;" id="report-frame"></iframe>

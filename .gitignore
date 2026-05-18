@@ -7,8 +7,9 @@
 
 # local data and report directories
 data/
+avian_data/
 docs/scratch.html
-flood_reports/
+/flood_reports/
 scratch.ipynb
 flood_app.ipynb
 
@@ -178,3 +179,10 @@ cython_debug/
 .Rproj.user
 
 /.quarto/
+
+# Avian report (staged separately from main flooded-acreage site)
+avian.qmd
+docs/avian.html
+docs/avian_files/
+Rplots.pdf
+code/

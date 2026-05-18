@@ -5,7 +5,6 @@ import geemap
 import pandas as pd
 import folium
 from folium.raster_layers import ImageOverlay
-import geemap.foliumap as geemap
 from datetime import datetime, timedelta
 import os
 import imageio.v2 as imageio
@@ -212,76 +211,56 @@ def main(start_date, threshold):
     # Debugging: print the cleaned DataFrame to ensure no duplicates
     print(units_df_properties_reduced.to_string(index=False))
 
-    # Create and Save HTML Map
+    # Create and Save HTML Map (use paths relative to map file so it renders from docs/reports/)
     print("Creating and saving the HTML map with overlays...")
     clipped_binary_image = binary_image.clip(units)
 
-    # Define the filenames for the overlays, matching the export paths
-    false_color_image_path = f"flood_reports/reports/false_color_composite_{image_date_str}_{threshold}.png"
-    # flooded_pixels_image_path = f"docs/reports/flooded_pixels_{image_date_str}_{threshold}.png"
+    false_color_basename = f"false_color_composite_{image_date_str}_{threshold}.png"
+    clipped_geojson_basename = f"clipped_flooded_areas_{image_date_str}_{threshold}.geojson"
+    subunits_basename = "subunits.geojson"
+    map_basename = f"flooded_area_map_{image_date_str}_{threshold}.html"
 
-    # Create the map with a center point
-    Map = folium.Map(location=[36.8795, -118.202], zoom_start=12)
-
-    # Add static image overlay for False Color Composite with dynamic path
-    # Use full path for creation, but the map will work with relative paths when served
-    Map.add_child(ImageOverlay(
-        name="False Color Composite",
-        image=false_color_image_path,
-        bounds=[[36.84651455123723, -118.23240736400778], [36.924364295139625, -118.17232588207419]],
-        opacity=1
-    ))
-
-    
-    # Add clipped flooded polygons to the folium map
-    Map.add_child(folium.GeoJson(
-        clipped_flooded_geojson_path,
-        name="Flooded Areas (Clipped)",
-        style_function=lambda x: {
-            "color": "blue",
-            "weight": 1,
-            "fillColor": "blue",
-            "fillOpacity": 0.5
-        }
-    ))
-
-    # Add subunit polygons as GeoJSON (exported to a local file, if necessary)
-    Map.add_child(folium.GeoJson(
-        "flood_reports/reports/subunits.geojson",
-    name="Unit Boundaries", 
-    style_function=lambda x: {
-        "color": "red",  # Boundary color
-        "weight": 2,
-        "fillColor": "#00000000",  # Transparent fill
-        "fillOpacity": 0  # Ensures fill is transparent
-    }
-    ))
-
-    # Adding static labels and popups for each unit at the pre-computed centroid
-    for feature in units_with_calculations.getInfo()['features']:
-        unit_name = feature['properties']['Flood_Unit']
-        label = feature['properties']['label']
-        centroid = feature['properties']['centroid']
-
-        # Ensure centroid coordinates are valid before adding
-        if isinstance(centroid, list) and len(centroid) == 2:
-            # Static label using DivIcon for always visible text
-            folium.map.Marker(
-                location=[centroid[1], centroid[0]],  # Latitude, Longitude
-                icon=folium.DivIcon(html=f"""<div style="font-size: 12px; color: black;">{unit_name}</div>""")
-            ).add_to(Map)
-
-            # Popup with detailed information (e.g., acreage)
-            folium.Marker(
-                location=[centroid[1], centroid[0]],  # Latitude, Longitude
-                popup=label
-            ).add_to(Map)
-
-
-    Map.add_child(folium.LayerControl())
-
-    Map.save(map_filename)
-    print(f"Map saved to {map_filename}")
+    orig_cwd = os.getcwd()
+    try:
+        os.chdir(html_subdirectory)
+        Map = folium.Map(location=[36.8795, -118.202], zoom_start=12)
+        Map.add_child(ImageOverlay(
+            name="False Color Composite",
+            image=false_color_basename,
+            bounds=[[36.84651455123723, -118.23240736400778], [36.924364295139625, -118.17232588207419]],
+            opacity=1
+        ))
+        Map.add_child(folium.GeoJson(
+            clipped_geojson_basename,
+            name="Flooded Areas (Clipped)",
+            style_function=lambda x: {
+                "color": "blue", "weight": 1, "fillColor": "blue", "fillOpacity": 0.5
+            }
+        ))
+        Map.add_child(folium.GeoJson(
+            subunits_basename,
+            name="Unit Boundaries",
+            style_function=lambda x: {
+                "color": "red", "weight": 2, "fillColor": "#00000000", "fillOpacity": 0
+            }
+        ))
+        for feature in units_with_calculations.getInfo()['features']:
+            unit_name = feature['properties']['Flood_Unit']
+            label = feature['properties']['label']
+            centroid = feature['properties']['centroid']
+            if isinstance(centroid, list) and len(centroid) == 2:
+                folium.map.Marker(
+                    location=[centroid[1], centroid[0]],
+                    icon=folium.DivIcon(html=f"""<div style="font-size: 12px; color: black;">{unit_name}</div>""")
+                ).add_to(Map)
+                folium.Marker(
+                    location=[centroid[1], centroid[0]], popup=label
+                ).add_to(Map)
+        Map.add_child(folium.LayerControl())
+        Map.save(map_basename)
+        print(f"Map saved to {map_filename}")
+    finally:
+        os.chdir(orig_cwd)
 
     # Define the subdirectory for CSV output
     csv_subdirectory = "flood_reports/csv_output"

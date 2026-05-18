@@ -1,6 +1,10 @@
 project:
   type: website
   output-dir: docs
+  # Avian page is developed locally (avian.qmd is gitignored); main site = Dashboard + About.
+  render:
+    - index.qmd
+    - about.qmd
   resources:
     - flood_reports/csv_output/**
     - flood_reports/reports/**
