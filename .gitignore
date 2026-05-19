@@ -181,6 +181,7 @@ cython_debug/
 /.quarto/
 
 # Avian report (staged separately from main flooded-acreage site)
+avian_todo_notes.md
 avian.qmd
 docs/avian.html
 docs/avian_files/

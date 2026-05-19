@@ -180,7 +180,7 @@ quarto render index.qmd
 
 The **Monthly Reports** table and **Most Recent Report** iframe read from `flood_reports/reports/` at render time; the same files are copied into `docs/flood_reports/` via `_quarto.yml` resources so links work on GitHub Pages.
 
-**Branching:** For small fixes, fixing in place is usually enough. For larger changes (e.g. replacing the iframe with an interactive map, adding GIS layers), use a feature branch so you can revert or compare: `git checkout -b feature/main-map-avian`, then merge to `main` when ready.
+**Branching:** For small fixes, fixing in place is usually enough. For larger changes (e.g. replacing the iframe with an interactive map, adding GIS layers), use a feature branch so you can revert or compare.
 
 ### Parameters
 
@@ -446,26 +446,6 @@ The validation analysis calculates:
 - Accuracy by unit
 
 Results help calibrate the NIR threshold and improve model performance over time.
-
-## Roadmap: Main map and avian layers
-
-**Data strategy**
-
-- **Flood data:** Use the latest report on the Dashboard (dynamic; updates when new reports are generated).
-- **Avian data:** More static — updated roughly once per year. The goal is for BirdWeather and PUCs (automated recording units) to eventually take over continuous monitoring.
-
-**Bayesian probability of occurrence**
-
-- For the main map and summaries, we want a **Bayesian probability of occurrence** for each species (and optionally per subunit, or pooled). This can be shown for all years.
-- **Universe of inference:** Only zones that have data. Subunits that are not always under water or were not surveyed should be excluded from the inference for that period — we do not infer occurrence for units with no surveys. So the probability is: *given this subunit was surveyed (had water / was in the survey design), what is the probability the species occurs there?*
-
-A simple formulation: for each subunit × species, take the set of surveys in which that subunit was surveyed (i.e. appears in the data). Let *n* = number of those surveys, *k* = number of surveys where the species was detected (count &gt; 0). Use a Beta prior (e.g. Beta(1,1)) and Binomial likelihood; posterior is Beta(1+*k*, 1+*n*−*k*). Report the posterior mean (or full distribution) as the probability of occurrence. This is implemented in the avian pipeline (see `code/R/functions.R` and the Avian page).
-
-**Map and layers (not yet implemented)**
-
-- **Single map on Dashboard** instead of an iframe: one Leaflet (or similar) map on `index.html` with optional GIS layers: flood extent (from latest report), berms/dikes, and avian subunits (same geometries as on the Avian page).
-- **Avian subunits on the main map:** Use the same subunit polygons as the Avian page; show all families on one map, with optional filtering.
-- **Anatidae depth indicator:** Use species as water-depth proxies: **dabblers** (e.g. Cinnamon Teal, Northern Shoveler) → shallow water; **divers** (e.g. Bufflehead, Ruddy Duck) → deeper water. Per-subunit icons (dabbler vs diver) can indicate dominant depth and, when both are present, depth diversity across the subunit.
 
 ## License
 
