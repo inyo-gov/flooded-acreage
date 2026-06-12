@@ -2,9 +2,50 @@
 
 This document tracks development work, fixes, and improvements to the flooded acreage monitoring system.
 
+**When to add an entry:** After generating monthly reports, changing the dashboard (`index.qmd`, Quarto render), or any operational/documentation update (README, `_quarto.yml`, `.gitignore`, scripts, staff workflow). Keep entries brief; link filenames and thresholds so future staff can reproduce the month.
+
 ---
 
-## 2025-01-02: January 2026 Report Generation
+## 2026-06-12: June 2026 report and staff documentation
+
+### Report generated
+- **Start date**: 2026-06-01 (15-day window through ~16th)
+- **Threshold**: 0.14
+- **Scenes in composite**: 7 (cloud-masked median; not a single scene)
+- **Imagery label in filename**: 2026-06-01
+- **Total flooded acreage**: ~12.8 acres (composite; lower than an earlier run with only 1 scene in the window, ~44 ac)
+
+### Actions taken
+1. Ran `python flood_report.py 2026-06-01 0.14`
+2. `quarto render`; updated **Most Recent Report** iframe to `flood_reports/reports/bwma_flood_report_2026-06-01_0.14.html`
+3. **README**: monthly staff workflow (run mid-month, use `YYYY-MM-01`, composite behavior); SAR/fusion marked **upcoming**, not in dashboard; optical is production
+4. **worklog.md**: this entry; note to update log on doc/report changes
+5. **`scripts/run_apr_may_2026_bwma.sh`**: post-run messages aligned with Quarto + `docs/flood_reports/`
+
+### Notes for staff
+- Acreage uses a **median composite** over all qualifying Sentinel-2 scenes in the window—not one acquisition. Run around **mid-month** so several passes are usually available.
+- SAR scripts exist but are **not** incorporated into monthly reporting yet; planned for emergent veg masking optical NIR.
+
+---
+
+## 2026-05-18: April–May 2026 reports and published site layout
+
+### Reports generated
+| Month (start date) | Scene date | Threshold | Total acres (approx.) |
+|--------------------|------------|-----------|------------------------|
+| 2026-04-01 | 2026-04-02 | 0.14 | 334 |
+| 2026-05-01 | 2026-05-07 | 0.14 | 167 |
+
+### Infrastructure / handoff
+1. **`flood_report.py`**: removed broken `geemap.foliumap` import (use top-level `geemap` only)
+2. **`_quarto.yml`**: render `index.qmd` + `about.qmd` only; removed Avian from navbar
+3. **`.gitignore`**: `/flood_reports/` at repo root (local); `avian.qmd`, `avian_data/`, `code/`, `avian_todo_notes.md` staged locally; **`scripts/`** tracked
+4. **Dashboard links**: `index.qmd` uses `flood_reports/reports/`; Quarto copies resources to **`docs/flood_reports/`** (replacing old `docs/reports/` layout)
+5. Committed **Apr and May 2026 Acreage**; avian products not on `main`
+
+---
+
+## 2026-01-02: January 2026 Report Generation
 
 ### Report Generated
 - **Date**: January 2, 2026 (first available image in date range)
@@ -181,18 +222,20 @@ This document tracks development work, fixes, and improvements to the flooded ac
 - Deleted `copy_csvs.sh` (temporary utility, no longer needed)
 - Deleted `update_website.sh` (replaced by Quarto render)
 
-### Current Workflow
-1. Generate report: `python flood_report.py 'YYYY-MM-DD' <threshold>`
-2. Copy supporting files to `docs/` directory
-3. Update iframe in `index.qmd` to new report
-4. Render website: `quarto render index.qmd`
-5. Manual review of `docs/index.html`
-6. Commit and push to GitHub
+### Current Workflow (Sentinel-2 monthly — production)
+
+1. **Mid-month:** `python flood_report.py 'YYYY-MM-01' 0.14` (15-day window, median composite)
+2. **Render site:** `quarto render` (copies `flood_reports/` → `docs/flood_reports/`)
+3. **Optional:** set **Most Recent Report** iframe in `index.qmd` to the new HTML
+4. Review `docs/index.html` locally
+5. Commit and push **`docs/`** (and source changes) for GitHub Pages
+
+SAR / fusion scripts are experimental; see README **upcoming** section—not part of this workflow yet.
 
 ### File Organization
-- **Source files**: `flood_reports/reports/` and `flood_reports/csv_output/`
-- **Deployed files**: `docs/reports/` and `docs/csv_output/` (copied by Quarto)
-- **Single source of truth**: All reports generated in `flood_reports/`, then copied to `docs/` for deployment
+- **Source (local, gitignored):** `/flood_reports/reports/` and `/flood_reports/csv_output/`
+- **Published (after render):** `docs/flood_reports/reports/` and `docs/flood_reports/csv_output/`
+- **Dashboard:** `index.qmd` → `docs/index.html`
 
 ---
 
@@ -212,7 +255,10 @@ This document tracks development work, fixes, and improvements to the flooded ac
 
 ## Notes
 
-- All reports use Sentinel-2 Surface Reflectance imagery
-- Threshold values are adjusted based on visual inspection and field validation
-- Reports are generated using a 15-day window from the requested date
-- The system automatically selects the first available cloud-free image in the date range
+- Production monthly reports use **Sentinel-2** surface reflectance only (`flood_report.py`).
+- **Composite:** cloud-masked **median** of all scenes in the 15-day window (start date = 1st of month); not a single-scene threshold.
+- **When to run:** mid-month so multiple passes are usually in the archive (~5–7 scenes).
+- Threshold **0.14** for current monthly series; adjust using field validation.
+- Report **filename date** comes from the first image in the collection; acreage still reflects the full-window composite.
+- **SAR / fusion:** scripts in repo; **upcoming** for emergent vegetation where optical NIR is masked—not in dashboard workflow yet.
+- Update **worklog.md** when reports or operational docs change (see top of this file).
