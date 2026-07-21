@@ -4,20 +4,27 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "Technical Notes\n\nFlooded acres were calculated from Sentinel-2 Surface Reflectance imagery using the Earth Engine Python API. Sentinel-2 (S2) is a wide-swath, high-resolution, multispectral imaging mission with a global 5-day revisit frequency. The S2 Multispectral Instrument (MSI) samples 13 spectral bands: Visible and NIR at 10 meters, red edge and SWIR at 20 meters, and atmospheric bands at 60 meters spatial resolution.\nThe Near Infrared (NIR) band with 10m pixel resolution was used to identify flooded areas by applying a reflectance threshold to isolate water from surrounding vegetation. The flooded extent predictions are verified in the field during avian surveys throughout the seasonal flooding cycle September through April."
+    "text": "About this dashboard\nFlooded acreage at Blackrock Waterfowl Management Area (BWMA) supports seasonal water and wildlife management. This site publishes monthly estimates derived from satellite imagery, replacing multi-day field GPS walks for routine monitoring.\n\n\n\nData source\nSentinel-2 Surface Reflectance (harmonized collection) via the Google Earth Engine Python API. S2 revisits every ~5 days with 10 m visible/NIR bands used for water detection.\n\n\nMethod\nThe Near Infrared (NIR) band is thresholded to separate open water from vegetation. Each monthly run uses a 15-day window starting on the 1st of the month, building a cloud-masked median composite across all qualifying scenes—not a single acquisition.\nField crews validate predictions during avian surveys across the flooding cycle (typically September through April).\n\n\nManagement target\nOperational planning references roughly 500 acres flooded between November 1 and March 1. The dashboard chart shows that target as a dashed reference line.\nMonthly reports include per-unit acreage for Thibaut, Drew, Waggoner, Winterton sub-units, and Thibaut Ponds.\n\n\nWhat’s next\nSentinel-1 SAR and optical–SAR fusion scripts exist in the repository for emergent-vegetation masking but are not part of the published monthly workflow yet."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "",
+    "title": "Blackrock Waterfowl Management Area",
     "section": "",
-    "text": "Code"
+    "text": "Monthly flooded acreage estimates from Sentinel-2 surface reflectance — Owens Valley, Inyo County, California.\n    \n      Sentinel-2 optical · NIR threshold\n      15-day cloud-masked composite\nLatest total flooded\n3.4 ac\nJuly 2026 · scene Jul 01, 2026\n\n\nMonth-over-month\n9.4 ac change\n\n-9.4 ac vs prior month\n\n\n\nSeason peak (Nov–Mar)\n716.8 ac on Feb 2026\n500 ac management target\n\n\nReporting units\n7\nThibaut, Drew, Waggoner, West Winterton, East Winterton, South Winterton, Thibaut Ponds"
   },
   {
-    "objectID": "index.html#most-recent-report",
-    "href": "index.html#most-recent-report",
-    "title": "",
-    "section": "Most Recent Report",
-    "text": "Most Recent Report"
+    "objectID": "index.html#monthly-flooded-acreage-by-unit",
+    "href": "index.html#monthly-flooded-acreage-by-unit",
+    "title": "Blackrock Waterfowl Management Area",
+    "section": "Monthly flooded acreage by unit",
+    "text": "Monthly flooded acreage by unit\nStacked totals by flood unit. Dashed line marks the 500 ac seasonal target (Nov 1 → Mar 1)."
+  },
+  {
+    "objectID": "index.html#monthly-report-archive",
+    "href": "index.html#monthly-report-archive",
+    "title": "Blackrock Waterfowl Management Area",
+    "section": "Monthly report archive",
+    "text": "Monthly report archive\nEach cell links to the full acreage report for that month (day of scene shown)."
   }
 ]

@@ -1,454 +1,476 @@
-/* Custom styles for Revegetation Projects website */
+/* Flooded Acreage Monitoring — dashboard styles */
 
-/* Global font consistency */
+:root {
+  --bwma-deep: #1a5f7a;
+  --bwma-primary: #2e86ab;
+  --bwma-sky: #5ba4bc;
+  --bwma-mist: #e8f4f8;
+  --bwma-surface: #f7fafb;
+  --bwma-green: #3d7a5c;
+  --bwma-amber: #b8860b;
+  --bwma-text: #1f2933;
+  --bwma-muted: #5c6b73;
+  --bwma-border: #d8e3ea;
+  --bwma-shadow: 0 4px 24px rgba(26, 95, 122, 0.08);
+  --bwma-radius: 14px;
+  --bwma-font: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Base */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--bwma-font);
   font-size: 16px;
   line-height: 1.6;
+  color: var(--bwma-text);
+  background: linear-gradient(180deg, #eef6f9 0%, #f9fbfc 240px, #ffffff 480px);
+}
+
+main.content {
+  max-width: 1180px !important;
+  margin: 0 auto;
+  padding: 0 1.25rem 3rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-weight: 600;
+  font-family: var(--bwma-font);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: var(--bwma-text);
 }
 
-/* Ensure consistent font rendering across all pages */
-.quarto-title-block,
-.quarto-title-meta,
-.page-layout-article {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+.quarto-title-block .title {
+  display: none;
 }
 
-/* Table responsiveness improvements */
-.table-responsive {
-  overflow-x: visible !important;
-  -webkit-overflow-scrolling: touch;
-  margin-bottom: 1rem;
-  width: 100% !important;
-  max-width: none !important;
-  min-width: 100% !important;
-}
-
-/* Full width table containers */
-.container-fluid,
-.container,
-.quarto-container {
-  max-width: none !important;
-  width: 100% !important;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
-/* Ensure main content area uses full width */
-main {
-  max-width: none !important;
-  width: 100% !important;
-}
-
-/* Full width page layout */
-.page-layout-article,
-.quarto-title-block,
-.quarto-title-meta {
-  max-width: none !important;
-  width: 100% !important;
-}
-
-/* Remove any Bootstrap container constraints */
-.row {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-}
-
-.col-12, .col-md-12, .col-lg-12 {
-  padding-left: 15px !important;
-  padding-right: 15px !important;
-}
-
-/* Full width for DT tables */
-.dataTables_wrapper {
-  width: 100% !important;
-  max-width: none !important;
-}
-
-/* Force full width on all table containers */
-.table-responsive,
-.dataTables_wrapper,
-.dataTables_scroll,
-.dataTables_scrollBody,
-table,
-.dataTables_wrapper .dataTables_scrollBody table,
-.dataTables_wrapper table {
-  width: 100% !important;
-  max-width: none !important;
-  min-width: 100% !important;
-}
-
-/* Override any Bootstrap or Quarto width constraints */
-.quarto-container-fluid,
-.quarto-container,
-.container-fluid,
-.container,
-.quarto-container-fluid .container,
-.quarto-container .container {
-  max-width: none !important;
-  width: 100% !important;
-  padding-left: 15px !important;
-  padding-right: 15px !important;
-}
-
-/* Force full width on all possible container classes */
-[class*="container"],
-[class*="quarto-container"],
-[class*="page-layout"] {
-  max-width: none !important;
-  width: 100% !important;
-}
-
-/* DT table improvements */
-.dataTables_wrapper {
-  overflow-x: auto;
-}
-
-.dataTables_wrapper .dataTables_scroll {
-  overflow-x: auto;
-}
-
-/* Ensure tables fit comfortably on page */
-table {
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 100% !important;
-  table-layout: auto !important;
-}
-
-/* Override Bootstrap table defaults */
-.table {
-  width: 100% !important;
-  max-width: none !important;
-  min-width: 100% !important;
-  margin-bottom: 0 !important;
-}
-
-/* Improve table cell padding for better readability */
-.table td, .table th {
-  padding: 0.5rem 0.75rem;
-  white-space: normal;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-/* Allow some table cells to wrap when needed */
-.table td.wrap-text {
-  white-space: normal;
-  word-wrap: break-word;
-}
-
-/* DT table specific improvements */
-.DTFC_LeftWrapper table,
-.DTFC_RightWrapper table {
-  border-collapse: collapse;
-}
-
-/* Force DT tables to use full width with compact styling */
-.dataTables_wrapper {
-  width: 100% !important;
-  max-width: none !important;
-  overflow: visible !important;
-  min-width: 1000px !important;
-  font-size: 0.85rem !important;
-}
-
-.dataTables_wrapper table {
-  font-size: 0.85rem !important;
-  line-height: 1.2 !important;
-}
-
-.dataTables_wrapper th,
-.dataTables_wrapper td {
-  padding: 4px 6px !important;
-  font-size: 0.85rem !important;
-  white-space: nowrap !important;
-}
-
-/* Quarto column-screen layout with margin */
-.column-screen {
-  width: 95% !important;
-  max-width: none !important;
-  margin: 0 auto !important;
-  padding: 0 20px !important;
-}
-
-.dataTables_wrapper .dataTables_scroll {
-  width: 100% !important;
-  max-width: none !important;
-  overflow: visible !important;
-  min-width: 1000px !important;
-}
-
-.dataTables_wrapper .dataTables_scrollBody {
-  width: 100% !important;
-  max-width: none !important;
-  overflow: visible !important;
-  min-width: 1000px !important;
-}
-
-.dataTables_wrapper table {
-  width: 100% !important;
-  max-width: none !important;
-  table-layout: fixed !important;
-  min-width: 1000px !important;
-}
-
-/* Improve button spacing in DT tables */
-.dataTables_wrapper .dt-buttons {
-  margin-bottom: 1rem;
-}
-
-.dataTables_wrapper .dt-buttons .btn {
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-/* Better mobile responsiveness */
-@media (max-width: 768px) {
-  .table-responsive {
-    font-size: 0.8rem;
-  }
-  
-  .dataTables_wrapper {
-    font-size: 0.8rem;
-  }
-  
-  .dataTables_wrapper .dataTables_length,
-  .dataTables_wrapper .dataTables_filter {
-    margin-bottom: 0.5rem;
-  }
-}
-
-/* Print/PDF specific styles */
-@media print {
-  .table-responsive {
-    overflow: visible !important;
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-  
-  .dataTables_wrapper {
-    overflow: visible !important;
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-  
-  table {
-    width: 100% !important;
-    max-width: 100% !important;
-    table-layout: fixed !important;
-    font-size: 0.8rem !important;
-  }
-  
-  .table td, .table th {
-    padding: 0.25rem 0.5rem !important;
-    white-space: normal !important;
-    word-wrap: break-word !important;
-    overflow-wrap: break-word !important;
-    font-size: 0.8rem !important;
-  }
-  
-  /* Hide DT controls for print */
-  .dataTables_length,
-  .dataTables_filter,
-  .dataTables_info,
-  .dataTables_paginate,
-  .dt-buttons {
-    display: none !important;
-  }
-  
-  /* Ensure full width containers for print */
-  .container,
-  .container-fluid,
-  .quarto-container,
-  .quarto-container-fluid {
-    max-width: 100% !important;
-    width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-}
-
-/* Improve histogram container */
-.histogram-container {
-  margin: 2rem 0;
-  padding: 1rem;
-  background-color: #f8f9fa;
-  border-radius: 0.5rem;
-  border: 1px solid #e9ecef;
-}
-
-/* Better figure styling */
-.figure {
-  margin: 2rem 0;
-  text-align: center;
-}
-
-.figure img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 0.375rem;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-}
-
-/* Improve code block styling */
-pre {
-  background-color: #f8f9fa;
-  border: 1px solid #e9ecef;
-  border-radius: 0.375rem;
-  padding: 1rem;
-  overflow-x: auto;
-}
-
-/* Better alert styling */
-.alert {
-  border-radius: 0.5rem;
-  border: none;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-}
-
-/* Custom navbar styling for blue theme */
+/* Navbar */
 .navbar {
-  background-color: #2E86AB !important;
+  background: linear-gradient(90deg, var(--bwma-deep) 0%, var(--bwma-primary) 100%) !important;
+  box-shadow: 0 2px 12px rgba(26, 95, 122, 0.18);
 }
 
-.navbar-brand {
-  display: flex;
-  align-items: center;
-  color: white !important;
-}
-
-.navbar-nav .nav-link {
-  color: white !important;
-}
-
-.navbar-nav .nav-link:hover {
-  color: #e9ecef !important;
-}
-
+.navbar-brand,
+.navbar-nav .nav-link,
 .navbar-text {
-  color: white !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
 }
 
 .navbar-brand img {
-  height: 40px;
-  max-height: 40px;
+  height: 38px;
+  max-height: 38px;
   width: auto;
-  margin-right: 10px;
+  margin-right: 0.65rem;
   object-fit: contain;
-  background-color: white;
-  border-radius: 4px;
-  padding: 2px;
-  /* Add white background to make logo visible on dark navbar */
+  background: #fff;
+  border-radius: 8px;
+  padding: 3px;
 }
 
-/* Better card styling */
-.card {
-  border-radius: 0.5rem;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-  margin-bottom: 1.5rem;
+/* Hero */
+.dashboard-hero {
+  margin: 0.5rem 0 2rem;
+  padding: 2.25rem 2rem;
+  border-radius: var(--bwma-radius);
+  background: linear-gradient(135deg, var(--bwma-deep) 0%, var(--bwma-primary) 55%, #3d9cad 100%);
+  color: #fff;
+  box-shadow: var(--bwma-shadow);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Improve sidebar styling */
-.sidebar {
-  background-color: #f8f9fa;
-  border-right: 1px solid #e9ecef;
+.dashboard-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.14) 0%, transparent 42%),
+    radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.08) 0%, transparent 35%);
+  pointer-events: none;
 }
 
-/* Better link styling */
-a {
-  color: #2E86AB;
-  text-decoration: none;
+.dashboard-hero .hero-content {
+  position: relative;
+  z-index: 1;
 }
 
-a:hover {
-  color: #1e5a73;
-  text-decoration: underline;
+.dashboard-hero h1 {
+  color: #fff;
+  font-size: clamp(1.75rem, 4vw, 2.35rem);
+  margin: 0 0 0.5rem;
+  line-height: 1.15;
 }
 
-/* Improve button styling */
-.btn {
-  border-radius: 0.375rem;
-  font-weight: 500;
+.dashboard-hero .hero-lead {
+  margin: 0;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.92);
+  max-width: 42rem;
 }
 
-/* Better form styling */
-.form-control {
-  border-radius: 0.375rem;
-  border: 1px solid #ced4da;
+.dashboard-hero .hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.85);
 }
 
-.form-control:focus {
-  border-color: #2E86AB;
-  box-shadow: 0 0 0 0.2rem rgba(46, 134, 171, 0.25);
+.dashboard-hero .hero-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(4px);
 }
 
-/* Footer styling */
-footer {
-  margin-top: 3rem;
-  padding: 2rem 0;
-  border-top: 1px solid #e9ecef;
-  background-color: #f8f9fa;
-  text-align: center;
-  color: #6c757d;
+/* Stat cards */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--bwma-surface);
+  border: 1px solid var(--bwma-border);
+  border-radius: var(--bwma-radius);
+  padding: 1.15rem 1.25rem;
+  box-shadow: var(--bwma-shadow);
+}
+
+.stat-card .stat-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--bwma-muted);
+  margin-bottom: 0.35rem;
+}
+
+.stat-card .stat-value {
+  font-size: 1.85rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--bwma-deep);
+}
+
+.stat-card .stat-detail {
+  margin-top: 0.45rem;
+  font-size: 0.875rem;
+  color: var(--bwma-muted);
+  line-height: 1.45;
+}
+
+.stat-card.stat-highlight {
+  border-color: var(--bwma-primary);
+  background: linear-gradient(180deg, #ffffff 0%, var(--bwma-mist) 100%);
+}
+
+.stat-card .stat-delta-up {
+  color: var(--bwma-primary);
+}
+
+.stat-card .stat-delta-down {
+  color: var(--bwma-green);
+}
+
+/* Dashboard sections */
+.dashboard-section {
+  margin-bottom: 2.25rem;
+}
+
+.dashboard-section-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.dashboard-section-header h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.dashboard-section-header p {
+  margin: 0;
+  font-size: 0.925rem;
+  color: var(--bwma-muted);
+  max-width: 36rem;
+}
+
+.dashboard-card {
+  background: #fff;
+  border: 1px solid var(--bwma-border);
+  border-radius: var(--bwma-radius);
+  padding: 1.25rem 1.35rem;
+  box-shadow: var(--bwma-shadow);
+}
+
+/* Chart */
+.chart-card .figure,
+.chart-card figure {
+  margin: 0;
+}
+
+.chart-card img,
+.figure img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Monthly reports table */
+.table-card {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dashboard-reports-table {
+  width: 100%;
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 0.9rem;
 }
 
-/* Data disclaimer styling */
-.alert-disclaimer {
-  background-color: #fff3cd;
-  border: 1px solid #ffeaa7;
-  color: #856404;
-  border-radius: 0.5rem;
-  padding: 1rem;
-  margin: 2rem 0;
+.dashboard-reports-table caption {
+  caption-side: top;
+  padding: 0 0 0.75rem;
+  font-size: 0;
 }
 
-/* Hide Quarto navigation envelope artifacts */
-#quarto-navigation-envelope {
-  display: none !important;
-  visibility: hidden !important;
-  height: 0 !important;
-  overflow: hidden !important;
+.dashboard-reports-table thead th {
+  background: var(--bwma-mist);
+  color: var(--bwma-deep);
+  font-weight: 650;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--bwma-border);
+  padding: 0.65rem 0.5rem;
+  white-space: nowrap;
 }
 
-.quarto-markdown-envelope-contents {
-  display: none !important;
-  visibility: hidden !important;
-  height: 0 !important;
-  overflow: hidden !important;
+.dashboard-reports-table thead th:first-child {
+  border-radius: 10px 0 0 0;
+  text-align: left;
+  padding-left: 0.85rem;
 }
 
-/* Hide any elements with quarto-markdown-envelope in their class */
+.dashboard-reports-table thead th:last-child {
+  border-radius: 0 10px 0 0;
+}
+
+.dashboard-reports-table tbody td {
+  padding: 0.55rem 0.45rem;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--bwma-border);
+}
+
+.dashboard-reports-table tbody td:first-child {
+  text-align: left;
+  font-weight: 650;
+  color: var(--bwma-deep);
+  padding-left: 0.85rem;
+  white-space: nowrap;
+}
+
+.dashboard-reports-table tbody tr:last-child td:first-child {
+  border-radius: 0 0 0 10px;
+}
+
+.dashboard-reports-table tbody tr:last-child td:last-child {
+  border-radius: 0 0 10px 0;
+}
+
+.dashboard-reports-table tbody tr:hover td {
+  background: rgba(232, 244, 248, 0.45);
+}
+
+.dashboard-reports-table td a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  min-height: 2rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: var(--bwma-mist);
+  color: var(--bwma-deep) !important;
+  font-weight: 650;
+  text-decoration: none !important;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.dashboard-reports-table td a:hover {
+  background: var(--bwma-primary);
+  color: #fff !important;
+  transform: translateY(-1px);
+}
+
+.table-legend {
+  margin-top: 0.85rem;
+  font-size: 0.875rem;
+  color: var(--bwma-muted);
+}
+
+/* Report embed */
+.report-embed-card {
+  background: #fff;
+  border: 1px solid var(--bwma-border);
+  border-radius: var(--bwma-radius);
+  overflow: hidden;
+  box-shadow: var(--bwma-shadow);
+}
+
+.report-embed-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--bwma-mist);
+  border-bottom: 1px solid var(--bwma-border);
+}
+
+.report-embed-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.report-embed-header p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--bwma-muted);
+}
+
+.report-embed-header a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: var(--bwma-primary);
+  color: #fff !important;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+.report-embed-header a:hover {
+  background: var(--bwma-deep);
+}
+
+.report-iframe {
+  display: block;
+  width: 100%;
+  height: min(920px, 85vh);
+  border: none;
+  background: #fff;
+}
+
+/* About page */
+.about-hero {
+  margin: 0.5rem 0 2rem;
+  padding: 1.75rem 1.5rem;
+  border-radius: var(--bwma-radius);
+  background: var(--bwma-mist);
+  border: 1px solid var(--bwma-border);
+}
+
+.about-hero h1 {
+  margin-top: 0;
+  font-size: 1.75rem;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.about-card {
+  background: #fff;
+  border: 1px solid var(--bwma-border);
+  border-radius: var(--bwma-radius);
+  padding: 1.25rem;
+  box-shadow: var(--bwma-shadow);
+}
+
+.about-card h3 {
+  margin-top: 0;
+  font-size: 1.05rem;
+  color: var(--bwma-deep);
+}
+
+.about-card p,
+.about-card li {
+  color: var(--bwma-text);
+  font-size: 0.95rem;
+}
+
+.about-card ul {
+  padding-left: 1.1rem;
+  margin-bottom: 0;
+}
+
+/* Links & footer */
+a {
+  color: var(--bwma-primary);
+}
+
+a:hover {
+  color: var(--bwma-deep);
+}
+
+footer {
+  margin-top: 3rem;
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--bwma-border);
+  background: var(--bwma-surface);
+  text-align: center;
+  color: var(--bwma-muted);
+  font-size: 0.9rem;
+}
+
+#quarto-navigation-envelope,
+.quarto-markdown-envelope-contents,
 [class*="quarto-markdown-envelope"] {
   display: none !important;
-  visibility: hidden !important;
-  height: 0 !important;
-  overflow: hidden !important;
 }
 
-/* Force tables to break out of containers and use full viewport width */
-.full-width-table {
-  width: 100vw !important;
-  max-width: 100vw !important;
-  margin-left: calc(-50vw + 50%) !important;
-  margin-right: calc(-50vw + 50%) !important;
-  position: relative !important;
-  left: 50% !important;
-  right: 50% !important;
-  transform: translateX(-50%) !important;
-}
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-hero {
+    padding: 1.5rem 1.25rem;
+  }
 
-.full-width-table .dataTables_wrapper {
-  width: 100vw !important;
-  max-width: 100vw !important;
-  margin-left: calc(-50vw + 50%) !important;
-  margin-right: calc(-50vw + 50%) !important;
-}
+  .dashboard-card,
+  .report-embed-header {
+    padding: 1rem;
+  }
 
+  .stat-card .stat-value {
+    font-size: 1.55rem;
+  }
+
+  .dashboard-reports-table {
+    font-size: 0.82rem;
+  }
+}

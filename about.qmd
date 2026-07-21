@@ -1,9 +1,42 @@
 ---
 title: "About"
+format:
+  html:
+    code-tools: false
 ---
 
-Technical Notes
+::: {.about-hero}
+# About this dashboard
 
--   Flooded acres were calculated from Sentinel-2 Surface Reflectance imagery using the Earth Engine Python API. Sentinel-2 (S2) is a wide-swath, high-resolution, multispectral imaging mission with a global 5-day revisit frequency. The S2 Multispectral Instrument (MSI) samples 13 spectral bands: Visible and NIR at 10 meters, red edge and SWIR at 20 meters, and atmospheric bands at 60 meters spatial resolution.
+Flooded acreage at Blackrock Waterfowl Management Area (BWMA) supports seasonal water and wildlife management. This site publishes monthly estimates derived from satellite imagery, replacing multi-day field GPS walks for routine monitoring.
+:::
 
--   The Near Infrared (NIR) band with 10m pixel resolution was used to identify flooded areas by applying a reflectance threshold to isolate water from surrounding vegetation. The flooded extent predictions are verified in the field during avian surveys throughout the seasonal flooding cycle September through April.
+::: {.about-grid}
+::: {.about-card}
+### Data source
+
+Sentinel-2 Surface Reflectance (harmonized collection) via the Google Earth Engine Python API. S2 revisits every ~5 days with 10 m visible/NIR bands used for water detection.
+:::
+
+::: {.about-card}
+### Method
+
+The **Near Infrared (NIR)** band is thresholded to separate open water from vegetation. Each monthly run uses a **15-day window** starting on the 1st of the month, building a **cloud-masked median composite** across all qualifying scenes—not a single acquisition.
+
+Field crews validate predictions during avian surveys across the flooding cycle (typically September through April).
+:::
+
+::: {.about-card}
+### Management target
+
+Operational planning references roughly **500 acres flooded** between **November 1 and March 1**. The dashboard chart shows that target as a dashed reference line.
+
+Monthly reports include per-unit acreage for Thibaut, Drew, Waggoner, Winterton sub-units, and Thibaut Ponds.
+:::
+
+::: {.about-card}
+### What's next
+
+Sentinel-1 SAR and optical–SAR fusion scripts exist in the repository for emergent-vegetation masking but are **not** part of the published monthly workflow yet.
+:::
+:::
