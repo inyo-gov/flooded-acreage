@@ -277,7 +277,7 @@ monthly_avg %>%
 ::: {.dashboard-section-header}
 ## Monthly report archive
 
-Each cell links to the full acreage report for that month (day of scene shown).
+Each cell links to that month’s archived report. The **day number** is the **file label date** (first scene in the collection)—not a single-scene acquisition. **Since April 2026**, reports follow the composite workflow below; older entries may reflect ad-hoc run dates and fewer scenes in the window.
 :::
 
 ::: {.dashboard-card .table-card}
@@ -311,9 +311,14 @@ df_links <- tibble(file = html_files) %>%
       str_sub(as.character(fy_num + 1L), 3, 4)
     ),
     day_only   = format(date, "%d"),
+    link_title = if_else(
+      date >= as.Date("2026-04-01"),
+      paste0("Composite report · label date ", format(date, "%b %d, %Y")),
+      paste0("Archived report · label date ", format(date, "%b %d, %Y"), " (pre-composite workflow)")
+    ),
     full_link  = paste0(
       "<a href='", report_link_dir, "/", file,
-      "' target='_blank' title='", format(date, "%B %d, %Y"),
+      "' target='_blank' title='", link_title,
       "' style='", link_style, "'>", day_only, "</a>"
     )
   )
@@ -360,7 +365,17 @@ knitr::kable(
 )
 ```
 
-<p class="table-legend">Click a day number to open the full HTML report (map, unit breakdown, and imagery metadata).</p>
+<p class="table-legend">Click a day number to open the HTML report (unit table, map, downloads).</p>
+
+```{=html}
+<div class="table-archive-note">
+  <strong>Composite workflow (Apr 2026 onward):</strong>
+  Run mid-month with start date <code>YYYY-MM-01</code>. All qualifying Sentinel-2 scenes in the 15-day window are cloud-masked and combined into a <strong>median composite</strong>; acreage uses NIR on that composite (threshold 0.14).
+  <br><br>
+  <strong>Earlier archive (before Apr 2026):</strong>
+  The script always built a median composite, but reports were often run on ad-hoc dates when a clear scene was available—sometimes with only one pass in the window. Legacy report pages may say “imagery date”; that label is the filename date, not proof of a single scene.
+</div>
+```
 :::
 :::
 

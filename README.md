@@ -136,6 +136,8 @@ This repo’s **dashboard** (`index.qmd` → `docs/index.html`) is updated from 
 - Console output includes `Number of images in collection:` — that is how many scenes fed the median.
 - The HTML/CSV names use an **“Image date”** taken from the **first** image in the collection (often the 1st of the month). That label is for naming only; the acreage still reflects the **composite** over the full window.
 
+**Archive note:** Dashboard monthly links before **April 2026** are legacy runs (ad-hoc dates, often fewer scenes). **April 2026 onward** follows the composite workflow above. Older HTML reports may still say “imagery date”; treat that as a file label, not a single-scene product.
+
 **Threshold**
 
 - Current monthly reports use **`0.14`** NIR reflectance (see validation notes elsewhere in this README). Re-calibrate from field GPS if wet/dry checks drift.

@@ -23,6 +23,8 @@ Sentinel-2 Surface Reflectance (harmonized collection) via the Google Earth Engi
 
 The **Near Infrared (NIR)** band is thresholded to separate open water from vegetation. Each monthly run uses a **15-day window** starting on the 1st of the month, building a **cloud-masked median composite** across all qualifying scenes—not a single acquisition.
 
+**Since April 2026**, that composite workflow is the official monthly procedure (mid-month run, start date `YYYY-MM-01`, threshold 0.14). Earlier archived reports used the same median code but were often generated on ad-hoc dates; their file names and legacy pages may show a label date that is not a single scene.
+
 Field crews validate predictions during avian surveys across the flooding cycle (typically September through April).
 :::
 
