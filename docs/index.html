@@ -39,7 +39,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-89a4cf4abe5adbf5221f4a0509680a92.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-950c223cf62aca9232cf2cf3fde24e49.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -152,48 +152,62 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="dashboard-hero" style="margin:0.5rem 0 2rem;padding:2.25rem 2rem;border-radius:14px;background:linear-gradient(135deg,#1a5f7a 0%,#2e86ab 55%,#3d9cad 100%);color:#fff;box-shadow:0 4px 24px rgba(26,95,122,0.08);position:relative;overflow:hidden;">
-  <div class="hero-content" style="position:relative;z-index:1;">
-    <h1 style="color:#fff;font-size:clamp(1.75rem,4vw,2.35rem);margin:0 0 0.5rem;line-height:1.15;">Blackrock Waterfowl Management Area</h1>
-    <p class="hero-lead" style="margin:0;font-size:1.05rem;color:rgba(255,255,255,0.92);max-width:42rem;">Monthly flooded acreage estimates from Sentinel-2 surface reflectance — Owens Valley, Inyo County, California.</p>
-    <div class="hero-meta" style="display:flex;flex-wrap:wrap;gap:0.5rem 1rem;margin-top:1.25rem;font-size:0.875rem;">
-      <span style="display:inline-flex;padding:0.35rem 0.75rem;border-radius:999px;background:rgba(255,255,255,0.14);">Sentinel-2 optical · NIR threshold</span>
-      <span style="display:inline-flex;padding:0.35rem 0.75rem;border-radius:999px;background:rgba(255,255,255,0.14);">15-day cloud-masked composite</span>
+<div class="dashboard-hero">
+  <div class="hero-row">
+    <div class="hero-main">
+      <div class="hero-tag">Sentinel-2 · BWMA · Owens Valley</div>
+      <h1>Blackrock Waterfowl Management Area</h1>
+      <p class="hero-lead">Monthly flooded acreage monitoring · Inyo County, California</p>
+    </div>
+    <div class="hero-meta">
+      <span>NIR threshold</span>
+      <span>15-day composite</span>
     </div>
   </div>
 </div>
 <div class="cell stat-chunk">
 <div class="cell-output-display">
-<div class="stat-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem;">
-<div class="stat-card stat-highlight" style="background:#f7fafb;border:1px solid #d8e3ea;border-radius:14px;padding:1.15rem 1.25rem;box-shadow:0 4px 24px rgba(26,95,122,0.08);border-color:#2e86ab;background:linear-gradient(180deg,#ffffff 0%,#e8f4f8 100%);">
-<div class="stat-label" style="font-size:0.78rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:#5c6b73;margin-bottom:0.35rem;">Latest total flooded</div>
-<div class="stat-value" style="font-size:1.85rem;font-weight:700;line-height:1.1;color:#1a5f7a;">3.4 ac</div>
-<div class="stat-detail" style="margin-top:0.45rem;font-size:0.875rem;color:#5c6b73;line-height:1.45;">July 2026 · scene Jul 01, 2026</div>
+<div class="stat-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.45rem;margin-bottom:0.45rem;">
+<div class="stat-card stat-highlight" style="background:#f8f9fb;border:1px solid #c5cdd8;border-left:3px solid #0b3d91;border-radius:3px;padding:0.5rem 0.6rem;border-left-color:#fc3d21;background:#fff;">
+<div class="stat-label" style="font-family:ui-monospace,monospace;font-size:0.58rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5a6578;margin-bottom:0.2rem;">Latest flooded</div>
+<span class="stat-value" style="font-size:1.15rem;font-weight:700;line-height:1.15;white-space:nowrap;">
+<span class="stat-acres-num" style="font-family:Georgia,Cambria,serif;font-variant-numeric:tabular-nums;font-size:1.25rem;color:#0b3d91;">3.4</span>
+<span class="stat-acres-unit" style="font-family:ui-monospace,monospace;font-size:0.78rem;font-weight:600;color:#5a6578;margin-left:0.1rem;">ac</span>
+</span>
+<div class="stat-detail" style="margin-top:0.25rem;font-size:0.68rem;color:#5a6578;line-height:1.25;white-space:nowrap;">Jul 2026 · 15-day composite</div>
 </div>
-<div class="stat-card" style="background:#f7fafb;border:1px solid #d8e3ea;border-radius:14px;padding:1.15rem 1.25rem;box-shadow:0 4px 24px rgba(26,95,122,0.08);">
-<div class="stat-label" style="font-size:0.78rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:#5c6b73;margin-bottom:0.35rem;">Month-over-month</div>
-<div class="stat-value" style="font-size:1.85rem;font-weight:700;line-height:1.1;color:#1a5f7a;">9.4 ac change</div>
-<div class="stat-detail" style="margin-top:0.45rem;font-size:0.875rem;color:#5c6b73;line-height:1.45;">
+<div class="stat-card" style="background:#f8f9fb;border:1px solid #c5cdd8;border-left:3px solid #0b3d91;border-radius:3px;padding:0.5rem 0.6rem;">
+<div class="stat-label" style="font-family:ui-monospace,monospace;font-size:0.58rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5a6578;margin-bottom:0.2rem;">Month-over-month change</div>
+<span class="stat-value" style="font-size:1.15rem;font-weight:700;line-height:1.15;white-space:nowrap;">
+<span class="stat-acres-num" style="font-family:Georgia,Cambria,serif;font-variant-numeric:tabular-nums;font-size:1.25rem;color:#0b3d91;">9.4</span>
+<span class="stat-acres-unit" style="font-family:ui-monospace,monospace;font-size:0.78rem;font-weight:600;color:#5a6578;margin-left:0.1rem;">ac change</span>
+</span>
+<div class="stat-detail" style="margin-top:0.25rem;font-size:0.68rem;color:#5a6578;line-height:1.25;">
 <span class="stat-delta-down">-9.4 ac vs prior month</span>
 </div>
 </div>
-<div class="stat-card" style="background:#f7fafb;border:1px solid #d8e3ea;border-radius:14px;padding:1.15rem 1.25rem;box-shadow:0 4px 24px rgba(26,95,122,0.08);">
-<div class="stat-label" style="font-size:0.78rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:#5c6b73;margin-bottom:0.35rem;">Season peak (Nov–Mar)</div>
-<div class="stat-value" style="font-size:1.85rem;font-weight:700;line-height:1.1;color:#1a5f7a;">716.8 ac on Feb 2026</div>
-<div class="stat-detail" style="margin-top:0.45rem;font-size:0.875rem;color:#5c6b73;line-height:1.45;">500 ac management target</div>
+<div class="stat-card" style="background:#f8f9fb;border:1px solid #c5cdd8;border-left:3px solid #0b3d91;border-radius:3px;padding:0.5rem 0.6rem;">
+<div class="stat-label" style="font-family:ui-monospace,monospace;font-size:0.58rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5a6578;margin-bottom:0.2rem;">Season peak</div>
+<span>
+<span class="stat-value" style="font-size:1.15rem;font-weight:700;line-height:1.15;white-space:nowrap;">
+<span class="stat-acres-num" style="font-family:Georgia,Cambria,serif;font-variant-numeric:tabular-nums;font-size:1.25rem;color:#0b3d91;">716.8</span>
+<span class="stat-acres-unit" style="font-family:ui-monospace,monospace;font-size:0.78rem;font-weight:600;color:#5a6578;margin-left:0.1rem;">ac</span>
+</span>
+<span class="stat-acres-unit" style="font-family:ui-monospace,monospace;font-size:0.78rem;font-weight:600;color:#5a6578;margin-left:0.25rem;">in Feb 2026</span>
+</span>
+<div class="stat-detail" style="margin-top:0.25rem;font-size:0.68rem;color:#5a6578;line-height:1.25;">Nov–Mar · 500 ac target</div>
 </div>
-<div class="stat-card" style="background:#f7fafb;border:1px solid #d8e3ea;border-radius:14px;padding:1.15rem 1.25rem;box-shadow:0 4px 24px rgba(26,95,122,0.08);">
-<div class="stat-label" style="font-size:0.78rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:#5c6b73;margin-bottom:0.35rem;">Reporting units</div>
-<div class="stat-value" style="font-size:1.85rem;font-weight:700;line-height:1.1;color:#1a5f7a;">7</div>
-<div class="stat-detail" style="margin-top:0.45rem;font-size:0.875rem;color:#5c6b73;line-height:1.45;">Thibaut, Drew, Waggoner, West Winterton, East Winterton, South Winterton, Thibaut Ponds</div>
 </div>
+<div class="stat-units-bar" style="display:flex;flex-wrap:wrap;align-items:baseline;gap:0.35rem 0.65rem;margin-bottom:1rem;padding:0.45rem 0.6rem;background:#f8f9fb;border:1px solid #c5cdd8;border-left:3px solid #0b3d91;border-radius:3px;">
+<span class="stat-label" style="font-family:ui-monospace,monospace;font-size:0.58rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5a6578;margin-bottom:0.2rem;margin-bottom:0;">Reporting units (7)</span>
+<span class="stat-units-list" style="font-family:ui-monospace,monospace;font-size:0.68rem;color:#5a6578;line-height:1.35;">Drew · Waggoner · West Winterton · East Winterton · South Winterton · Thibaut Ponds · Thibaut</span>
 </div>
 </div>
 </div>
 <div class="dashboard-section">
 <section id="monthly-flooded-acreage-by-unit" class="level2 dashboard-section-header">
 <h2 class="anchored" data-anchor-id="monthly-flooded-acreage-by-unit">Monthly flooded acreage by unit</h2>
-<p>Stacked totals by flood unit. Dashed line marks the <strong>500 ac</strong> seasonal target (Nov 1 → Mar 1).</p>
+<p>Stacked totals by flood unit. Dashed line marks the <strong>500 ac</strong> seasonal target (Nov-Mar).</p>
 </section>
 <div class="dashboard-card chart-card">
 <div class="cell" data-layout-align="center">
@@ -239,35 +253,35 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;">2024-25</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2024-09-22_0.18.html" target="_blank" title="September 22, 2024">22</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2024-10-22_0.22.html" target="_blank" title="October 22, 2024">22</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2024-11-03_0.22.html" target="_blank" title="November 03, 2024">03</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2024-12-06_0.2.html" target="_blank" title="December 06, 2024">06</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-01-05_0.2.html" target="_blank" title="January 05, 2025">05</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-02-21_0.16.html" target="_blank" title="February 21, 2025">21</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-03-01_0.16.html" target="_blank" title="March 01, 2025">01</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-04-04_0.16.html" target="_blank" title="April 04, 2025">04</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-05-02_0.08.html" target="_blank" title="May 02, 2025">02</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-06-04_0.1.html" target="_blank" title="June 04, 2025">04</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2024-09-22_0.18.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="September 22, 2024">22</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2024-10-22_0.22.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="October 22, 2024">22</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2024-11-03_0.22.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="November 03, 2024">03</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2024-12-06_0.2.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="December 06, 2024">06</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-01-05_0.2.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="January 05, 2025">05</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-02-21_0.16.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="February 21, 2025">21</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-03-01_0.16.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="March 01, 2025">01</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-04-04_0.16.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="April 04, 2025">04</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-05-02_0.08.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="May 02, 2025">02</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-06-04_0.1.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="June 04, 2025">04</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2025-26</td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-07-01_0.1.html" target="_blank" title="July 01, 2025">01</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-08-02_0.1.html" target="_blank" title="August 02, 2025">02</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-09-17_0.15.html" target="_blank" title="September 17, 2025">17</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-10-17_0.2.html" target="_blank" title="October 17, 2025">17</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-11-01_0.2.html" target="_blank" title="November 01, 2025">01</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-12-01_0.16.html" target="_blank" title="December 01, 2025">01</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2026-01-02_0.14.html" target="_blank" title="January 02, 2026">02</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2026-02-01_0.14.html" target="_blank" title="February 01, 2026">01</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2026-03-01_0.14.html" target="_blank" title="March 01, 2026">01</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2026-04-02_0.14.html" target="_blank" title="April 02, 2026">02</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2026-05-07_0.14.html" target="_blank" title="May 07, 2026">07</a></td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2026-06-01_0.14.html" target="_blank" title="June 01, 2026">01</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-07-01_0.1.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="July 01, 2025">01</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-08-02_0.1.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="August 02, 2025">02</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-09-17_0.15.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="September 17, 2025">17</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-10-17_0.2.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="October 17, 2025">17</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-11-01_0.2.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="November 01, 2025">01</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2025-12-01_0.16.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="December 01, 2025">01</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2026-01-02_0.14.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="January 02, 2026">02</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2026-02-01_0.14.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="February 01, 2026">01</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2026-03-01_0.14.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="March 01, 2026">01</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2026-04-02_0.14.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="April 02, 2026">02</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2026-05-07_0.14.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="May 07, 2026">07</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2026-06-01_0.14.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="June 01, 2026">01</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">2026-27</td>
-<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2026-07-01_0.14.html" target="_blank" title="July 01, 2026">01</a></td>
+<td style="text-align: left;"><a href="flood_reports/reports/bwma_flood_report_2026-07-01_0.14.html" target="_blank" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;" title="July 01, 2026">01</a></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>

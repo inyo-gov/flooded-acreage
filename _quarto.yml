@@ -31,7 +31,7 @@ website:
 format:
   html:
     theme: bootstrap
-    linkcolor: "#2E86AB"
+    linkcolor: "#0B3D91"
     css: styles.css
     include-in-header:
       - includes/dashboard-head.html

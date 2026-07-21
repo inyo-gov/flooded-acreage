@@ -8,13 +8,16 @@ format:
 ---
 
 ```{=html}
-<div class="dashboard-hero" style="margin:0.5rem 0 2rem;padding:2.25rem 2rem;border-radius:14px;background:linear-gradient(135deg,#1a5f7a 0%,#2e86ab 55%,#3d9cad 100%);color:#fff;box-shadow:0 4px 24px rgba(26,95,122,0.08);position:relative;overflow:hidden;">
-  <div class="hero-content" style="position:relative;z-index:1;">
-    <h1 style="color:#fff;font-size:clamp(1.75rem,4vw,2.35rem);margin:0 0 0.5rem;line-height:1.15;">Blackrock Waterfowl Management Area</h1>
-    <p class="hero-lead" style="margin:0;font-size:1.05rem;color:rgba(255,255,255,0.92);max-width:42rem;">Monthly flooded acreage estimates from Sentinel-2 surface reflectance — Owens Valley, Inyo County, California.</p>
-    <div class="hero-meta" style="display:flex;flex-wrap:wrap;gap:0.5rem 1rem;margin-top:1.25rem;font-size:0.875rem;">
-      <span style="display:inline-flex;padding:0.35rem 0.75rem;border-radius:999px;background:rgba(255,255,255,0.14);">Sentinel-2 optical · NIR threshold</span>
-      <span style="display:inline-flex;padding:0.35rem 0.75rem;border-radius:999px;background:rgba(255,255,255,0.14);">15-day cloud-masked composite</span>
+<div class="dashboard-hero">
+  <div class="hero-row">
+    <div class="hero-main">
+      <div class="hero-tag">Sentinel-2 · BWMA · Owens Valley</div>
+      <h1>Blackrock Waterfowl Management Area</h1>
+      <p class="hero-lead">Monthly flooded acreage monitoring · Inyo County, California</p>
+    </div>
+    <div class="hero-meta">
+      <span>NIR threshold</span>
+      <span>15-day composite</span>
     </div>
   </div>
 </div>
@@ -57,15 +60,22 @@ library(htmltools)
 
 fmt_acres <- function(x) format(round(x, 1), nsmall = 1, trim = TRUE)
 
-stat_card_style <- "background:#f7fafb;border:1px solid #d8e3ea;border-radius:14px;padding:1.15rem 1.25rem;box-shadow:0 4px 24px rgba(26,95,122,0.08);"
-stat_highlight_style <- paste0(
-  stat_card_style,
-  "border-color:#2e86ab;background:linear-gradient(180deg,#ffffff 0%,#e8f4f8 100%);"
-)
-stat_grid_style <- "display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem;"
-stat_label_style <- "font-size:0.78rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:#5c6b73;margin-bottom:0.35rem;"
-stat_value_style <- "font-size:1.85rem;font-weight:700;line-height:1.1;color:#1a5f7a;"
-stat_detail_style <- "margin-top:0.45rem;font-size:0.875rem;color:#5c6b73;line-height:1.45;"
+acres_value <- function(x, unit = "ac") {
+  tags$span(
+    class = "stat-value",
+    style = "font-size:1.15rem;font-weight:700;line-height:1.15;white-space:nowrap;",
+    tags$span(class = "stat-acres-num", style = "font-family:Georgia,Cambria,serif;font-variant-numeric:tabular-nums;font-size:1.25rem;color:#0b3d91;", x),
+    tags$span(class = "stat-acres-unit", style = "font-family:ui-monospace,monospace;font-size:0.78rem;font-weight:600;color:#5a6578;margin-left:0.1rem;", unit)
+  )
+}
+
+stat_card_style <- "background:#f8f9fb;border:1px solid #c5cdd8;border-left:3px solid #0b3d91;border-radius:3px;padding:0.5rem 0.6rem;"
+stat_highlight_style <- paste0(stat_card_style, "border-left-color:#fc3d21;background:#fff;")
+stat_grid_style <- "display:grid;grid-template-columns:repeat(3,1fr);gap:0.45rem;margin-bottom:0.45rem;"
+stat_units_style <- "display:flex;flex-wrap:wrap;align-items:baseline;gap:0.35rem 0.65rem;margin-bottom:1rem;padding:0.45rem 0.6rem;background:#f8f9fb;border:1px solid #c5cdd8;border-left:3px solid #0b3d91;border-radius:3px;"
+stat_label_style <- "font-family:ui-monospace,monospace;font-size:0.58rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5a6578;margin-bottom:0.2rem;"
+stat_detail_style <- "margin-top:0.25rem;font-size:0.68rem;color:#5a6578;line-height:1.25;"
+stat_units_list_style <- "font-family:ui-monospace,monospace;font-size:0.68rem;color:#5a6578;line-height:1.35;"
 
 totals <- monthly_raw %>%
   filter(Flood_Unit == "Total") %>%
@@ -97,62 +107,62 @@ delta_detail <- if (nrow(prev) == 1) {
 }
 
 season_value <- if (nrow(season_peak) == 1) {
-  paste0(
-    fmt_acres(season_peak$acres_flooded),
-    " ac on ",
-    format(season_peak$report_date, "%b %Y")
+  tags$span(
+    acres_value(fmt_acres(season_peak$acres_flooded)),
+    tags$span(
+      class = "stat-acres-unit",
+      style = "font-family:ui-monospace,monospace;font-size:0.78rem;font-weight:600;color:#5a6578;margin-left:0.25rem;",
+      paste0("in ", format(season_peak$month_date[1], "%b %Y"))
+    )
   )
 } else {
-  "—"
+  tags$span(class = "stat-value", "—")
 }
 
 mom_value <- if (nrow(prev) == 1) {
-  paste0(fmt_acres(abs(latest$acres_flooded - prev$acres_flooded)), " ac change")
+  acres_value(fmt_acres(abs(latest$acres_flooded - prev$acres_flooded)), "ac change")
 } else {
-  "—"
+  tags$span(class = "stat-value", "—")
 }
 
-tags$div(
-  class = "stat-grid",
-  style = stat_grid_style,
+tagList(
   tags$div(
-    class = "stat-card stat-highlight",
-    style = stat_highlight_style,
-    tags$div(class = "stat-label", style = stat_label_style, "Latest total flooded"),
-    tags$div(class = "stat-value", style = stat_value_style, paste0(fmt_acres(latest$acres_flooded), " ac")),
+    class = "stat-grid",
+    style = stat_grid_style,
     tags$div(
-      class = "stat-detail",
-      style = stat_detail_style,
-      paste0(
-        format(latest_month, "%B %Y"),
-        " · scene ",
-        format(latest$report_date, "%b %d, %Y")
+      class = "stat-card stat-highlight",
+      style = stat_highlight_style,
+      tags$div(class = "stat-label", style = stat_label_style, "Latest flooded"),
+      acres_value(fmt_acres(latest$acres_flooded)),
+      tags$div(
+        class = "stat-detail",
+        style = paste0(stat_detail_style, "white-space:nowrap;"),
+        paste0(format(latest_month, "%b %Y"), " · 15-day composite")
       )
+    ),
+    tags$div(
+      class = "stat-card",
+      style = stat_card_style,
+      tags$div(class = "stat-label", style = stat_label_style, "Month-over-month change"),
+      mom_value,
+      tags$div(class = "stat-detail", style = stat_detail_style, delta_detail)
+    ),
+    tags$div(
+      class = "stat-card",
+      style = stat_card_style,
+      tags$div(class = "stat-label", style = stat_label_style, "Season peak"),
+      if (nrow(season_peak) == 1) season_value else tags$span(class = "stat-value", "—"),
+      tags$div(class = "stat-detail", style = stat_detail_style, "Nov–Mar · 500 ac target")
     )
   ),
   tags$div(
-    class = "stat-card",
-    style = stat_card_style,
-    tags$div(class = "stat-label", style = stat_label_style, "Month-over-month"),
-    tags$div(class = "stat-value", style = stat_value_style, mom_value),
-    tags$div(class = "stat-detail", style = stat_detail_style, delta_detail)
-  ),
-  tags$div(
-    class = "stat-card",
-    style = stat_card_style,
-    tags$div(class = "stat-label", style = stat_label_style, "Season peak (Nov–Mar)"),
-    tags$div(class = "stat-value", style = stat_value_style, season_value),
-    tags$div(class = "stat-detail", style = stat_detail_style, "500 ac management target")
-  ),
-  tags$div(
-    class = "stat-card",
-    style = stat_card_style,
-    tags$div(class = "stat-label", style = stat_label_style, "Reporting units"),
-    tags$div(class = "stat-value", style = stat_value_style, "7"),
-    tags$div(
-      class = "stat-detail",
-      style = stat_detail_style,
-      "Thibaut, Drew, Waggoner, West Winterton, East Winterton, South Winterton, Thibaut Ponds"
+    class = "stat-units-bar",
+    style = stat_units_style,
+    tags$span(class = "stat-label", style = paste0(stat_label_style, "margin-bottom:0;"), "Reporting units (7)"),
+    tags$span(
+      class = "stat-units-list",
+      style = stat_units_list_style,
+      "Drew · Waggoner · West Winterton · East Winterton · South Winterton · Thibaut Ponds · Thibaut"
     )
   )
 )
@@ -162,7 +172,7 @@ tags$div(
 ::: {.dashboard-section-header}
 ## Monthly flooded acreage by unit
 
-Stacked totals by flood unit. Dashed line marks the **500 ac** seasonal target (Nov 1 → Mar 1).
+Stacked totals by flood unit. Dashed line marks the **500 ac** seasonal target (Nov-Mar).
 :::
 
 ::: {.dashboard-card .chart-card}
@@ -171,14 +181,19 @@ library(dplyr)
 library(lubridate)
 library(ggplot2)
 
+unit_order <- c(
+  "Drew", "Waggoner", "West Winterton", "East Winterton",
+  "South Winterton", "Thibaut Ponds", "Thibaut"
+)
+
 unit_colors <- c(
-  "Thibaut"         = "#1a5f7a",
   "Drew"            = "#2e86ab",
-  "Waggoner"        = "#57a773",
+  "Waggoner"        = "#e85d04",
   "West Winterton"  = "#7eb8a4",
   "East Winterton"  = "#a8c686",
   "South Winterton" = "#c4a35a",
-  "Thibaut Ponds"   = "#8b6fad"
+  "Thibaut Ponds"   = "#8b6fad",
+  "Thibaut"         = "#1a5f7a"
 )
 
 monthly_fixed <- monthly_raw %>%
@@ -197,10 +212,11 @@ monthly_avg <- monthly_fixed %>%
   slice_max(report_date, n = 1, with_ties = FALSE) %>%
   ungroup() %>%
   select(Flood_Unit, month_date, acres_flooded) %>%
-  rename(avg_acres = acres_flooded)
+  rename(avg_acres = acres_flooded) %>%
+  mutate(Flood_Unit = factor(Flood_Unit, levels = unit_order))
 
-target_start <- as.Date("2024-11-01")
-target_end   <- max(monthly_avg$month_date, na.rm = TRUE) + 15
+x_min <- min(monthly_avg$month_date) - 15
+x_max <- max(monthly_avg$month_date) + 15
 
 monthly_avg %>%
   ggplot(aes(x = month_date, y = avg_acres, fill = Flood_Unit)) +
@@ -209,25 +225,31 @@ monthly_avg %>%
     yintercept = 500,
     linetype   = "dashed",
     color      = "#b8860b",
-    linewidth  = 0.7
+    linewidth  = 0.65
   ) +
   annotate(
-    "text",
-    x     = target_start + 45,
-    y     = 535,
-    label = "500 ac target (Nov → Mar)",
-    size  = 3.2,
-    color = "#8a6914",
-    hjust = 0
+    "label",
+    x     = x_max - 5,
+    y     = 500,
+    label = "500 ac target (Nov-Mar)",
+    hjust = 1,
+    vjust = -0.35,
+    size  = 2.8,
+    fontface = "bold",
+    color = "#7a5c10",
+    fill  = "#fffef8",
+    label.size    = 0.3,
+    label.padding = grid::unit(0.28, "lines")
   ) +
-  scale_fill_manual(values = unit_colors, name = "Flood unit") +
+  scale_fill_manual(values = unit_colors, breaks = unit_order, name = "Flood unit") +
   scale_x_date(
-    limits      = c(min(monthly_avg$month_date) - 15, max(monthly_avg$month_date) + 15),
+    limits      = c(x_min, x_max),
     date_breaks = "1 month",
     date_labels = "%b '%y",
-    expand    = c(0.02, 0)
+    expand      = c(0.02, 0)
   ) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.04)), labels = scales::comma) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.06)), labels = scales::comma) +
+  coord_cartesian(clip = "off") +
   labs(
     title = NULL,
     x     = NULL,
@@ -275,6 +297,8 @@ html_files <- list.files(
   full.names = FALSE
 )
 
+link_style <- "font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;"
+
 df_links <- tibble(file = html_files) %>%
   mutate(
     date       = as.Date(str_extract(file, "[0-9]{4}-[0-9]{2}-[0-9]{2}")),
@@ -289,7 +313,8 @@ df_links <- tibble(file = html_files) %>%
     day_only   = format(date, "%d"),
     full_link  = paste0(
       "<a href='", report_link_dir, "/", file,
-      "' target='_blank' title='", format(date, "%B %d, %Y"), "'>", day_only, "</a>"
+      "' target='_blank' title='", format(date, "%B %d, %Y"),
+      "' style='", link_style, "'>", day_only, "</a>"
     )
   )
 

@@ -4,8 +4,8 @@ import geopandas as gpd
 import geemap
 import pandas as pd
 import folium
-from folium.raster_layers import ImageOverlay
 from datetime import datetime, timedelta
+import html
 import os
 import imageio.v2 as imageio
 
@@ -13,8 +13,523 @@ import imageio.v2 as imageio
 # > python flood_report.py '2024-10-22' .22
 # > python flood_report.py '2024-11-01' .22
 
+UNIT_ORDER = [
+    "Drew", "Waggoner", "West Winterton", "East Winterton",
+    "South Winterton", "Thibaut Ponds", "Thibaut",
+]
+
+
+def order_units_df(df):
+    """Sort flood units to match dashboard legend order; Total row last."""
+    units_only = df[df["Flood_Unit"] != "Total"].copy()
+    units_only["Flood_Unit"] = pd.Categorical(
+        units_only["Flood_Unit"], categories=UNIT_ORDER, ordered=True
+    )
+    units_only = units_only.sort_values("Flood_Unit")
+    total_row = df[df["Flood_Unit"] == "Total"]
+    return pd.concat([units_only, total_row], ignore_index=True)
+
+
+def build_report_html(
+    table_df,
+    image_date_str,
+    start_date,
+    end_date,
+    threshold,
+    scene_count,
+    map_basename,
+    clipped_geojson_basename,
+    csv_basename,
+    tif_basename,
+):
+    month_label = pd.to_datetime(start_date).strftime("%b %Y")
+    total_acres = int(table_df.loc[table_df["BWMA Unit"] == "Total", "Acres"].iloc[0])
+
+    rows_html = []
+    for _, row in table_df.iterrows():
+        unit = html.escape(str(row["BWMA Unit"]))
+        acres = int(row["Acres"])
+        row_class = "total-row" if unit == "Total" else ""
+        rows_html.append(
+            f'<tr class="{row_class}">'
+            f'<td class="unit-name">{unit}</td>'
+            f'<td class="unit-acres"><span class="acres-num">{acres}</span> ac</td>'
+            f"</tr>"
+        )
+    rows_html = "\n".join(rows_html)
+
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BWMA Flood Report · {html.escape(month_label)}</title>
+  <style>
+    :root {{
+      --rs-nasa-blue: #0b3d91;
+      --rs-nasa-red: #fc3d21;
+      --rs-dark: #0d1117;
+      --rs-border: #c5cdd8;
+      --rs-muted: #5a6578;
+      --rs-mono: ui-monospace, "SF Mono", Menlo, monospace;
+      --rs-sans: "Segoe UI", system-ui, sans-serif;
+    }}
+    * {{ box-sizing: border-box; }}
+    body {{
+      margin: 0;
+      font-family: var(--rs-sans);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #1a2332;
+      background-color: #eef1f5;
+      background-image:
+        linear-gradient(rgba(11, 61, 145, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(11, 61, 145, 0.06) 1px, transparent 1px);
+      background-size: 18px 18px;
+    }}
+    .report-wrap {{
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0.75rem 1rem 1.5rem;
+    }}
+    .report-header {{
+      padding: 0.55rem 0.75rem;
+      margin-bottom: 0.65rem;
+      border: 1px solid #8a96a8;
+      border-left: 4px solid var(--rs-nasa-blue);
+      border-radius: 3px;
+      background: var(--rs-dark);
+      color: #e8ecf2;
+    }}
+    .report-tag {{
+      font-family: var(--rs-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #7eb8ff;
+      margin-bottom: 0.15rem;
+    }}
+    .report-header h1 {{
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }}
+    .report-meta {{
+      margin: 0.25rem 0 0;
+      font-family: var(--rs-mono);
+      font-size: 0.68rem;
+      color: #9aa8bc;
+    }}
+    .report-meta strong {{
+      color: #dce8f8;
+      font-weight: 600;
+    }}
+    .report-grid {{
+      display: grid;
+      grid-template-columns: minmax(220px, 28%) 1fr;
+      gap: 0.55rem;
+      align-items: stretch;
+    }}
+    .report-panel {{
+      background: #fff;
+      border: 1px solid var(--rs-border);
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.03);
+    }}
+    .report-panel h2 {{
+      margin: 0;
+      padding: 0.4rem 0.65rem;
+      font-family: var(--rs-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--rs-dark);
+      border-bottom: 2px solid var(--rs-nasa-blue);
+    }}
+    .report-panel h2::before {{
+      content: "▸ ";
+      color: var(--rs-nasa-red);
+    }}
+    .report-table-wrap {{
+      padding: 0.35rem 0.5rem 0.5rem;
+    }}
+    .report-table {{
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }}
+    .report-table th {{
+      font-family: var(--rs-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: left;
+      color: var(--rs-muted);
+      padding: 0.35rem 0.45rem;
+      border-bottom: 2px solid var(--rs-border);
+    }}
+    .report-table th:last-child {{
+      text-align: right;
+    }}
+    .report-table td {{
+      padding: 0.32rem 0.45rem;
+      border-bottom: 1px solid #e4e9ef;
+    }}
+    .report-table tr:nth-child(even) td {{
+      background: #f7f9fc;
+    }}
+    .report-table .unit-name {{
+      font-family: var(--rs-mono);
+      font-size: 0.72rem;
+      color: #1a2332;
+    }}
+    .report-table .unit-acres {{
+      text-align: right;
+      font-family: var(--rs-mono);
+      font-size: 0.68rem;
+      color: var(--rs-muted);
+    }}
+    .report-table .acres-num {{
+      font-family: Georgia, Cambria, serif;
+      font-variant-numeric: tabular-nums;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--rs-nasa-blue);
+    }}
+    .report-table tr.total-row td {{
+      border-top: 2px solid var(--rs-nasa-blue);
+      background: #eef3fa !important;
+      font-weight: 700;
+    }}
+    .report-table tr.total-row .acres-num {{
+      font-size: 1.05rem;
+      color: var(--rs-nasa-red);
+    }}
+    .report-map-panel iframe {{
+      display: block;
+      width: 100%;
+      height: min(560px, 72vh);
+      border: none;
+      background: #fff;
+    }}
+    .report-summary {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.75rem;
+      padding: 0.45rem 0.65rem;
+      border-top: 1px solid var(--rs-border);
+      background: #f7f9fc;
+      font-family: var(--rs-mono);
+      font-size: 0.65rem;
+      color: var(--rs-muted);
+    }}
+    .report-summary span {{
+      white-space: nowrap;
+    }}
+    .report-footer {{
+      margin-top: 0.65rem;
+      padding: 0.55rem 0.65rem;
+      background: #fff;
+      border: 1px solid var(--rs-border);
+      border-left: 3px solid var(--rs-nasa-blue);
+      border-radius: 3px;
+    }}
+    .report-footer h3 {{
+      margin: 0 0 0.35rem;
+      font-family: var(--rs-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--rs-nasa-blue);
+    }}
+    .report-footer p {{
+      margin: 0.2rem 0;
+      font-size: 0.78rem;
+      color: var(--rs-muted);
+    }}
+    .report-footer a {{
+      color: var(--rs-nasa-blue);
+      font-family: var(--rs-mono);
+      font-size: 0.72rem;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }}
+    .report-footer a:hover {{
+      color: var(--rs-nasa-red);
+    }}
+    .download-links {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.75rem;
+      margin-top: 0.35rem;
+    }}
+    @media (max-width: 820px) {{
+      .report-grid {{
+        grid-template-columns: 1fr;
+      }}
+    }}
+  </style>
+</head>
+<body>
+  <div class="report-wrap">
+    <header class="report-header">
+      <div class="report-tag">Sentinel-2 SR · Cloud-masked median composite</div>
+      <h1>BWMA Flood Report · {html.escape(month_label)}</h1>
+      <p class="report-meta">
+        <strong>{html.escape(start_date)}</strong> to <strong>{html.escape(end_date)}</strong>
+        · NIR threshold <strong>{threshold:g}</strong>
+        · <strong>{scene_count}</strong> scene{"s" if scene_count != 1 else ""} in composite
+        · label date {html.escape(image_date_str)}
+      </p>
+    </header>
+
+    <div class="report-grid">
+      <section class="report-panel">
+        <h2>Flooded acreage</h2>
+        <div class="report-table-wrap">
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th>BWMA unit</th>
+                <th>Acres flooded</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows_html}
+            </tbody>
+          </table>
+        </div>
+        <div class="report-summary">
+          <span>Total: <strong>{total_acres} ac</strong></span>
+          <span>Composite window: 15 days</span>
+        </div>
+      </section>
+
+      <section class="report-panel report-map-panel">
+        <h2>Spatial extent</h2>
+        <iframe src="./{html.escape(map_basename)}" title="BWMA flooded extent map"></iframe>
+      </section>
+    </div>
+
+    <footer class="report-footer">
+      <h3>Data products</h3>
+      <p>Sentinel-2 surface reflectance (harmonized). NIR band threshold applied to a cloud-masked median composite—not a single acquisition.</p>
+      <div class="download-links">
+        <a href="{html.escape(clipped_geojson_basename)}" download>Flooded extent GeoJSON</a>
+        <a href="../csv_output/{html.escape(csv_basename)}" download>Unit acreage CSV</a>
+        <a href="{html.escape(tif_basename)}" download>False-color GeoTIFF</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
+"""
+
+def build_flood_map(
+    map_basename,
+    false_color_basename,
+    clipped_geojson_basename,
+    subunits_basename,
+    unit_features,
+    start_date,
+    end_date,
+    threshold,
+    scene_count,
+):
+    """Build a telemetry-themed folium map for the monthly report iframe."""
+    bbox_bounds = [
+        [36.84651455123723, -118.23240736400778],
+        [36.924364295139625, -118.17232588207419],
+    ]
+    month_label = pd.to_datetime(start_date).strftime("%b %Y")
+
+    m = folium.Map(location=[36.8795, -118.202], tiles=None, control_scale=True)
+
+    folium.TileLayer(
+        tiles="CartoDB positron",
+        name="Light basemap",
+        overlay=False,
+        control=True,
+        show=True,
+    ).add_to(m)
+
+    folium.TileLayer(
+        tiles=(
+            "https://server.arcgisonline.com/ArcGIS/rest/services/"
+            "World_Imagery/MapServer/tile/{z}/{y}/{x}"
+        ),
+        attr="Esri World Imagery",
+        name="Satellite basemap",
+        overlay=False,
+        control=True,
+        show=False,
+    ).add_to(m)
+
+    folium.raster_layers.ImageOverlay(
+        name="S2 false-color composite",
+        image=false_color_basename,
+        bounds=bbox_bounds,
+        opacity=1,
+        interactive=True,
+        cross_origin=False,
+        zindex=2,
+    ).add_to(m)
+
+    folium.GeoJson(
+        clipped_geojson_basename,
+        name="Flooded extent",
+        style_function=lambda x: {
+            "color": "#0b3d91",
+            "weight": 1.5,
+            "fillColor": "#2e86ab",
+            "fillOpacity": 0.55,
+        },
+        highlight_function=lambda x: {
+            "weight": 2.5,
+            "fillOpacity": 0.72,
+            "color": "#fc3d21",
+        },
+    ).add_to(m)
+
+    folium.GeoJson(
+        subunits_basename,
+        name="Unit boundaries",
+        style_function=lambda x: {
+            "color": "#fc3d21",
+            "weight": 2,
+            "fillColor": "#00000000",
+            "fillOpacity": 0,
+            "dashArray": "5 4",
+        },
+    ).add_to(m)
+
+    for feature in unit_features:
+        unit_name = feature["properties"]["Flood_Unit"]
+        label = feature["properties"]["label"]
+        centroid = feature["properties"]["centroid"]
+        if isinstance(centroid, list) and len(centroid) == 2:
+            folium.Marker(
+                location=[centroid[1], centroid[0]],
+                icon=folium.DivIcon(
+                    icon_size=(None, None),
+                    class_name="unit-label-wrap",
+                    html=(
+                        f'<div class="unit-map-label">{html.escape(unit_name)}</div>'
+                    ),
+                ),
+                popup=folium.Popup(
+                    f'<div class="unit-popup">{html.escape(label)}</div>',
+                    max_width=240,
+                ),
+                tooltip=html.escape(label),
+            ).add_to(m)
+
+    folium.LayerControl(collapsed=True, position="topright").add_to(m)
+    m.fit_bounds(bbox_bounds, padding=(12, 12))
+
+    map_css = """
+    <style>
+      html, body, .folium-map { width: 100%; height: 100%; margin: 0; padding: 0; }
+      .leaflet-container {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        background: #eef1f5;
+      }
+      .leaflet-control-layers {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace !important;
+        font-size: 10px !important;
+        border: 1px solid #c5cdd8 !important;
+        border-radius: 3px !important;
+        box-shadow: 1px 1px 0 rgba(0,0,0,0.05) !important;
+      }
+      .leaflet-control-layers-expanded {
+        padding: 4px 8px !important;
+        background: rgba(255,255,255,0.95) !important;
+      }
+      .leaflet-control-scale-line {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 9px;
+        border-color: #0b3d91 !important;
+        background: rgba(255,255,255,0.85) !important;
+      }
+      .unit-map-label {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        color: #fff;
+        background: rgba(13, 17, 23, 0.88);
+        border: 1px solid #0b3d91;
+        border-left: 2px solid #fc3d21;
+        padding: 1px 5px;
+        border-radius: 2px;
+        white-space: nowrap;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+      }
+      .unit-label-wrap {
+        background: transparent !important;
+        border: none !important;
+      }
+      .unit-popup {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 11px;
+        color: #1a2332;
+      }
+      .map-legend {
+        position: fixed;
+        bottom: 24px;
+        left: 10px;
+        z-index: 9999;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 9px;
+        line-height: 1.45;
+        color: #c8d4e4;
+        background: rgba(13, 17, 23, 0.92);
+        padding: 6px 8px;
+        border: 1px solid #8a96a8;
+        border-left: 3px solid #fc3d21;
+        border-radius: 3px;
+        pointer-events: none;
+      }
+      .map-legend-title {
+        color: #7eb8ff;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-size: 8px;
+        margin-bottom: 4px;
+      }
+      .map-legend-meta {
+        margin-top: 4px;
+        color: #9aa8bc;
+        font-size: 8px;
+      }
+      .swatch-flood { color: #2e86ab; }
+      .swatch-unit { color: #fc3d21; }
+    </style>
+    """
+    m.get_root().html.add_child(folium.Element(map_css))
+
+    scene_label = "scene" if scene_count == 1 else "scenes"
+    legend_html = f"""
+    <div class="map-legend">
+      <div class="map-legend-title">BWMA · {html.escape(month_label)} composite</div>
+      <div><span class="swatch-flood">■</span> Flooded extent (NIR &lt; {threshold:g})</div>
+      <div><span class="swatch-unit">—</span> Unit boundary</div>
+      <div class="map-legend-meta">
+        {html.escape(start_date)} – {html.escape(end_date)} ·
+        {scene_count} {scene_label}
+      </div>
+    </div>
+    """
+    m.get_root().html.add_child(folium.Element(legend_html))
+
+    m.save(map_basename)
+
+
 def main(start_date, threshold):
-    # Initialize Earth Engine with registered project
     # Project ID can be set via EARTH_ENGINE_PROJECT_ID environment variable
     # Falls back to default if not set
     project_id = os.getenv('EARTH_ENGINE_PROJECT_ID', 'ee-zjn-2022')
@@ -219,45 +734,22 @@ def main(start_date, threshold):
     clipped_geojson_basename = f"clipped_flooded_areas_{image_date_str}_{threshold}.geojson"
     subunits_basename = "subunits.geojson"
     map_basename = f"flooded_area_map_{image_date_str}_{threshold}.html"
+    unit_features = units_with_calculations.getInfo()["features"]
 
     orig_cwd = os.getcwd()
     try:
         os.chdir(html_subdirectory)
-        Map = folium.Map(location=[36.8795, -118.202], zoom_start=12)
-        Map.add_child(ImageOverlay(
-            name="False Color Composite",
-            image=false_color_basename,
-            bounds=[[36.84651455123723, -118.23240736400778], [36.924364295139625, -118.17232588207419]],
-            opacity=1
-        ))
-        Map.add_child(folium.GeoJson(
-            clipped_geojson_basename,
-            name="Flooded Areas (Clipped)",
-            style_function=lambda x: {
-                "color": "blue", "weight": 1, "fillColor": "blue", "fillOpacity": 0.5
-            }
-        ))
-        Map.add_child(folium.GeoJson(
-            subunits_basename,
-            name="Unit Boundaries",
-            style_function=lambda x: {
-                "color": "red", "weight": 2, "fillColor": "#00000000", "fillOpacity": 0
-            }
-        ))
-        for feature in units_with_calculations.getInfo()['features']:
-            unit_name = feature['properties']['Flood_Unit']
-            label = feature['properties']['label']
-            centroid = feature['properties']['centroid']
-            if isinstance(centroid, list) and len(centroid) == 2:
-                folium.map.Marker(
-                    location=[centroid[1], centroid[0]],
-                    icon=folium.DivIcon(html=f"""<div style="font-size: 12px; color: black;">{unit_name}</div>""")
-                ).add_to(Map)
-                folium.Marker(
-                    location=[centroid[1], centroid[0]], popup=label
-                ).add_to(Map)
-        Map.add_child(folium.LayerControl())
-        Map.save(map_basename)
+        build_flood_map(
+            map_basename=map_basename,
+            false_color_basename=false_color_basename,
+            clipped_geojson_basename=clipped_geojson_basename,
+            subunits_basename=subunits_basename,
+            unit_features=unit_features,
+            start_date=start_date,
+            end_date=end_date,
+            threshold=threshold,
+            scene_count=size,
+        )
         print(f"Map saved to {map_filename}")
     finally:
         os.chdir(orig_cwd)
@@ -272,104 +764,28 @@ def main(start_date, threshold):
     units_df_properties_reduced.to_csv(csv_filename, index=False)
     print(f"CSV file saved to {csv_filename}")
 
-    # Create HTML Table
-    units_df_properties_reduced = units_df_properties_reduced[['Flood_Unit', 'acres_flooded']]
-    units_df_properties_reduced.columns = ['BWMA Unit', 'Acres']
-    units_df_properties_reduced['Acres'] = units_df_properties_reduced['Acres'].round(0).astype(int)
+    # Build styled HTML report table (legend unit order)
+    report_table_df = units_df_properties_reduced[["Flood_Unit", "acres_flooded"]].copy()
+    report_table_df = order_units_df(report_table_df)
+    report_table_df.columns = ["BWMA Unit", "Acres"]
+    report_table_df["Acres"] = report_table_df["Acres"].round(0).astype(int)
 
-    html_table_simple = (
-        units_df_properties_reduced.style
-        .set_table_styles([
-            {'selector': 'th', 'props': [('text-align', 'center'), ('font-size', '14px')]},
-            {'selector': 'td:nth-child(1)', 'props': [('text-align', 'left'), ('font-size', '12px')]},
-            {'selector': 'td:nth-child(2)', 'props': [('text-align', 'right'), ('font-size', '12px')]},
-        ])
-        .set_properties(subset=pd.IndexSlice[units_df_properties_reduced.index[-1], :], **{'font-weight': 'bold', 'font-size': '14px'})
-        .hide(axis='index')
-        .to_html()
+    csv_basename = f"flood_report_data_{image_date_str}_{threshold}.csv"
+    tif_basename = f"false_color_composite_{image_date_str}_{threshold}.tif"
+
+    html_report = build_report_html(
+        table_df=report_table_df,
+        image_date_str=image_date_str,
+        start_date=start_date,
+        end_date=end_date,
+        threshold=threshold,
+        scene_count=size,
+        map_basename=map_basename,
+        clipped_geojson_basename=clipped_geojson_basename,
+        csv_basename=csv_basename,
+        tif_basename=tif_basename,
     )
-    html_table_simple = html_table_simple.replace('<th></th>', '')
-
-    # Create HTML Report
-    html_report = f"""
-    <html>
-    <head>
-        <title>BWMA Flooded Extent: {image_date_str}</title>
-        <style>
-            body {{
-                font-family: Arial, sans-serif;
-            }}
-            .container {{
-                display: flex;
-                justify-content: space-between;
-            }}
-            .left {{
-                width: 25%;
-            }}
-            .right {{
-                width: 75%;
-                text-align: center;
-            }}
-            h1, h2 {{
-                text-align: center;
-            }}
-            .notes {{
-                margin-top: 20px;
-                padding: 10px;
-                border-top: 1px solid #000;
-            }}
-            table {{
-                width: 90%;
-                font-size: 50px;
-                border-collapse: collapse;
-            }}
-            th, td {{
-                padding: 20px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;
-            }}
-            th {{
-                text-align: right;
-                font-size: 30px;
-            }}
-            td:nth-child(2) {{
-                text-align: right;
-            }}
-            tr:last-child {{
-                font-weight: bold;
-                font-size: 80px;
-            }}
-            tr:last-child td {{
-                border-top: 3px solid #000;
-            }}
-        </style>
-    </head>
-    <body>
-        <h1>BWMA Flooded Acres and Extent: {image_date_str}</h1>
-        <div class="container">
-            <div class="left">
-                <h2>Flooded Acres</h2>
-                {html_table_simple}
-            </div>
-            <div class="right">
-                <h2>Spatial Extent</h2>
-                <p>Imagery Date: {image_date_str}</p>
-                <iframe src="./flooded_area_map_{image_date_str}_{threshold}.html" width="90%" height="500"></iframe>
-            </div>
-        </div>
-        <div class="notes">
-            <h3>Technical Notes and Links</h3>
-            <p>Flooded acres were calculated from Sentinel-2 Surface Reflectance imagery using the Earth Engine Python API.</p>
-            <p>NIR band was used to identify flooded areas by applying a threshold to isolate water.</p>
-            <p>Vectorized flooded extent boundaries - GeoJSON <a href="clipped_flooded_areas_{image_date_str}_{threshold}.geojson" download>here</a>.</p>
-            <p>Flooded extent CSV <a href="../csv_output/flood_report_data_{image_date_str}_{threshold}.csv" download>here</a>.</p>
-            <p>Sentinel 2 false color composite GeoTIFF <a href="false_color_composite_{image_date_str}_{threshold}.tif" download>here</a>.</p>
-        </div>
-        </div>
-    </body>
-    </html>
-    """
-    print("Generating CSV and HTML report for flood data...")
+    print("Generating HTML report for flood data...")
     with open(report_filename, "w") as file:
         file.write(html_report)
     print(f"Report saved to {report_filename}")

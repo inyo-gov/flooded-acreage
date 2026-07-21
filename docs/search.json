@@ -11,14 +11,14 @@
     "href": "index.html",
     "title": "Blackrock Waterfowl Management Area",
     "section": "",
-    "text": "Monthly flooded acreage estimates from Sentinel-2 surface reflectance — Owens Valley, Inyo County, California.\n    \n      Sentinel-2 optical · NIR threshold\n      15-day cloud-masked composite\nLatest total flooded\n3.4 ac\nJuly 2026 · scene Jul 01, 2026\n\n\nMonth-over-month\n9.4 ac change\n\n-9.4 ac vs prior month\n\n\n\nSeason peak (Nov–Mar)\n716.8 ac on Feb 2026\n500 ac management target\n\n\nReporting units\n7\nThibaut, Drew, Waggoner, West Winterton, East Winterton, South Winterton, Thibaut Ponds"
+    "text": "Sentinel-2 · BWMA · Owens Valley\n      \n      Monthly flooded acreage monitoring · Inyo County, California\n    \n    \n      NIR threshold\n      15-day composite\nLatest flooded\n\n3.4\nac\n\nJul 2026 · 15-day composite\n\n\nMonth-over-month change\n\n9.4\nac change\n\n\n-9.4 ac vs prior month\n\n\n\nSeason peak\n\n\n716.8\nac\n\nin Feb 2026\n\nNov–Mar · 500 ac target\n\n\n\nReporting units (7)\nDrew · Waggoner · West Winterton · East Winterton · South Winterton · Thibaut Ponds · Thibaut"
   },
   {
     "objectID": "index.html#monthly-flooded-acreage-by-unit",
     "href": "index.html#monthly-flooded-acreage-by-unit",
     "title": "Blackrock Waterfowl Management Area",
     "section": "Monthly flooded acreage by unit",
-    "text": "Monthly flooded acreage by unit\nStacked totals by flood unit. Dashed line marks the 500 ac seasonal target (Nov 1 → Mar 1)."
+    "text": "Monthly flooded acreage by unit\nStacked totals by flood unit. Dashed line marks the 500 ac seasonal target (Nov-Mar)."
   },
   {
     "objectID": "index.html#monthly-report-archive",

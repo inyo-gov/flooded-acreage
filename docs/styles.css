@@ -1,195 +1,244 @@
-/* Flooded Acreage Monitoring — dashboard styles */
+/* Flooded Acreage — remote sensing / telemetry dashboard */
 
 :root {
-  --bwma-deep: #1a5f7a;
-  --bwma-primary: #2e86ab;
-  --bwma-sky: #5ba4bc;
-  --bwma-mist: #e8f4f8;
-  --bwma-surface: #f7fafb;
-  --bwma-green: #3d7a5c;
-  --bwma-amber: #b8860b;
-  --bwma-text: #1f2933;
-  --bwma-muted: #5c6b73;
-  --bwma-border: #d8e3ea;
-  --bwma-shadow: 0 4px 24px rgba(26, 95, 122, 0.08);
-  --bwma-radius: 14px;
-  --bwma-font: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  --rs-nasa-blue: #0b3d91;
+  --rs-nasa-red: #fc3d21;
+  --rs-dark: #0d1117;
+  --rs-panel: #f8f9fb;
+  --rs-grid: rgba(11, 61, 145, 0.07);
+  --rs-border: #c5cdd8;
+  --rs-border-dark: #8a96a8;
+  --rs-text: #1a2332;
+  --rs-muted: #5a6578;
+  --rs-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, monospace;
+  --rs-sans: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  --rs-radius: 3px;
 }
 
-/* Base */
+/* Graph-paper field */
 body {
-  font-family: var(--bwma-font);
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--bwma-text);
-  background: linear-gradient(180deg, #eef6f9 0%, #f9fbfc 240px, #ffffff 480px);
+  font-family: var(--rs-sans);
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--rs-text);
+  background-color: #eef1f5;
+  background-image:
+    linear-gradient(var(--rs-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--rs-grid) 1px, transparent 1px);
+  background-size: 18px 18px;
 }
 
 main.content {
   max-width: 1180px !important;
   margin: 0 auto;
-  padding: 0 1.25rem 3rem;
+  padding: 0 1rem 2rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--bwma-font);
+  font-family: var(--rs-sans);
   font-weight: 650;
-  letter-spacing: -0.02em;
-  color: var(--bwma-text);
+  color: var(--rs-text);
 }
 
-.quarto-title-block .title {
-  display: none;
-}
-
+.quarto-title-block .title,
 #title-block-header.quarto-title-block {
   display: none !important;
 }
 
-/* Navbar */
+/* Navbar — mission control strip */
 .navbar {
-  background: linear-gradient(90deg, var(--bwma-deep) 0%, var(--bwma-primary) 100%) !important;
-  box-shadow: 0 2px 12px rgba(26, 95, 122, 0.18);
+  background: var(--rs-dark) !important;
+  border-bottom: 2px solid var(--rs-nasa-blue);
+  box-shadow: none;
+  min-height: 2.75rem;
 }
 
 .navbar-brand,
 .navbar-nav .nav-link,
 .navbar-text {
-  color: rgba(255, 255, 255, 0.95) !important;
+  color: rgba(255, 255, 255, 0.88) !important;
+  font-family: var(--rs-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link.active {
-  color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
+  color: #fff !important;
+  background: rgba(11, 61, 145, 0.45);
+  border-radius: var(--rs-radius);
 }
 
 .navbar-brand img {
-  height: 38px;
-  max-height: 38px;
-  width: auto;
-  margin-right: 0.65rem;
-  object-fit: contain;
+  height: 30px;
+  max-height: 30px;
+  margin-right: 0.5rem;
   background: #fff;
-  border-radius: 8px;
-  padding: 3px;
+  border-radius: 2px;
+  padding: 2px;
 }
 
-/* Hero */
+/* Hero — compact telemetry header */
 .dashboard-hero {
-  margin: 0.5rem 0 2rem;
-  padding: 2.25rem 2rem;
-  border-radius: var(--bwma-radius);
-  background: linear-gradient(135deg, var(--bwma-deep) 0%, var(--bwma-primary) 55%, #3d9cad 100%);
-  color: #fff;
-  box-shadow: var(--bwma-shadow);
-  position: relative;
-  overflow: hidden;
+  margin: 0.35rem 0 0.85rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--rs-border-dark);
+  border-left: 4px solid var(--rs-nasa-blue);
+  border-radius: var(--rs-radius);
+  background: var(--rs-dark);
+  color: #e8ecf2;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
 }
 
-.dashboard-hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.14) 0%, transparent 42%),
-    radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.08) 0%, transparent 35%);
-  pointer-events: none;
+.dashboard-hero .hero-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
 }
 
-.dashboard-hero .hero-content {
-  position: relative;
-  z-index: 1;
+.dashboard-hero .hero-tag {
+  font-family: var(--rs-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7eb8ff;
+  margin-bottom: 0.15rem;
 }
 
 .dashboard-hero h1 {
   color: #fff;
-  font-size: clamp(1.75rem, 4vw, 2.35rem);
-  margin: 0 0 0.5rem;
-  line-height: 1.15;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 .dashboard-hero .hero-lead {
-  margin: 0;
-  font-size: 1.05rem;
-  color: rgba(255, 255, 255, 0.92);
-  max-width: 42rem;
+  margin: 0.15rem 0 0;
+  font-size: 0.78rem;
+  color: #9aa8bc;
+  line-height: 1.3;
 }
 
 .dashboard-hero .hero-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1rem;
-  margin-top: 1.25rem;
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.85);
+  gap: 0.35rem;
+  margin: 0;
 }
 
 .dashboard-hero .hero-meta span {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.35rem 0.75rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(4px);
+  font-family: var(--rs-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid rgba(126, 184, 255, 0.35);
+  border-radius: var(--rs-radius);
+  color: #b8cce0;
+  background: rgba(11, 61, 145, 0.25);
+  white-space: nowrap;
 }
 
-/* Stat cards */
+/* Stat readouts */
 .stat-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.45rem;
+  margin-bottom: 0.45rem;
+}
+
+.stat-units-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.65rem;
+  margin-bottom: 1rem;
+  padding: 0.45rem 0.6rem;
+  background: var(--rs-panel);
+  border: 1px solid var(--rs-border);
+  border-left: 3px solid var(--rs-nasa-blue);
+  border-radius: var(--rs-radius);
+}
+
+.stat-units-bar .stat-label {
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.stat-units-list {
+  font-family: var(--rs-mono);
+  font-size: 0.68rem;
+  color: var(--rs-muted);
+  line-height: 1.35;
 }
 
 .stat-card {
-  background: var(--bwma-surface);
-  border: 1px solid var(--bwma-border);
-  border-radius: var(--bwma-radius);
-  padding: 1.15rem 1.25rem;
-  box-shadow: var(--bwma-shadow);
+  background: var(--rs-panel);
+  border: 1px solid var(--rs-border);
+  border-left: 3px solid var(--rs-nasa-blue);
+  border-radius: var(--rs-radius);
+  padding: 0.5rem 0.6rem 0.55rem;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.04);
 }
 
 .stat-card .stat-label {
-  font-size: 0.78rem;
+  font-family: var(--rs-mono);
+  font-size: 0.58rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--bwma-muted);
-  margin-bottom: 0.35rem;
+  color: var(--rs-muted);
+  margin-bottom: 0.2rem;
 }
 
 .stat-card .stat-value {
-  font-size: 1.85rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  line-height: 1.1;
-  color: var(--bwma-deep);
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.stat-card .stat-value .stat-acres-num {
+  font-family: Georgia, Cambria, "Times New Roman", serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 1.25rem;
+  color: var(--rs-nasa-blue);
+}
+
+.stat-card .stat-value .stat-acres-unit {
+  font-family: var(--rs-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--rs-muted);
+  margin-left: 0.1rem;
 }
 
 .stat-card .stat-detail {
-  margin-top: 0.45rem;
-  font-size: 0.875rem;
-  color: var(--bwma-muted);
-  line-height: 1.45;
+  margin-top: 0.25rem;
+  font-size: 0.68rem;
+  color: var(--rs-muted);
+  line-height: 1.25;
 }
 
 .stat-card.stat-highlight {
-  border-color: var(--bwma-primary);
-  background: linear-gradient(180deg, #ffffff 0%, var(--bwma-mist) 100%);
+  border-left-color: var(--rs-nasa-red);
+  background: #fff;
 }
 
 .stat-card .stat-delta-up {
-  color: var(--bwma-primary);
+  color: var(--rs-nasa-blue);
 }
 
 .stat-card .stat-delta-down {
-  color: var(--bwma-green);
+  color: #2d6a4f;
 }
 
-/* Remove Quarto cell chrome around stat cards */
 .stat-chunk,
 .stat-chunk .cell-output-display {
   margin: 0 !important;
@@ -199,41 +248,50 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: none !important;
 }
 
-/* Dashboard sections */
+/* Sections */
 .dashboard-section {
-  margin-bottom: 2.25rem;
+  margin-bottom: 1.35rem;
 }
 
 .dashboard-section-header {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  justify-content: space-between;
-  gap: 0.5rem 1rem;
-  margin-bottom: 1rem;
+  gap: 0.35rem 0.75rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--rs-border);
 }
 
 .dashboard-section-header h2 {
   margin: 0;
-  font-size: 1.35rem;
+  font-family: var(--rs-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rs-nasa-blue);
+}
+
+.dashboard-section-header h2::before {
+  content: "▸ ";
+  color: var(--rs-nasa-red);
 }
 
 .dashboard-section-header p {
   margin: 0;
-  font-size: 0.925rem;
-  color: var(--bwma-muted);
-  max-width: 36rem;
+  font-size: 0.78rem;
+  color: var(--rs-muted);
 }
 
 .dashboard-card {
   background: #fff;
-  border: 1px solid var(--bwma-border);
-  border-radius: var(--bwma-radius);
-  padding: 1.25rem 1.35rem;
-  box-shadow: var(--bwma-shadow);
+  border: 1px solid var(--rs-border);
+  border-radius: var(--rs-radius);
+  padding: 0.65rem 0.75rem;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.03);
 }
 
-/* Chart */
 .chart-card .figure,
 .chart-card figure {
   margin: 0;
@@ -243,10 +301,11 @@ h1, h2, h3, h4, h5, h6 {
 .figure img {
   width: 100%;
   height: auto;
-  border-radius: 10px;
+  border-radius: var(--rs-radius);
+  border: 1px solid var(--rs-border);
 }
 
-/* Monthly reports table */
+/* Report archive table */
 .table-card {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -255,100 +314,102 @@ h1, h2, h3, h4, h5, h6 {
 .dashboard-reports-table {
   width: 100%;
   margin: 0;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: 0.9rem;
+  border-collapse: collapse;
+  font-family: var(--rs-mono);
+  font-size: 0.75rem;
+  table-layout: fixed;
 }
 
 .dashboard-reports-table caption {
   caption-side: top;
-  padding: 0 0 0.75rem;
+  padding: 0;
   font-size: 0;
 }
 
 .dashboard-reports-table thead th {
-  background: var(--bwma-mist);
-  color: var(--bwma-deep);
-  font-weight: 650;
-  font-size: 0.78rem;
-  letter-spacing: 0.03em;
+  background: var(--rs-dark);
+  color: #c8d4e4;
+  font-weight: 600;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  border-bottom: 2px solid var(--bwma-border);
-  padding: 0.65rem 0.5rem;
+  border: 1px solid var(--rs-border-dark);
+  padding: 0.35rem 0.25rem;
   white-space: nowrap;
+  text-align: center;
 }
 
 .dashboard-reports-table thead th:first-child {
-  border-radius: 10px 0 0 0;
   text-align: left;
-  padding-left: 0.85rem;
-}
-
-.dashboard-reports-table thead th:last-child {
-  border-radius: 0 10px 0 0;
+  padding-left: 0.5rem;
+  width: 4.5rem;
 }
 
 .dashboard-reports-table tbody td {
-  padding: 0.55rem 0.45rem;
+  padding: 0.3rem 0.2rem;
   text-align: center;
   vertical-align: middle;
-  border-bottom: 1px solid var(--bwma-border);
+  border: 1px solid var(--rs-border);
+  background: #fff;
+  white-space: nowrap;
+  word-wrap: normal;
+  overflow-wrap: normal;
+}
+
+.dashboard-reports-table tbody tr:nth-child(even) td {
+  background: #f4f6f9;
 }
 
 .dashboard-reports-table tbody td:first-child {
   text-align: left;
-  font-weight: 650;
-  color: var(--bwma-deep);
-  padding-left: 0.85rem;
-  white-space: nowrap;
-}
-
-.dashboard-reports-table tbody tr:last-child td:first-child {
-  border-radius: 0 0 0 10px;
-}
-
-.dashboard-reports-table tbody tr:last-child td:last-child {
-  border-radius: 0 0 10px 0;
+  font-weight: 700;
+  color: var(--rs-nasa-blue);
+  padding-left: 0.5rem;
+  font-size: 0.7rem;
 }
 
 .dashboard-reports-table tbody tr:hover td {
-  background: rgba(232, 244, 248, 0.45);
+  background: #e8eef8;
 }
 
+/* Day links — horizontal monospace, no stacked digits */
 .dashboard-reports-table td a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 2rem;
-  min-height: 2rem;
-  padding: 0.15rem 0.55rem;
-  border-radius: 999px;
-  background: var(--bwma-mist);
-  color: var(--bwma-deep) !important;
-  font-weight: 650;
-  text-decoration: none !important;
-  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  display: inline;
+  font-family: var(--rs-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap !important;
+  word-break: keep-all;
+  padding: 0.05rem 0.2rem;
+  border-radius: 2px;
+  background: transparent;
+  color: var(--rs-nasa-blue) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px;
+  min-width: unset;
+  min-height: unset;
 }
 
 .dashboard-reports-table td a:hover {
-  background: var(--bwma-primary);
-  color: #fff !important;
-  transform: translateY(-1px);
+  background: rgba(11, 61, 145, 0.1);
+  color: var(--rs-nasa-red) !important;
+  transform: none;
 }
 
 .table-legend {
-  margin-top: 0.85rem;
-  font-size: 0.875rem;
-  color: var(--bwma-muted);
+  margin-top: 0.45rem;
+  font-size: 0.72rem;
+  color: var(--rs-muted);
+  font-family: var(--rs-mono);
 }
 
 /* Report embed */
 .report-embed-card {
   background: #fff;
-  border: 1px solid var(--bwma-border);
-  border-radius: var(--bwma-radius);
+  border: 1px solid var(--rs-border);
+  border-radius: var(--rs-radius);
   overflow: hidden;
-  box-shadow: var(--bwma-shadow);
 }
 
 .report-embed-header {
@@ -356,39 +417,45 @@ h1, h2, h3, h4, h5, h6 {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem 1rem;
-  padding: 1rem 1.25rem;
-  background: var(--bwma-mist);
-  border-bottom: 1px solid var(--bwma-border);
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--rs-dark);
+  border-bottom: 2px solid var(--rs-nasa-blue);
 }
 
 .report-embed-header h2 {
   margin: 0;
-  font-size: 1.2rem;
+  font-family: var(--rs-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
 }
 
 .report-embed-header p {
-  margin: 0;
-  font-size: 0.875rem;
-  color: var(--bwma-muted);
+  margin: 0.1rem 0 0;
+  font-size: 0.68rem;
+  color: #9aa8bc;
+  font-family: var(--rs-mono);
 }
 
 .report-embed-header a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.45rem 0.9rem;
-  border-radius: 999px;
-  background: var(--bwma-primary);
-  color: #fff !important;
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-family: var(--rs-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.55rem;
+  border-radius: var(--rs-radius);
+  border: 1px solid rgba(126, 184, 255, 0.4);
+  background: rgba(11, 61, 145, 0.35);
+  color: #dce8f8 !important;
   text-decoration: none !important;
   white-space: nowrap;
 }
 
 .report-embed-header a:hover {
-  background: var(--bwma-deep);
+  background: var(--rs-nasa-blue);
 }
 
 .report-iframe {
@@ -399,68 +466,67 @@ h1, h2, h3, h4, h5, h6 {
   background: #fff;
 }
 
-/* About page */
+/* About */
 .about-hero {
-  margin: 0.5rem 0 2rem;
-  padding: 1.75rem 1.5rem;
-  border-radius: var(--bwma-radius);
-  background: var(--bwma-mist);
-  border: 1px solid var(--bwma-border);
+  margin: 0.35rem 0 1rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--rs-border);
+  border-left: 4px solid var(--rs-nasa-blue);
+  border-radius: var(--rs-radius);
+  background: #fff;
 }
 
 .about-hero h1 {
   margin-top: 0;
-  font-size: 1.75rem;
+  font-size: 1.1rem;
 }
 
 .about-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.5rem;
 }
 
 .about-card {
   background: #fff;
-  border: 1px solid var(--bwma-border);
-  border-radius: var(--bwma-radius);
-  padding: 1.25rem;
-  box-shadow: var(--bwma-shadow);
+  border: 1px solid var(--rs-border);
+  border-left: 3px solid var(--rs-nasa-blue);
+  border-radius: var(--rs-radius);
+  padding: 0.65rem 0.75rem;
 }
 
 .about-card h3 {
   margin-top: 0;
-  font-size: 1.05rem;
-  color: var(--bwma-deep);
+  font-family: var(--rs-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rs-nasa-blue);
 }
 
 .about-card p,
 .about-card li {
-  color: var(--bwma-text);
-  font-size: 0.95rem;
+  font-size: 0.85rem;
+  color: var(--rs-text);
 }
 
-.about-card ul {
-  padding-left: 1.1rem;
-  margin-bottom: 0;
-}
-
-/* Links & footer */
 a {
-  color: var(--bwma-primary);
+  color: var(--rs-nasa-blue);
 }
 
 a:hover {
-  color: var(--bwma-deep);
+  color: var(--rs-nasa-red);
 }
 
 footer {
-  margin-top: 3rem;
-  padding: 1.75rem 0;
-  border-top: 1px solid var(--bwma-border);
-  background: var(--bwma-surface);
+  margin-top: 2rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--rs-border);
+  background: rgba(255, 255, 255, 0.7);
   text-align: center;
-  color: var(--bwma-muted);
-  font-size: 0.9rem;
+  color: var(--rs-muted);
+  font-size: 0.78rem;
+  font-family: var(--rs-mono);
 }
 
 #quarto-navigation-envelope,
@@ -469,22 +535,22 @@ footer {
   display: none !important;
 }
 
-/* Responsive */
+@media (max-width: 900px) {
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
-  .dashboard-hero {
-    padding: 1.5rem 1.25rem;
+  .stat-grid {
+    grid-template-columns: 1fr;
   }
 
-  .dashboard-card,
-  .report-embed-header {
-    padding: 1rem;
-  }
-
-  .stat-card .stat-value {
-    font-size: 1.55rem;
+  .stat-card .stat-value .stat-acres-num {
+    font-size: 1.1rem;
   }
 
   .dashboard-reports-table {
-    font-size: 0.82rem;
+    font-size: 0.68rem;
   }
 }
