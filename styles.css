@@ -43,6 +43,10 @@ h1, h2, h3, h4, h5, h6 {
   display: none;
 }
 
+#title-block-header.quarto-title-block {
+  display: none !important;
+}
+
 /* Navbar */
 .navbar {
   background: linear-gradient(90deg, var(--bwma-deep) 0%, var(--bwma-primary) 100%) !important;
@@ -183,6 +187,16 @@ h1, h2, h3, h4, h5, h6 {
 
 .stat-card .stat-delta-down {
   color: var(--bwma-green);
+}
+
+/* Remove Quarto cell chrome around stat cards */
+.stat-chunk,
+.stat-chunk .cell-output-display {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 /* Dashboard sections */

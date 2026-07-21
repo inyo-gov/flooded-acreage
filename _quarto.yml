@@ -8,11 +8,13 @@ project:
   resources:
     - flood_reports/csv_output/**
     - flood_reports/reports/**
+    - .nojekyll
 execute:
   dir: project
 
 website:
   title: "Flooded Acreage Monitoring"
+  site-url: https://inyo-gov.github.io/flooded-acreage/
   navbar:
     title: "Flooded Acreage Monitoring"
     logo: inyo_logo.png
@@ -31,6 +33,8 @@ format:
     theme: bootstrap
     linkcolor: "#2E86AB"
     css: styles.css
+    include-in-header:
+      - includes/dashboard-head.html
     toc: false
     code-fold: true
     code-tools: true

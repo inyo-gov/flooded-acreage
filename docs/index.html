@@ -67,6 +67,18 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<style>
+  /* Fallback if external stylesheet fails to load on GitHub Pages */
+  #title-block-header.quarto-title-block { display: none !important; }
+  .stat-chunk,
+  .stat-chunk .cell-output-display {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+</style>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -140,40 +152,40 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="dashboard-hero">
-  <div class="hero-content">
-    <h1>Blackrock Waterfowl Management Area</h1>
-    <p class="hero-lead">Monthly flooded acreage estimates from Sentinel-2 surface reflectance — Owens Valley, Inyo County, California.</p>
-    <div class="hero-meta">
-      <span>Sentinel-2 optical · NIR threshold</span>
-      <span>15-day cloud-masked composite</span>
+<div class="dashboard-hero" style="margin:0.5rem 0 2rem;padding:2.25rem 2rem;border-radius:14px;background:linear-gradient(135deg,#1a5f7a 0%,#2e86ab 55%,#3d9cad 100%);color:#fff;box-shadow:0 4px 24px rgba(26,95,122,0.08);position:relative;overflow:hidden;">
+  <div class="hero-content" style="position:relative;z-index:1;">
+    <h1 style="color:#fff;font-size:clamp(1.75rem,4vw,2.35rem);margin:0 0 0.5rem;line-height:1.15;">Blackrock Waterfowl Management Area</h1>
+    <p class="hero-lead" style="margin:0;font-size:1.05rem;color:rgba(255,255,255,0.92);max-width:42rem;">Monthly flooded acreage estimates from Sentinel-2 surface reflectance — Owens Valley, Inyo County, California.</p>
+    <div class="hero-meta" style="display:flex;flex-wrap:wrap;gap:0.5rem 1rem;margin-top:1.25rem;font-size:0.875rem;">
+      <span style="display:inline-flex;padding:0.35rem 0.75rem;border-radius:999px;background:rgba(255,255,255,0.14);">Sentinel-2 optical · NIR threshold</span>
+      <span style="display:inline-flex;padding:0.35rem 0.75rem;border-radius:999px;background:rgba(255,255,255,0.14);">15-day cloud-masked composite</span>
     </div>
   </div>
 </div>
-<div class="cell">
+<div class="cell stat-chunk">
 <div class="cell-output-display">
-<div class="stat-grid">
-<div class="stat-card stat-highlight">
-<div class="stat-label">Latest total flooded</div>
-<div class="stat-value">3.4 ac</div>
-<div class="stat-detail">July 2026 · scene Jul 01, 2026</div>
+<div class="stat-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem;">
+<div class="stat-card stat-highlight" style="background:#f7fafb;border:1px solid #d8e3ea;border-radius:14px;padding:1.15rem 1.25rem;box-shadow:0 4px 24px rgba(26,95,122,0.08);border-color:#2e86ab;background:linear-gradient(180deg,#ffffff 0%,#e8f4f8 100%);">
+<div class="stat-label" style="font-size:0.78rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:#5c6b73;margin-bottom:0.35rem;">Latest total flooded</div>
+<div class="stat-value" style="font-size:1.85rem;font-weight:700;line-height:1.1;color:#1a5f7a;">3.4 ac</div>
+<div class="stat-detail" style="margin-top:0.45rem;font-size:0.875rem;color:#5c6b73;line-height:1.45;">July 2026 · scene Jul 01, 2026</div>
 </div>
-<div class="stat-card">
-<div class="stat-label">Month-over-month</div>
-<div class="stat-value">9.4 ac change</div>
-<div class="stat-detail">
+<div class="stat-card" style="background:#f7fafb;border:1px solid #d8e3ea;border-radius:14px;padding:1.15rem 1.25rem;box-shadow:0 4px 24px rgba(26,95,122,0.08);">
+<div class="stat-label" style="font-size:0.78rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:#5c6b73;margin-bottom:0.35rem;">Month-over-month</div>
+<div class="stat-value" style="font-size:1.85rem;font-weight:700;line-height:1.1;color:#1a5f7a;">9.4 ac change</div>
+<div class="stat-detail" style="margin-top:0.45rem;font-size:0.875rem;color:#5c6b73;line-height:1.45;">
 <span class="stat-delta-down">-9.4 ac vs prior month</span>
 </div>
 </div>
-<div class="stat-card">
-<div class="stat-label">Season peak (Nov–Mar)</div>
-<div class="stat-value">716.8 ac on Feb 2026</div>
-<div class="stat-detail">500 ac management target</div>
+<div class="stat-card" style="background:#f7fafb;border:1px solid #d8e3ea;border-radius:14px;padding:1.15rem 1.25rem;box-shadow:0 4px 24px rgba(26,95,122,0.08);">
+<div class="stat-label" style="font-size:0.78rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:#5c6b73;margin-bottom:0.35rem;">Season peak (Nov–Mar)</div>
+<div class="stat-value" style="font-size:1.85rem;font-weight:700;line-height:1.1;color:#1a5f7a;">716.8 ac on Feb 2026</div>
+<div class="stat-detail" style="margin-top:0.45rem;font-size:0.875rem;color:#5c6b73;line-height:1.45;">500 ac management target</div>
 </div>
-<div class="stat-card">
-<div class="stat-label">Reporting units</div>
-<div class="stat-value">7</div>
-<div class="stat-detail">Thibaut, Drew, Waggoner, West Winterton, East Winterton, South Winterton, Thibaut Ponds</div>
+<div class="stat-card" style="background:#f7fafb;border:1px solid #d8e3ea;border-radius:14px;padding:1.15rem 1.25rem;box-shadow:0 4px 24px rgba(26,95,122,0.08);">
+<div class="stat-label" style="font-size:0.78rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:#5c6b73;margin-bottom:0.35rem;">Reporting units</div>
+<div class="stat-value" style="font-size:1.85rem;font-weight:700;line-height:1.1;color:#1a5f7a;">7</div>
+<div class="stat-detail" style="margin-top:0.45rem;font-size:0.875rem;color:#5c6b73;line-height:1.45;">Thibaut, Drew, Waggoner, West Winterton, East Winterton, South Winterton, Thibaut Ponds</div>
 </div>
 </div>
 </div>
@@ -367,7 +379,7 @@ Click a day number to open the full HTML report (map, unit breakdown, and imager
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/inyo-gov\.github\.io\/flooded-acreage\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

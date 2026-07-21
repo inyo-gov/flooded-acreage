@@ -8,13 +8,13 @@ format:
 ---
 
 ```{=html}
-<div class="dashboard-hero">
-  <div class="hero-content">
-    <h1>Blackrock Waterfowl Management Area</h1>
-    <p class="hero-lead">Monthly flooded acreage estimates from Sentinel-2 surface reflectance — Owens Valley, Inyo County, California.</p>
-    <div class="hero-meta">
-      <span>Sentinel-2 optical · NIR threshold</span>
-      <span>15-day cloud-masked composite</span>
+<div class="dashboard-hero" style="margin:0.5rem 0 2rem;padding:2.25rem 2rem;border-radius:14px;background:linear-gradient(135deg,#1a5f7a 0%,#2e86ab 55%,#3d9cad 100%);color:#fff;box-shadow:0 4px 24px rgba(26,95,122,0.08);position:relative;overflow:hidden;">
+  <div class="hero-content" style="position:relative;z-index:1;">
+    <h1 style="color:#fff;font-size:clamp(1.75rem,4vw,2.35rem);margin:0 0 0.5rem;line-height:1.15;">Blackrock Waterfowl Management Area</h1>
+    <p class="hero-lead" style="margin:0;font-size:1.05rem;color:rgba(255,255,255,0.92);max-width:42rem;">Monthly flooded acreage estimates from Sentinel-2 surface reflectance — Owens Valley, Inyo County, California.</p>
+    <div class="hero-meta" style="display:flex;flex-wrap:wrap;gap:0.5rem 1rem;margin-top:1.25rem;font-size:0.875rem;">
+      <span style="display:inline-flex;padding:0.35rem 0.75rem;border-radius:999px;background:rgba(255,255,255,0.14);">Sentinel-2 optical · NIR threshold</span>
+      <span style="display:inline-flex;padding:0.35rem 0.75rem;border-radius:999px;background:rgba(255,255,255,0.14);">15-day cloud-masked composite</span>
     </div>
   </div>
 </div>
@@ -50,11 +50,22 @@ monthly_raw <- lapply(csv_files, function(path) {
 ```
 
 ```{r dashboard_stats, echo=FALSE, message=FALSE, warning=FALSE}
+#| classes: stat-chunk
 library(dplyr)
 library(lubridate)
 library(htmltools)
 
 fmt_acres <- function(x) format(round(x, 1), nsmall = 1, trim = TRUE)
+
+stat_card_style <- "background:#f7fafb;border:1px solid #d8e3ea;border-radius:14px;padding:1.15rem 1.25rem;box-shadow:0 4px 24px rgba(26,95,122,0.08);"
+stat_highlight_style <- paste0(
+  stat_card_style,
+  "border-color:#2e86ab;background:linear-gradient(180deg,#ffffff 0%,#e8f4f8 100%);"
+)
+stat_grid_style <- "display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem;"
+stat_label_style <- "font-size:0.78rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:#5c6b73;margin-bottom:0.35rem;"
+stat_value_style <- "font-size:1.85rem;font-weight:700;line-height:1.1;color:#1a5f7a;"
+stat_detail_style <- "margin-top:0.45rem;font-size:0.875rem;color:#5c6b73;line-height:1.45;"
 
 totals <- monthly_raw %>%
   filter(Flood_Unit == "Total") %>%
@@ -103,12 +114,15 @@ mom_value <- if (nrow(prev) == 1) {
 
 tags$div(
   class = "stat-grid",
+  style = stat_grid_style,
   tags$div(
     class = "stat-card stat-highlight",
-    tags$div(class = "stat-label", "Latest total flooded"),
-    tags$div(class = "stat-value", paste0(fmt_acres(latest$acres_flooded), " ac")),
+    style = stat_highlight_style,
+    tags$div(class = "stat-label", style = stat_label_style, "Latest total flooded"),
+    tags$div(class = "stat-value", style = stat_value_style, paste0(fmt_acres(latest$acres_flooded), " ac")),
     tags$div(
       class = "stat-detail",
+      style = stat_detail_style,
       paste0(
         format(latest_month, "%B %Y"),
         " · scene ",
@@ -118,22 +132,26 @@ tags$div(
   ),
   tags$div(
     class = "stat-card",
-    tags$div(class = "stat-label", "Month-over-month"),
-    tags$div(class = "stat-value", mom_value),
-    tags$div(class = "stat-detail", delta_detail)
+    style = stat_card_style,
+    tags$div(class = "stat-label", style = stat_label_style, "Month-over-month"),
+    tags$div(class = "stat-value", style = stat_value_style, mom_value),
+    tags$div(class = "stat-detail", style = stat_detail_style, delta_detail)
   ),
   tags$div(
     class = "stat-card",
-    tags$div(class = "stat-label", "Season peak (Nov–Mar)"),
-    tags$div(class = "stat-value", season_value),
-    tags$div(class = "stat-detail", "500 ac management target")
+    style = stat_card_style,
+    tags$div(class = "stat-label", style = stat_label_style, "Season peak (Nov–Mar)"),
+    tags$div(class = "stat-value", style = stat_value_style, season_value),
+    tags$div(class = "stat-detail", style = stat_detail_style, "500 ac management target")
   ),
   tags$div(
     class = "stat-card",
-    tags$div(class = "stat-label", "Reporting units"),
-    tags$div(class = "stat-value", "7"),
+    style = stat_card_style,
+    tags$div(class = "stat-label", style = stat_label_style, "Reporting units"),
+    tags$div(class = "stat-value", style = stat_value_style, "7"),
     tags$div(
       class = "stat-detail",
+      style = stat_detail_style,
       "Thibaut, Drew, Waggoner, West Winterton, East Winterton, South Winterton, Thibaut Ponds"
     )
   )
