@@ -380,18 +380,18 @@ knitr::kable(
 :::
 
 ```{=html}
-<!-- Latest monthly run: July 2026 (threshold 0.14). June: flood_reports/reports/bwma_flood_report_2026-06-01_0.14.html -->
+<!-- Latest monthly run: August 2026 (threshold 0.14; window 2026-08-01–16, filename date 2026-08-03). July: bwma_flood_report_2026-07-01_0.14.html -->
 <div class="dashboard-section">
   <div class="report-embed-card">
     <div class="report-embed-header">
       <div>
         <h2>Most recent report</h2>
-        <p>July 2026 · Sentinel-2 composite · threshold 0.14</p>
+        <p>August 2026 · Sentinel-2 composite · threshold 0.14 · ~3.1 ac (Drew)</p>
       </div>
-      <a href="flood_reports/reports/bwma_flood_report_2026-07-01_0.14.html" target="_blank" rel="noopener">Open full report ↗</a>
+      <a href="flood_reports/reports/bwma_flood_report_2026-08-03_0.14.html" target="_blank" rel="noopener">Open full report ↗</a>
     </div>
     <iframe
-      src="flood_reports/reports/bwma_flood_report_2026-07-01_0.14.html"
+      src="flood_reports/reports/bwma_flood_report_2026-08-03_0.14.html"
       class="report-iframe"
       id="report-frame"
       title="Latest BWMA flood acreage report">

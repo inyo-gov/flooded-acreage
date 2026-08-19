@@ -1,0 +1,13 @@
+title: Flooded Acreage Monitoring
+description: BWMA monthly Sentinel-2 flood acreage reporting and dashboard.
+site_url: https://inyo-gov.github.io/flooded-acreage/
+visibility: public
+release: release
+tags:
+  - bwma
+  - sentinel-2
+  - flooded-acreage
+  - green-book
+mandates:
+  - 1997 MOU
+  - BWMA Interim Plan
