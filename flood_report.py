@@ -8,6 +8,10 @@ from datetime import datetime, timedelta
 import html
 import os
 import imageio.v2 as imageio
+import shutil
+import subprocess
+import json
+import tempfile
 
 # Example terminal command
 # > python flood_report.py '2024-10-22' .22
@@ -362,6 +366,88 @@ def build_report_html(
 </html>
 """
 
+
+AOI_BBOX_BOUNDS = [
+    [36.84651455123723, -118.23240736400778],
+    [36.924364295139625, -118.17232588207419],
+]
+
+
+def _gdal_exe(name):
+    """Resolve gdalwarp/gdalinfo from PATH or known conda envs on this Mac."""
+    found = shutil.which(name)
+    if found:
+        return found
+    for base in (
+        "/opt/homebrew/Caskroom/miniconda/base/envs/lidar/bin",
+        "/opt/homebrew/Caskroom/miniconda/base/envs/ee-tools/bin",
+        "/opt/homebrew/Caskroom/miniconda/base/bin",
+    ):
+        cand = os.path.join(base, name)
+        if os.path.isfile(cand) and os.access(cand, os.X_OK):
+            return cand
+    return None
+
+
+def prepare_folium_overlay_png(tif_path, png_path):
+    """Reproject a GeoTIFF to EPSG:4326 for Folium ImageOverlay.
+
+    geemap/EE exports are typically UTM-aligned. Folium ImageOverlay only
+    accepts an axis-aligned lon/lat rectangle, so stretching a UTM PNG onto the
+    AOI lon/lat box misplaces the imagery relative to GeoJSON (tens of meters
+    inside BWMA; >100 m at corners). Warping to WGS84 before PNG export fixes
+    that real overlay bug.
+
+    Returns Folium bounds [[south, west], [north, east]].
+    """
+    gdalwarp = _gdal_exe("gdalwarp")
+    gdalinfo = _gdal_exe("gdalinfo")
+    if not gdalwarp or not gdalinfo:
+        raise RuntimeError(
+            "gdalwarp/gdalinfo required to build a WGS84 Folium overlay PNG "
+            "(install GDAL or use the lidar/ee-tools conda env)."
+        )
+
+    os.makedirs(os.path.dirname(os.path.abspath(png_path)) or ".", exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="bwma_overlay_") as tmp:
+        warped = os.path.join(tmp, "wgs84.tif")
+        cmd = [
+            gdalwarp,
+            "-t_srs", "EPSG:4326",
+            "-r", "bilinear",
+            "-dstalpha",
+            "-overwrite",
+            tif_path,
+            warped,
+        ]
+        subprocess.run(cmd, check=True, capture_output=True, text=True)
+        info = subprocess.run(
+            [gdalinfo, "-json", warped],
+            check=True, capture_output=True, text=True,
+        )
+        meta = json.loads(info.stdout)
+        # cornerCoordinates: upperLeft/lowerRight etc as [lon, lat]
+        corners = meta["cornerCoordinates"]
+        ul = corners["upperLeft"]
+        lr = corners["lowerRight"]
+        west = min(ul[0], lr[0], corners["upperRight"][0], corners["lowerLeft"][0])
+        east = max(ul[0], lr[0], corners["upperRight"][0], corners["lowerLeft"][0])
+        south = min(ul[1], lr[1], corners["upperRight"][1], corners["lowerLeft"][1])
+        north = max(ul[1], lr[1], corners["upperRight"][1], corners["lowerLeft"][1])
+        arr = imageio.imread(warped)
+        # Drop alpha if present for a simple RGB PNG the map already expects.
+        if arr.ndim == 3 and arr.shape[2] >= 3:
+            arr = arr[:, :, :3]
+        imageio.imwrite(png_path, arr)
+
+    bounds = [[south, west], [north, east]]
+    print(
+        f"Folium overlay PNG (EPSG:4326) saved at {png_path} "
+        f"bounds S/W–N/E {south:.6f}/{west:.6f}–{north:.6f}/{east:.6f}"
+    )
+    return bounds
+
+
 def build_flood_map(
     map_basename,
     false_color_basename,
@@ -373,12 +459,13 @@ def build_flood_map(
     threshold,
     scene_count,
     product="composite",
+    overlay_bounds=None,
 ):
     """Build a telemetry-themed folium map for the monthly report iframe."""
-    bbox_bounds = [
-        [36.84651455123723, -118.23240736400778],
-        [36.924364295139625, -118.17232588207419],
-    ]
+    # Image overlay must use the PNG's true WGS84 bounds (see prepare_folium_overlay_png).
+    # fit_bounds can stay on the AOI box so the view framing stays consistent.
+    bbox_bounds = AOI_BBOX_BOUNDS
+    image_bounds = overlay_bounds or AOI_BBOX_BOUNDS
     month_label = pd.to_datetime(start_date).strftime("%b %Y")
 
     m = folium.Map(location=[36.8795, -118.202], tiles=None, control_scale=True)
@@ -407,7 +494,7 @@ def build_flood_map(
     folium.raster_layers.ImageOverlay(
         name=overlay_name,
         image=false_color_basename,
-        bounds=bbox_bounds,
+        bounds=image_bounds,
         opacity=1,
         interactive=True,
         cross_origin=False,
@@ -826,11 +913,12 @@ def main(start_date, threshold, mode="composite", end_date=None, max_cloud_frac=
 
     false_color_filename_png = f"flood_reports/reports/false_color_composite_{name_prefix}{image_date_str}_{threshold}.png"
     # flooded_pixels_filename_png = f"docs/reports/flooded_pixels_{image_date_str}_{threshold}.png"
-    
-    # Read the TIFF file and save it as PNG
-    false_color_image = imageio.imread(false_color_filename_tif)
-    imageio.imwrite(false_color_filename_png, false_color_image)
-    print(f"False-color PNG saved at {false_color_filename_png}")
+
+    # UTM (or other projected) GeoTIFF stays the downloadable product; Folium needs
+    # a WGS84-aligned PNG + matching bounds or the unit outlines look offset.
+    overlay_bounds = prepare_folium_overlay_png(
+        false_color_filename_tif, false_color_filename_png
+    )
 
     # Load units from geojson and convert to Earth Engine geometry
     print("Loading units from geojson...")
@@ -951,6 +1039,7 @@ def main(start_date, threshold, mode="composite", end_date=None, max_cloud_frac=
             threshold=threshold,
             scene_count=size,
             product=product,
+            overlay_bounds=overlay_bounds,
         )
         print(f"Map saved to {map_filename}")
     finally:
@@ -1008,7 +1097,11 @@ def main(start_date, threshold, mode="composite", end_date=None, max_cloud_frac=
             "aoi_cloud_frac": scene_cloud_frac,
             "granule_cloud_pct": None if granule_cloud_pct is None else float(granule_cloud_pct),
             "max_cloud_frac": max_cloud_frac,
-            "cloud_rule": (
+            "lead": (
+                "Newest clear Sentinel-2 pass over BWMA since wet-up began — "
+                "for release calibration, not the monthly composite."
+            ),
+            "method_details": (
                 "Prefilter: granule CLOUDY_PIXEL_PERCENTAGE < 90 (whole Sentinel-2 tile, not the AOI). "
                 "Acceptance: over the BWMA bounding box at 20 m, "
                 "aoi_cloud_frac = count(SCL in {8,9,10}) / count(SCL != 0) must be <= 20%. "
@@ -1017,8 +1110,19 @@ def main(start_date, threshold, mode="composite", end_date=None, max_cloud_frac=
                 "SCL in {0,3,8,9,10} (no data, cloud shadow, medium cloud, high cloud, cirrus). "
                 "This is not a 15-day median composite."
             ),
-            "report_href": report_filename.replace("\\", "/"),
+            # Kept for older dashboard renders that still read cloud_rule.
+            "cloud_rule": (
+                "Newest clear Sentinel-2 pass over BWMA since wet-up began — "
+                "for release calibration, not the monthly composite."
+            ),
+            "report_href": report_filename.replace(chr(92), "/"),
+            "map_note": (
+                "False-color PNG for the Folium map is warped to EPSG:4326 so the "
+                "image overlay matches unit GeoJSON; downloadable GeoTIFF stays in "
+                "the EE export CRS (typically UTM 11N)."
+            ),
         }
+
         os.makedirs("includes", exist_ok=True)
         sidecar = "includes/latest_scene.json"
         with open(sidecar, "w") as fh:

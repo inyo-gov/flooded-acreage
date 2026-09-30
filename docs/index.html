@@ -218,12 +218,16 @@ ul.task-list li input[type="checkbox"] {
 <div class="scene-card-kicker">Latest usable scene · release calibration</div>
 <div class="scene-card-row">
 <div>
-<div class="scene-card-acres">106.6 ac</div>
-<div class="scene-card-date">Scene date 2026-09-29 · single Sentinel-2 pass · NIR 0.14 · AOI cloud 0.0%</div>
+<div class="scene-card-acres">137.5 ac</div>
+<div class="scene-card-date">Scene date 2026-09-29 · NIR 0.16</div>
 </div>
-<a class="scene-card-link" href="flood_reports/reports/bwma_flood_report_scene_2026-09-29_0.14.html" target="_blank" rel="noopener">Open scene report</a>
+<a class="scene-card-link" href="flood_reports/reports/bwma_flood_report_scene_2026-09-29_0.16.html" target="_blank" rel="noopener">Open scene report</a>
 </div>
-<p class="scene-card-rule">Prefilter: granule CLOUDY_PIXEL_PERCENTAGE &lt; 90 (whole Sentinel-2 tile, not the AOI). Acceptance: over the BWMA bounding box at 20 m, aoi_cloud_frac = count(SCL in {8,9,10}) / count(SCL != 0) must be &lt;= 20%. The usable scene with the latest system:time_start is kept. Acreage is NIR reflectance &lt; threshold on that single scene after masking SCL in {0,3,8,9,10} (no data, cloud shadow, medium cloud, high cloud, cirrus). This is not a 15-day median composite.</p>
+<p class="scene-card-lead">Newest clear Sentinel-2 pass over BWMA since wet-up began — for release calibration, not the monthly composite.</p>
+<details class="scene-card-details">
+<summary>Scene selection &amp; NIR method</summary>
+<p>Prefilter: granule CLOUDY_PIXEL_PERCENTAGE &lt; 90 (whole Sentinel-2 tile, not the AOI). Acceptance: over the BWMA bounding box at 20 m, aoi_cloud_frac = count(SCL in {8,9,10}) / count(SCL != 0) must be &lt;= 20%. The usable scene with the latest system:time_start is kept. Acreage is NIR reflectance &lt; threshold on that single scene after masking SCL in {0,3,8,9,10} (no data, cloud shadow, medium cloud, high cloud, cirrus). Displayed threshold 0.16 (raised from 0.14 to include dark fringe wet pixels in fall imagery). This is not a 15-day median composite. False-color PNG for the Folium map is warped to EPSG:4326 so the image overlay matches unit GeoJSON; downloadable GeoTIFF stays in the EE export CRS (typically UTM 11N).</p>
+</details>
 </div>
 </div>
 </div>
@@ -247,7 +251,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="dashboard-section">
 <section id="monthly-report-archive" class="level2 dashboard-section-header">
 <h2 class="anchored" data-anchor-id="monthly-report-archive">Monthly report archive</h2>
-<p>Each cell links to that month’s archived report. The <strong>day number</strong> is the <strong>file label date</strong> (first scene in the collection)—not a single-scene acquisition. <strong>Since April 2026</strong>, reports follow the composite workflow below; older entries may reflect ad-hoc run dates and fewer scenes in the window.</p>
+<p>Each cell links to that month’s archived composite report (one day per month). The <strong>day number</strong> is the <strong>file label date</strong> (first scene in the collection)—not a single-scene acquisition. Latest usable scene acreage lives in the card above, not in this table. <strong>Since April 2026</strong>, reports follow the composite workflow below; older entries may reflect ad-hoc run dates and fewer scenes in the window.</p>
 </section>
 <div class="dashboard-card table-card">
 <div class="archive-mobile" aria-label="Monthly reports by fiscal year">
@@ -270,7 +274,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="archive-m-row">
 <span class="archive-m-month">Nov</span>
 <div class="archive-days">
-<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2024-11-03_0.22.html" target="_blank" rel="noopener" title="Archived report · label date Nov 03, 2024 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">03</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a class="archive-day" href="flood_reports/reports/bwma_flood_report_2024-11-08_0.22.html" target="_blank" rel="noopener" title="Archived report · label date Nov 08, 2024 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">08</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a class="archive-day" href="flood_reports/reports/bwma_flood_report_2024-11-13_0.22.html" target="_blank" rel="noopener" title="Archived report · label date Nov 13, 2024 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">13</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a class="archive-day" href="flood_reports/reports/bwma_flood_report_2024-11-16_0.22.html" target="_blank" rel="noopener" title="Archived report · label date Nov 16, 2024 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">16</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a class="archive-day" href="flood_reports/reports/bwma_flood_report_2024-11-18_0.22.html" target="_blank" rel="noopener" title="Archived report · label date Nov 18, 2024 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">18</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a class="archive-day" href="flood_reports/reports/bwma_flood_report_2024-11-28_0.21.html" target="_blank" rel="noopener" title="Archived report · label date Nov 28, 2024 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">28</a>
+<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2024-11-03_0.22.html" target="_blank" rel="noopener" title="Archived report · label date Nov 03, 2024 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">03</a>
 </div>
 </div>
 <div class="archive-m-row">
@@ -294,7 +298,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="archive-m-row">
 <span class="archive-m-month">Mar</span>
 <div class="archive-days">
-<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-03-01_0.16.html" target="_blank" rel="noopener" title="Archived report · label date Mar 01, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">01</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-03-08_0.18.html" target="_blank" rel="noopener" title="Archived report · label date Mar 08, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">08</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-03-15_0.2.html" target="_blank" rel="noopener" title="Archived report · label date Mar 15, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">15</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-03-26_0.14.html" target="_blank" rel="noopener" title="Archived report · label date Mar 26, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">26</a>
+<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-03-01_0.16.html" target="_blank" rel="noopener" title="Archived report · label date Mar 01, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">01</a>
 </div>
 </div>
 <div class="archive-m-row">
@@ -306,7 +310,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="archive-m-row">
 <span class="archive-m-month">May</span>
 <div class="archive-days">
-<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-05-02_0.08.html" target="_blank" rel="noopener" title="Archived report · label date May 02, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">02</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-05-20_0.1.html" target="_blank" rel="noopener" title="Archived report · label date May 20, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">20</a>
+<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-05-02_0.08.html" target="_blank" rel="noopener" title="Archived report · label date May 02, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">02</a>
 </div>
 </div>
 <div class="archive-m-row">
@@ -335,7 +339,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="archive-m-row">
 <span class="archive-m-month">Sep</span>
 <div class="archive-days">
-<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-09-17_0.15.html" target="_blank" rel="noopener" title="Archived report · label date Sep 17, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">17</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-09-29_0.15.html" target="_blank" rel="noopener" title="Archived report · label date Sep 29, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">29</a>
+<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-09-17_0.15.html" target="_blank" rel="noopener" title="Archived report · label date Sep 17, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">17</a>
 </div>
 </div>
 <div class="archive-m-row">
@@ -347,13 +351,13 @@ ul.task-list li input[type="checkbox"] {
 <div class="archive-m-row">
 <span class="archive-m-month">Nov</span>
 <div class="archive-days">
-<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-11-01_0.2.html" target="_blank" rel="noopener" title="Archived report · label date Nov 01, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">01</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-11-01_0.21.html" target="_blank" rel="noopener" title="Archived report · label date Nov 01, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">01</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-11-01_0.22.html" target="_blank" rel="noopener" title="Archived report · label date Nov 01, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">01</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-11-10_0.21.html" target="_blank" rel="noopener" title="Archived report · label date Nov 10, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">10</a>
+<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-11-01_0.2.html" target="_blank" rel="noopener" title="Archived report · label date Nov 01, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">01</a>
 </div>
 </div>
 <div class="archive-m-row">
 <span class="archive-m-month">Dec</span>
 <div class="archive-days">
-<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-12-01_0.16.html" target="_blank" rel="noopener" title="Archived report · label date Dec 01, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">01</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-12-08_0.18.html" target="_blank" rel="noopener" title="Archived report · label date Dec 08, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">08</a>
+<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2025-12-01_0.16.html" target="_blank" rel="noopener" title="Archived report · label date Dec 01, 2025 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">01</a>
 </div>
 </div>
 <div class="archive-m-row">
@@ -371,7 +375,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="archive-m-row">
 <span class="archive-m-month">Mar</span>
 <div class="archive-days">
-<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2026-03-01_0.14.html" target="_blank" rel="noopener" title="Archived report · label date Mar 01, 2026 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">01</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a class="archive-day" href="flood_reports/reports/bwma_flood_report_2026-03-16_0.14.html" target="_blank" rel="noopener" title="Archived report · label date Mar 16, 2026 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">16</a>
+<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2026-03-01_0.14.html" target="_blank" rel="noopener" title="Archived report · label date Mar 01, 2026 (pre-composite workflow)" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">01</a>
 </div>
 </div>
 <div class="archive-m-row">
@@ -412,7 +416,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="archive-m-row">
 <span class="archive-m-month">Sep</span>
 <div class="archive-days">
-<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2026-09-22_0.14.html" target="_blank" rel="noopener" title="Composite report · label date Sep 22, 2026" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">22</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a class="archive-day" href="flood_reports/reports/bwma_flood_report_2026-09-26_0.14.html" target="_blank" rel="noopener" title="Composite report · label date Sep 26, 2026" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">26</a>
+<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2026-09-22_0.14.html" target="_blank" rel="noopener" title="Composite report · label date Sep 22, 2026" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">22</a>
 </div>
 </div>
 </details>
@@ -463,7 +467,7 @@ ul.task-list li input[type="checkbox"] {
 <a href="flood_reports/reports/bwma_flood_report_2024-10-22_0.22.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Oct 22, 2024 (pre-composite workflow)">22</a>
 </div></td>
 <td style="text-align: left;"><div class="archive-days">
-<a href="flood_reports/reports/bwma_flood_report_2024-11-03_0.22.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Nov 03, 2024 (pre-composite workflow)">03</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a href="flood_reports/reports/bwma_flood_report_2024-11-08_0.22.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Nov 08, 2024 (pre-composite workflow)">08</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a href="flood_reports/reports/bwma_flood_report_2024-11-13_0.22.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Nov 13, 2024 (pre-composite workflow)">13</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a href="flood_reports/reports/bwma_flood_report_2024-11-16_0.22.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Nov 16, 2024 (pre-composite workflow)">16</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a href="flood_reports/reports/bwma_flood_report_2024-11-18_0.22.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Nov 18, 2024 (pre-composite workflow)">18</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a href="flood_reports/reports/bwma_flood_report_2024-11-28_0.21.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Nov 28, 2024 (pre-composite workflow)">28</a>
+<a href="flood_reports/reports/bwma_flood_report_2024-11-03_0.22.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Nov 03, 2024 (pre-composite workflow)">03</a>
 </div></td>
 <td style="text-align: left;"><div class="archive-days">
 <a href="flood_reports/reports/bwma_flood_report_2024-12-06_0.2.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Dec 06, 2024 (pre-composite workflow)">06</a>
@@ -475,13 +479,13 @@ ul.task-list li input[type="checkbox"] {
 <a href="flood_reports/reports/bwma_flood_report_2025-02-21_0.16.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Feb 21, 2025 (pre-composite workflow)">21</a>
 </div></td>
 <td style="text-align: left;"><div class="archive-days">
-<a href="flood_reports/reports/bwma_flood_report_2025-03-01_0.16.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Mar 01, 2025 (pre-composite workflow)">01</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a href="flood_reports/reports/bwma_flood_report_2025-03-08_0.18.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Mar 08, 2025 (pre-composite workflow)">08</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a href="flood_reports/reports/bwma_flood_report_2025-03-15_0.2.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Mar 15, 2025 (pre-composite workflow)">15</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a href="flood_reports/reports/bwma_flood_report_2025-03-26_0.14.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Mar 26, 2025 (pre-composite workflow)">26</a>
+<a href="flood_reports/reports/bwma_flood_report_2025-03-01_0.16.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Mar 01, 2025 (pre-composite workflow)">01</a>
 </div></td>
 <td style="text-align: left;"><div class="archive-days">
 <a href="flood_reports/reports/bwma_flood_report_2025-04-04_0.16.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Apr 04, 2025 (pre-composite workflow)">04</a>
 </div></td>
 <td style="text-align: left;"><div class="archive-days">
-<a href="flood_reports/reports/bwma_flood_report_2025-05-02_0.08.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date May 02, 2025 (pre-composite workflow)">02</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a href="flood_reports/reports/bwma_flood_report_2025-05-20_0.1.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date May 20, 2025 (pre-composite workflow)">20</a>
+<a href="flood_reports/reports/bwma_flood_report_2025-05-02_0.08.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date May 02, 2025 (pre-composite workflow)">02</a>
 </div></td>
 <td style="text-align: left;"><div class="archive-days">
 <a href="flood_reports/reports/bwma_flood_report_2025-06-04_0.1.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Jun 04, 2025 (pre-composite workflow)">04</a>
@@ -496,16 +500,16 @@ ul.task-list li input[type="checkbox"] {
 <a href="flood_reports/reports/bwma_flood_report_2025-08-02_0.1.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Aug 02, 2025 (pre-composite workflow)">02</a>
 </div></td>
 <td style="text-align: left;"><div class="archive-days">
-<a href="flood_reports/reports/bwma_flood_report_2025-09-17_0.15.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Sep 17, 2025 (pre-composite workflow)">17</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a href="flood_reports/reports/bwma_flood_report_2025-09-29_0.15.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Sep 29, 2025 (pre-composite workflow)">29</a>
+<a href="flood_reports/reports/bwma_flood_report_2025-09-17_0.15.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Sep 17, 2025 (pre-composite workflow)">17</a>
 </div></td>
 <td style="text-align: left;"><div class="archive-days">
 <a href="flood_reports/reports/bwma_flood_report_2025-10-17_0.2.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Oct 17, 2025 (pre-composite workflow)">17</a>
 </div></td>
 <td style="text-align: left;"><div class="archive-days">
-<a href="flood_reports/reports/bwma_flood_report_2025-11-01_0.2.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Nov 01, 2025 (pre-composite workflow)">01</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a href="flood_reports/reports/bwma_flood_report_2025-11-01_0.21.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Nov 01, 2025 (pre-composite workflow)">01</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a href="flood_reports/reports/bwma_flood_report_2025-11-01_0.22.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Nov 01, 2025 (pre-composite workflow)">01</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a href="flood_reports/reports/bwma_flood_report_2025-11-10_0.21.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Nov 10, 2025 (pre-composite workflow)">10</a>
+<a href="flood_reports/reports/bwma_flood_report_2025-11-01_0.2.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Nov 01, 2025 (pre-composite workflow)">01</a>
 </div></td>
 <td style="text-align: left;"><div class="archive-days">
-<a href="flood_reports/reports/bwma_flood_report_2025-12-01_0.16.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Dec 01, 2025 (pre-composite workflow)">01</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a href="flood_reports/reports/bwma_flood_report_2025-12-08_0.18.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Dec 08, 2025 (pre-composite workflow)">08</a>
+<a href="flood_reports/reports/bwma_flood_report_2025-12-01_0.16.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Dec 01, 2025 (pre-composite workflow)">01</a>
 </div></td>
 <td style="text-align: left;"><div class="archive-days">
 <a href="flood_reports/reports/bwma_flood_report_2026-01-02_0.14.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Jan 02, 2026 (pre-composite workflow)">02</a>
@@ -514,7 +518,7 @@ ul.task-list li input[type="checkbox"] {
 <a href="flood_reports/reports/bwma_flood_report_2026-02-01_0.14.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Feb 01, 2026 (pre-composite workflow)">01</a>
 </div></td>
 <td style="text-align: left;"><div class="archive-days">
-<a href="flood_reports/reports/bwma_flood_report_2026-03-01_0.14.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Mar 01, 2026 (pre-composite workflow)">01</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a href="flood_reports/reports/bwma_flood_report_2026-03-16_0.14.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Mar 16, 2026 (pre-composite workflow)">16</a>
+<a href="flood_reports/reports/bwma_flood_report_2026-03-01_0.14.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Archived report · label date Mar 01, 2026 (pre-composite workflow)">01</a>
 </div></td>
 <td style="text-align: left;"><div class="archive-days">
 <a href="flood_reports/reports/bwma_flood_report_2026-04-02_0.14.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Composite report · label date Apr 02, 2026">02</a>
@@ -535,7 +539,7 @@ ul.task-list li input[type="checkbox"] {
 <a href="flood_reports/reports/bwma_flood_report_2026-08-03_0.14.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Composite report · label date Aug 03, 2026">03</a>
 </div></td>
 <td style="text-align: left;"><div class="archive-days">
-<a href="flood_reports/reports/bwma_flood_report_2026-09-22_0.14.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Composite report · label date Sep 22, 2026">22</a><span class="archive-sep" aria-hidden="true">&nbsp;·&nbsp;</span><a href="flood_reports/reports/bwma_flood_report_2026-09-26_0.14.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Composite report · label date Sep 26, 2026">26</a>
+<a href="flood_reports/reports/bwma_flood_report_2026-09-22_0.14.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Composite report · label date Sep 22, 2026">22</a>
 </div></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>

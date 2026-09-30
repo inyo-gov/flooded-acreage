@@ -518,6 +518,48 @@ a.archive-day {
   color: var(--rs-muted);
 }
 
+.scene-card-lead {
+  margin: 0.45rem 0 0.25rem;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--rs-text);
+}
+
+.scene-card-details {
+  margin: 0.15rem 0 0;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  color: var(--rs-muted);
+}
+
+.scene-card-details summary {
+  cursor: pointer;
+  font-family: var(--rs-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--rs-nasa-blue);
+  list-style: none;
+}
+
+.scene-card-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.scene-card-details summary::before {
+  content: "▸ ";
+  color: var(--rs-nasa-red);
+}
+
+.scene-card-details[open] summary::before {
+  content: "▾ ";
+}
+
+.scene-card-details p {
+  margin: 0.35rem 0 0;
+}
+
 /* Report embed */
 .report-embed-card {
   background: #fff;

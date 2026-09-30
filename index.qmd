@@ -176,7 +176,21 @@ scene_file <- "includes/latest_scene.json"
 if (file.exists(scene_file)) {
   s <- jsonlite::fromJSON(scene_file)
   acres_txt <- format(round(as.numeric(s$acres), 1), nsmall = 1, trim = TRUE)
-  cloud_pct <- sprintf("%.1f%%", 100 * as.numeric(s$aoi_cloud_frac))
+  lead_txt <- if (!is.null(s$lead) && nzchar(s$lead)) {
+    s$lead
+  } else {
+    "Newest clear Sentinel-2 pass over BWMA since wet-up began — for release calibration, not the monthly composite."
+  }
+  method_txt <- if (!is.null(s$method_details) && nzchar(s$method_details)) {
+    s$method_details
+  } else {
+    s$cloud_rule
+  }
+  map_note <- if (!is.null(s$map_note) && nzchar(s$map_note)) s$map_note else NULL
+  details_body <- method_txt
+  if (!is.null(map_note)) {
+    details_body <- paste0(details_body, " ", map_note)
+  }
   tagList(
     tags$div(
       class = "scene-card",
@@ -187,11 +201,7 @@ if (file.exists(scene_file)) {
           tags$div(class = "scene-card-acres", paste0(acres_txt, " ac")),
           tags$div(
             class = "scene-card-date",
-            paste0(
-              "Scene date ", s$scene_date,
-              " · single Sentinel-2 pass · NIR ", s$threshold,
-              " · AOI cloud ", cloud_pct
-            )
+            paste0("Scene date ", s$scene_date, " · NIR ", s$threshold)
           )
         ),
         tags$a(
@@ -202,7 +212,12 @@ if (file.exists(scene_file)) {
           "Open scene report"
         )
       ),
-      tags$p(class = "scene-card-rule", s$cloud_rule)
+      tags$p(class = "scene-card-lead", lead_txt),
+      tags$details(
+        class = "scene-card-details",
+        tags$summary("Scene selection & NIR method"),
+        tags$p(details_body)
+      )
     )
   )
 }
@@ -317,7 +332,7 @@ monthly_avg %>%
 ::: {.dashboard-section-header}
 ## Monthly report archive
 
-Each cell links to that month’s archived report. The **day number** is the **file label date** (first scene in the collection)—not a single-scene acquisition. **Since April 2026**, reports follow the composite workflow below; older entries may reflect ad-hoc run dates and fewer scenes in the window.
+Each cell links to that month’s archived composite report (one day per month). The **day number** is the **file label date** (first scene in the collection)—not a single-scene acquisition. Latest usable scene acreage lives in the card above, not in this table. **Since April 2026**, reports follow the composite workflow below; older entries may reflect ad-hoc run dates and fewer scenes in the window.
 :::
 
 ::: {.dashboard-card .table-card}
@@ -338,6 +353,8 @@ html_files <- list.files(
 )
 
 # Wrapping is owned by .archive-days / .archive-day — do not nowrap the anchor.
+# One day link per month (earliest label date), as before multi-date wet-up paste.
+# Scene products (bwma_flood_report_scene_*) are excluded by the filename pattern.
 link_style <- "font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;"
 
 df_links <- tibble(file = html_files) %>%
@@ -358,32 +375,16 @@ df_links <- tibble(file = html_files) %>%
       paste0("Archived report · label date ", format(date, "%b %d, %Y"), " (pre-composite workflow)")
     ),
     full_link  = paste0(
-      "<a class='archive-day' href='", report_link_dir, "/", file,
+      "<div class='archive-days'><a class='archive-day' href='", report_link_dir, "/", file,
       "' target='_blank' rel='noopener' title='", link_title,
-      "' style='", link_style, "'>", day_only, "</a>"
+      "' style='", link_style, "'>", day_only, "</a></div>"
     )
   )
 
-# HTML separator (nbsp + middot entity) so day digits never concatenate,
-# even if a browser collapses ordinary spaces between inline tags.
-archive_sep <- "<span class='archive-sep' aria-hidden='true'>&nbsp;&middot;&nbsp;</span>"
-
-pack_days <- function(links) {
-  paste0(
-    "<div class='archive-days'>",
-    paste(links, collapse = archive_sep),
-    "</div>"
-  )
-}
-
-# Keep all report days in each FY×month cell (e.g. wet-up 22 · 26), sorted by date
 df_one_per_month <- df_links %>%
-  arrange(date) %>%
   group_by(fy_label, month_name) %>%
-  summarise(
-    full_link = pack_days(full_link),
-    .groups = "drop"
-  )
+  slice_min(date, n = 1, with_ties = FALSE) %>%
+  ungroup()
 
 # Phone: stacked FY accordion (hidden on wide screens). Desktop keeps the FY×month table.
 fy_order <- sort(unique(df_one_per_month$fy_label))
