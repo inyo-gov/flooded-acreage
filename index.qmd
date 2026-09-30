@@ -37,16 +37,31 @@ csv_files <- list.files(
   full.names = TRUE
 )
 
-monthly_raw <- lapply(csv_files, function(path) {
-  fname     <- basename(path)
-  date_part <- str_match(
-    fname,
-    "^flood_report_data_([0-9]{4}-[0-9]{2}-[0-9]{2})_.*\\.csv$"
-  )[, 2]
-  report_dt <- as.Date(date_part, format = "%Y-%m-%d")
+# One CSV per report_date. Multiple threshold experiments for the same day
+# used to be summed into KPI totals (e.g. Mar 2025 → 2334 ac). Prefer the
+# threshold closest to the current composite standard (0.14).
+csv_meta <- tibble(path = csv_files) %>%
+  mutate(
+    fname       = basename(path),
+    date_part   = str_match(
+      fname,
+      "^flood_report_data_([0-9]{4}-[0-9]{2}-[0-9]{2})_(.+)\\.csv$"
+    )[, 2],
+    threshold   = str_match(
+      fname,
+      "^flood_report_data_([0-9]{4}-[0-9]{2}-[0-9]{2})_(.+)\\.csv$"
+    )[, 3],
+    report_date = as.Date(date_part, format = "%Y-%m-%d"),
+    thr_num     = suppressWarnings(as.numeric(threshold))
+  ) %>%
+  filter(!is.na(report_date), !is.na(thr_num)) %>%
+  group_by(report_date) %>%
+  slice_min(abs(thr_num - 0.14), n = 1, with_ties = FALSE) %>%
+  ungroup()
 
-  read_csv(path, show_col_types = FALSE) %>%
-    mutate(report_date = report_dt)
+monthly_raw <- lapply(seq_len(nrow(csv_meta)), function(i) {
+  read_csv(csv_meta$path[i], show_col_types = FALSE) %>%
+    mutate(report_date = csv_meta$report_date[i])
 }) %>%
   bind_rows() %>%
   select(Flood_Unit, acres_flooded, report_date)
@@ -89,13 +104,23 @@ latest <- totals %>% slice(1)
 prev   <- totals %>% slice(2)
 
 latest_month <- floor_date(latest$report_date, "month")
+
+# Current flood season only (Nov 1 – Mar 31). Do not take all-time Nov–Mar max.
+# Apr–Oct → just-completed season; Nov–Dec → season starting this year;
+# Jan–Mar → season that started the prior November.
+today <- Sys.Date()
+# Nov–Dec: season starts this calendar year; Jan–Oct: season started prior Nov.
+season_start_year <- if (month(today) >= 11) year(today) else year(today) - 1L
+season_start <- as.Date(sprintf("%d-11-01", season_start_year))
+season_end   <- as.Date(sprintf("%d-03-31", season_start_year + 1L))
+season_label <- paste0(
+  season_start_year, "–",
+  substr(as.character(season_start_year + 1L), 3, 4)
+)
+
 season_peak <- totals %>%
-  filter(report_date >= as.Date("2024-09-01")) %>%
+  filter(report_date >= season_start, report_date <= season_end) %>%
   mutate(month_date = floor_date(report_date, "month")) %>%
-  filter(month(report_date) %in% c(11, 12, 1, 2, 3)) %>%
-  group_by(month_date) %>%
-  slice_max(report_date, n = 1, with_ties = FALSE) %>%
-  ungroup() %>%
   slice_max(acres_flooded, n = 1, with_ties = FALSE)
 
 delta_detail <- if (nrow(prev) == 1) {
@@ -156,7 +181,15 @@ tagList(
       style = stat_card_style,
       tags$div(class = "stat-label", style = stat_label_style, "Season peak"),
       if (nrow(season_peak) == 1) season_value else tags$span(class = "stat-value", "—"),
-      tags$div(class = "stat-detail", style = stat_detail_style, "Nov–Mar · 500 ac target")
+      tags$div(
+        class = "stat-detail",
+        style = stat_detail_style,
+        if (nrow(season_peak) == 1) {
+          paste0(season_label, " · Nov–Mar · 500 ac target")
+        } else {
+          paste0(season_label, " · Nov–Mar · no peak yet · 500 ac target")
+        }
+      )
     )
   ),
   tags$div(
