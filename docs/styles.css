@@ -785,3 +785,77 @@ footer {
     border: 0;
   }
 }
+
+
+/* Subtle BWMA duck flock (background; non-interactive) */
+#bwma-duck-sky {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  contain: layout paint;
+}
+
+.navbar,
+main.content,
+footer.footer,
+#quarto-header,
+#quarto-content {
+  position: relative;
+  z-index: 1;
+}
+
+.bwma-duck {
+  position: absolute;
+  left: -12vw;
+  width: var(--duck-size, 28px);
+  height: auto;
+  color: #3a4a63;
+  opacity: var(--duck-opacity, 0.11);
+  will-change: transform;
+  animation-name: bwma-duck-fly;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: var(--duck-dur, 72s);
+  animation-delay: var(--duck-delay, 0s);
+}
+
+.bwma-duck svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 0.5px rgba(13, 17, 23, 0.15));
+}
+
+@keyframes bwma-duck-fly {
+  0% {
+    transform: translate3d(0, 0, 0) translateY(0);
+  }
+  25% {
+    transform: translate3d(28vw, 0, 0) translateY(-6px);
+  }
+  50% {
+    transform: translate3d(56vw, 0, 0) translateY(4px);
+  }
+  75% {
+    transform: translate3d(84vw, 0, 0) translateY(-5px);
+  }
+  100% {
+    transform: translate3d(112vw, 0, 0) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bwma-duck {
+    animation: none !important;
+    /* Park a few static silhouettes in the margins */
+    left: auto;
+    opacity: 0.08;
+  }
+  .bwma-duck:nth-child(1) { right: 4%; top: 18% !important; }
+  .bwma-duck:nth-child(2) { left: 6%; top: 42% !important; }
+  .bwma-duck:nth-child(3) { right: 8%; top: 68% !important; }
+  .bwma-duck:nth-child(4),
+  .bwma-duck:nth-child(5) { display: none; }
+}
