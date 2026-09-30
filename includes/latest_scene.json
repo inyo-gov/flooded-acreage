@@ -14,7 +14,7 @@
   "cloud_rule": "Newest clear Sentinel-2 pass over BWMA since wet-up began \u2014 for release calibration, not the monthly composite.",
   "report_href": "flood_reports/reports/bwma_flood_report_scene_2026-09-29_0.16.html",
   "map_note": "False-color PNG for the Folium map is warped to EPSG:4326 so the image overlay matches unit GeoJSON; downloadable GeoTIFF stays in the EE export CRS (typically UTM 11N).",
-  "threshold_note": "Fall fringe calibration (Drew excluded from Total): Sep 29 scene 0.14=104.3, 0.15=111.1, 0.16=118.1, 0.18=132.7 ac. Displayed 0.16. Mid-month composites remain at 0.14 unless Desk decides otherwise. Drew excluded from Total (not in current rotation; detections often Blackrock ditch / reddish false positives).",
+  "threshold_note": "Fall fringe calibration (Drew excluded from Total): Sep 29 scene 0.14=104.3, 0.15=111.1, 0.16=118.1, 0.18=132.7 ac. Displayed 0.16. With Drew at 0.16 was 137.5 ac. Mid-month composites remain at 0.14 unless Desk decides otherwise.",
   "acres_include_drew": false,
-  "drew_note": "Drew excluded from Total (not in current rotation; detections often Blackrock ditch / reddish false positives)."
+  "drew_note": "Drew excluded (~19 ac) \u2014 Total without Drew."
 }

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>About – Flooded Acreage Monitoring</title>
+<title>Blackrock Waterfowl Management Area – Flooded Acreage Monitoring</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -112,14 +112,6 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="https://inyo-gov.github.io/bwma-avian/"> 
-<span class="menu-text">BWMA avian</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="https://inyo-gov.github.io/bwma-msm-veg/"> 
-<span class="menu-text">MSM veg</span></a>
-  </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/inyo-gov/flooded-acreage"> <i class="bi bi-github" role="img">
 </i> 
@@ -142,7 +134,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">About</h1>
+<h1 class="title">Blackrock Waterfowl Management Area</h1>
 <p class="subtitle lead">Flooded acreage monitoring dashboard</p>
 </div>
 
@@ -224,7 +216,7 @@ ul.task-list li input[type="checkbox"] {
 <a class="scene-card-link" href="flood_reports/reports/bwma_flood_report_scene_2026-09-29_0.16.html" target="_blank" rel="noopener">Open scene report</a>
 </div>
 <p class="scene-card-lead">Newest clear Sentinel-2 pass over BWMA since wet-up began — for release calibration, not the monthly composite.</p>
-<p class="scene-card-drew-note">Drew excluded from Total (not in current rotation; detections often Blackrock ditch / reddish false positives).</p>
+<p class="scene-card-drew-note">Drew excluded (~19 ac) — Total without Drew.</p>
 <details class="scene-card-details">
 <summary>Scene selection &amp; NIR method</summary>
 <p>Prefilter: granule CLOUDY_PIXEL_PERCENTAGE &lt; 90 (whole Sentinel-2 tile, not the AOI). Acceptance: over the BWMA bounding box at 20 m, aoi_cloud_frac = count(SCL in {8,9,10}) / count(SCL != 0) must be &lt;= 20%. The usable scene with the latest system:time_start is kept. Acreage is NIR reflectance &lt; threshold on that single scene after masking SCL in {0,3,8,9,10} (no data, cloud shadow, medium cloud, high cloud, cirrus). Displayed threshold 0.16 (raised from 0.14 to include dark fringe wet pixels in fall imagery). This is not a 15-day median composite. Total acreage excludes Drew (not in current rotation; often Blackrock ditch / reddish false positives); Drew row kept for QA. False-color PNG for the Folium map is warped to EPSG:4326 so the image overlay matches unit GeoJSON; downloadable GeoTIFF stays in the EE export CRS (typically UTM 11N).</p>
@@ -584,31 +576,6 @@ Click a day number to open the HTML report (unit table, map, downloads).
 </div>
 
 
-<section id="about-this-dashboard" class="level1 about-hero">
-<h1>About this dashboard</h1>
-<p>Flooded acreage at Blackrock Waterfowl Management Area (BWMA) supports seasonal water and wildlife management. This site publishes monthly estimates derived from satellite imagery, replacing multi-day field GPS walks for routine monitoring.</p>
-</section>
-<div class="about-grid">
-<section id="data-source" class="level3 about-card">
-<h3 class="anchored" data-anchor-id="data-source">Data source</h3>
-<p>Sentinel-2 Surface Reflectance (harmonized collection) via the Google Earth Engine Python API. S2 revisits every ~5 days with 10 m visible/NIR bands used for water detection.</p>
-</section>
-<section id="method" class="level3 about-card">
-<h3 class="anchored" data-anchor-id="method">Method</h3>
-<p>The <strong>Near Infrared (NIR)</strong> band is thresholded to separate open water from vegetation. Each monthly run uses a <strong>15-day window</strong> starting on the 1st of the month, building a <strong>cloud-masked median composite</strong> across all qualifying scenes—not a single acquisition.</p>
-<p><strong>Since April 2026</strong>, that composite workflow is the official monthly procedure (mid-month run, start date <code>YYYY-MM-01</code>, threshold 0.14). Earlier archived reports used the same median code but were often generated on ad-hoc dates; their file names and legacy pages may show a label date that is not a single scene.</p>
-<p>Field crews validate predictions during avian surveys across the flooding cycle (typically September through April). Companion products: <a href="https://inyo-gov.github.io/bwma-avian/">BWMA avian surveys</a> · <a href="https://inyo-gov.github.io/bwma-msm-veg/">MSM vegetation (dry-pond forage)</a>.</p>
-</section>
-<section id="management-target" class="level3 about-card">
-<h3 class="anchored" data-anchor-id="management-target">Management target</h3>
-<p>Operational planning references roughly <strong>500 acres flooded</strong> between <strong>November 1 and March 1</strong>. The dashboard chart shows that target as a dashed reference line.</p>
-<p>Monthly reports include per-unit acreage for Thibaut, Drew, Waggoner, Winterton sub-units, and Thibaut Ponds.</p>
-</section>
-<section id="whats-next" class="level3 about-card">
-<h3 class="anchored" data-anchor-id="whats-next">What’s next</h3>
-<p>Sentinel-1 SAR and optical–SAR fusion scripts exist in the repository for emergent-vegetation masking but are <strong>not</strong> part of the published monthly workflow yet.</p>
-</section>
-</div>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
