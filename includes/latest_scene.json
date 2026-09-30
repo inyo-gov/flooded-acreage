@@ -5,14 +5,16 @@
   "scene_date": "2026-09-29",
   "scene_id": "20260929T183149_20260929T184359_T11SLA",
   "threshold": 0.16,
-  "acres": 137.49,
+  "acres": 118.09,
   "aoi_cloud_frac": 0.0,
   "granule_cloud_pct": 0.112932,
   "max_cloud_frac": 0.2,
   "lead": "Newest clear Sentinel-2 pass over BWMA since wet-up began \u2014 for release calibration, not the monthly composite.",
-  "method_details": "Prefilter: granule CLOUDY_PIXEL_PERCENTAGE < 90 (whole Sentinel-2 tile, not the AOI). Acceptance: over the BWMA bounding box at 20 m, aoi_cloud_frac = count(SCL in {8,9,10}) / count(SCL != 0) must be <= 20%. The usable scene with the latest system:time_start is kept. Acreage is NIR reflectance < threshold on that single scene after masking SCL in {0,3,8,9,10} (no data, cloud shadow, medium cloud, high cloud, cirrus). Displayed threshold 0.16 (raised from 0.14 to include dark fringe wet pixels in fall imagery). This is not a 15-day median composite.",
+  "method_details": "Prefilter: granule CLOUDY_PIXEL_PERCENTAGE < 90 (whole Sentinel-2 tile, not the AOI). Acceptance: over the BWMA bounding box at 20 m, aoi_cloud_frac = count(SCL in {8,9,10}) / count(SCL != 0) must be <= 20%. The usable scene with the latest system:time_start is kept. Acreage is NIR reflectance < threshold on that single scene after masking SCL in {0,3,8,9,10} (no data, cloud shadow, medium cloud, high cloud, cirrus). Displayed threshold 0.16 (raised from 0.14 to include dark fringe wet pixels in fall imagery). This is not a 15-day median composite. Total acreage excludes Drew (not in current rotation; often Blackrock ditch / reddish false positives); Drew row kept for QA.",
   "cloud_rule": "Newest clear Sentinel-2 pass over BWMA since wet-up began \u2014 for release calibration, not the monthly composite.",
   "report_href": "flood_reports/reports/bwma_flood_report_scene_2026-09-29_0.16.html",
   "map_note": "False-color PNG for the Folium map is warped to EPSG:4326 so the image overlay matches unit GeoJSON; downloadable GeoTIFF stays in the EE export CRS (typically UTM 11N).",
-  "threshold_note": "Fall fringe calibration: Sep 29 scene 0.14=106.6, 0.15=119.5, 0.16=137.5, 0.18=175.4 ac. Displayed 0.16. Mid-month composites remain at 0.14 unless Desk decides otherwise."
+  "threshold_note": "Fall fringe calibration (Drew excluded from Total): Sep 29 scene 0.14=104.3, 0.15=111.1, 0.16=118.1, 0.18=132.7 ac. Displayed 0.16. Mid-month composites remain at 0.14 unless Desk decides otherwise. Drew excluded from Total (not in current rotation; detections often Blackrock ditch / reddish false positives).",
+  "acres_include_drew": false,
+  "drew_note": "Drew excluded from Total (not in current rotation; detections often Blackrock ditch / reddish false positives)."
 }

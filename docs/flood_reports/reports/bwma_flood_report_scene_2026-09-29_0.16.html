@@ -149,6 +149,26 @@
       font-size: 1.05rem;
       color: var(--rs-nasa-red);
     }
+    .report-table tr.excluded-from-total td {
+      color: var(--rs-muted);
+    }
+    .report-table tr.excluded-from-total .acres-num {
+      color: var(--rs-muted);
+    }
+    .report-table .unit-note {
+      font-family: var(--rs-mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--rs-muted);
+      margin-left: 0.35rem;
+    }
+    .report-drew-note {
+      margin: 0.65rem 0 0;
+      font-size: 0.78rem;
+      color: var(--rs-muted);
+      line-height: 1.4;
+    }
     .report-map-panel iframe {
       display: block;
       width: 100%;
@@ -220,7 +240,7 @@
       <div class="report-tag">Sentinel-2 SR · Single scene (not a median composite)</div>
       <h1>BWMA single-scene flood report · 2026-09-29</h1>
       <p class="report-meta">
-        Scene date <strong>2026-09-29</strong> · NIR threshold <strong>0.16</strong> · one acquisition, not a 15-day composite<br>AOI cloud 0.0% (SCL 8/9/10 over SCL≠0, 20 m, BWMA bbox; usable if ≤ 20%). Granule CLOUDY_PIXEL_PERCENTAGE 0.1% (prefilter only). Search 2026-09-20 to 2026-09-30. Flood mask drops SCL 0/3/8/9/10 before the NIR test.
+        Scene date <strong>2026-09-29</strong> · NIR threshold <strong>0.16</strong> · one acquisition, not a 15-day composite
       </p>
     </header>
 
@@ -236,21 +256,22 @@
               </tr>
             </thead>
             <tbody>
-              <tr class=""><td class="unit-name">Drew</td><td class="unit-acres"><span class="acres-num">19</span> ac</td></tr>
+              <tr class="excluded-from-total"><td class="unit-name">Drew <span class="unit-note">(not in Total)</span></td><td class="unit-acres"><span class="acres-num">19</span> ac</td></tr>
 <tr class=""><td class="unit-name">Waggoner</td><td class="unit-acres"><span class="acres-num">46</span> ac</td></tr>
 <tr class=""><td class="unit-name">West Winterton</td><td class="unit-acres"><span class="acres-num">24</span> ac</td></tr>
 <tr class=""><td class="unit-name">East Winterton</td><td class="unit-acres"><span class="acres-num">0</span> ac</td></tr>
 <tr class=""><td class="unit-name">South Winterton</td><td class="unit-acres"><span class="acres-num">0</span> ac</td></tr>
 <tr class=""><td class="unit-name">Thibaut Ponds</td><td class="unit-acres"><span class="acres-num">10</span> ac</td></tr>
 <tr class=""><td class="unit-name">Thibaut</td><td class="unit-acres"><span class="acres-num">37</span> ac</td></tr>
-<tr class="total-row"><td class="unit-name">Total</td><td class="unit-acres"><span class="acres-num">137</span> ac</td></tr>
+<tr class="total-row"><td class="unit-name">Total</td><td class="unit-acres"><span class="acres-num">118</span> ac</td></tr>
             </tbody>
           </table>
         </div>
         <div class="report-summary">
-          <span>Total: <strong>137 ac</strong></span>
+          <span>Total: <strong>118 ac</strong></span>
           <span>Single scene · release calibration</span>
         </div>
+        <p class="report-drew-note">Drew excluded from Total (not in current rotation; detections often Blackrock ditch / reddish false positives).</p>
       </section>
 
       <section class="report-panel report-map-panel">

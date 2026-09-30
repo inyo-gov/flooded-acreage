@@ -525,6 +525,13 @@ a.archive-day {
   color: var(--rs-text);
 }
 
+.scene-card-drew-note {
+  margin: 0.35rem 0 0;
+  font-size: 0.78rem;
+  color: #5a6578;
+  line-height: 1.4;
+}
+
 .scene-card-details {
   margin: 0.15rem 0 0;
   font-size: 0.68rem;

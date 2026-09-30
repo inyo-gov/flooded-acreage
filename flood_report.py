@@ -24,6 +24,19 @@ UNIT_ORDER = [
     "South Winterton", "Thibaut Ponds", "Thibaut",
 ]
 
+# Drew is not in the current wet-up rotation. Keep its row for QA, but exclude
+# it from Total — detections are often Blackrock ditch / reddish false positives.
+UNITS_EXCLUDED_FROM_TOTAL = frozenset({"Drew"})
+DREW_TOTAL_NOTE = (
+    "Drew excluded from Total (not in current rotation; detections often "
+    "Blackrock ditch / reddish false positives)."
+)
+
+
+def units_for_total(df):
+    """Unit rows that contribute to the reported Total (excludes Drew)."""
+    return df[~df["Flood_Unit"].isin(UNITS_EXCLUDED_FROM_TOTAL)].copy()
+
 
 def order_units_df(df):
     """Sort flood units to match dashboard legend order; Total row last."""
@@ -87,16 +100,30 @@ def build_report_html(
 
     rows_html = []
     for _, row in table_df.iterrows():
-        unit = html.escape(str(row["BWMA Unit"]))
+        unit_raw = str(row["BWMA Unit"])
+        unit = html.escape(unit_raw)
         acres = int(row["Acres"])
-        row_class = "total-row" if unit == "Total" else ""
+        if unit_raw == "Total":
+            row_class = "total-row"
+            name_cell = unit
+        elif unit_raw in UNITS_EXCLUDED_FROM_TOTAL:
+            row_class = "excluded-from-total"
+            name_cell = (
+                f'{unit} <span class="unit-note">(not in Total)</span>'
+            )
+        else:
+            row_class = ""
+            name_cell = unit
         rows_html.append(
             f'<tr class="{row_class}">'
-            f'<td class="unit-name">{unit}</td>'
+            f'<td class="unit-name">{name_cell}</td>'
             f'<td class="unit-acres"><span class="acres-num">{acres}</span> ac</td>'
             f"</tr>"
         )
     rows_html = "\n".join(rows_html)
+    drew_note_html = (
+        f'<p class="report-drew-note">{html.escape(DREW_TOTAL_NOTE)}</p>'
+    )
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -249,6 +276,26 @@ def build_report_html(
       font-size: 1.05rem;
       color: var(--rs-nasa-red);
     }}
+    .report-table tr.excluded-from-total td {{
+      color: var(--rs-muted);
+    }}
+    .report-table tr.excluded-from-total .acres-num {{
+      color: var(--rs-muted);
+    }}
+    .report-table .unit-note {{
+      font-family: var(--rs-mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--rs-muted);
+      margin-left: 0.35rem;
+    }}
+    .report-drew-note {{
+      margin: 0.65rem 0 0;
+      font-size: 0.78rem;
+      color: var(--rs-muted);
+      line-height: 1.4;
+    }}
     .report-map-panel iframe {{
       display: block;
       width: 100%;
@@ -344,6 +391,7 @@ def build_report_html(
           <span>Total: <strong>{total_acres} ac</strong></span>
           <span>{html.escape(summary_note)}</span>
         </div>
+        {drew_note_html}
       </section>
 
       <section class="report-panel report-map-panel">
@@ -996,15 +1044,16 @@ def main(start_date, threshold, mode="composite", end_date=None, max_cloud_frac=
     units_df_properties_reduced = units_df_properties_reduced[['Flood_Unit', 'total_pixels', 'flooded_pixels', 'unit_acres', 'acres_flooded', 'flooded_percentage']]
     units_df_properties_reduced = units_df_properties_reduced.round(2)
 
-    # Calculate Total Acreage and add total row
-    total_acres = units_df_properties_reduced['unit_acres'].sum()
-    total_flooded_acres = units_df_properties_reduced['acres_flooded'].sum()
-    total_flooded_percentage = (total_flooded_acres / total_acres) * 100
+    # Calculate Total Acreage and add total row (Drew excluded from Total)
+    included = units_for_total(units_df_properties_reduced)
+    total_acres = included['unit_acres'].sum()
+    total_flooded_acres = included['acres_flooded'].sum()
+    total_flooded_percentage = (total_flooded_acres / total_acres) * 100 if total_acres else 0.0
 
     totals = pd.DataFrame([{
         'Flood_Unit': 'Total',
-        'total_pixels': units_df_properties_reduced['total_pixels'].sum(),
-        'flooded_pixels': units_df_properties_reduced['flooded_pixels'].sum(),
+        'total_pixels': included['total_pixels'].sum(),
+        'flooded_pixels': included['flooded_pixels'].sum(),
         'unit_acres': total_acres,
         'acres_flooded': total_flooded_acres,
         'flooded_percentage': total_flooded_percentage
@@ -1097,6 +1146,8 @@ def main(start_date, threshold, mode="composite", end_date=None, max_cloud_frac=
             "scene_id": scene_id,
             "threshold": threshold,
             "acres": float(total_flooded_acres),
+            "acres_include_drew": False,
+            "drew_note": DREW_TOTAL_NOTE,
             "aoi_cloud_frac": scene_cloud_frac,
             "granule_cloud_pct": None if granule_cloud_pct is None else float(granule_cloud_pct),
             "max_cloud_frac": max_cloud_frac,

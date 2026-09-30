@@ -11,6 +11,10 @@ import os
 import imageio.v2 as imageio
 from sar_utils import s1_composites, s1_flood_indicators, s1_flood_mask
 
+# Drew excluded from Total (not in current rotation; often Blackrock ditch FPs).
+UNITS_EXCLUDED_FROM_TOTAL = frozenset({"Drew"})
+
+
 # Example terminal command
 # > python flood_report_fusion.py '2024-10-22' 0.22 '2024-08-01' '2024-08-31' --fusion-mode union
 # > python flood_report_fusion.py '2024-11-01' 0.22 '2024-08-01' '2024-08-31' --fusion-mode confidence --s1-thresh -1.5
@@ -272,13 +276,14 @@ def main(start_date, s2_threshold, dry_start, dry_end, dvv_thresh=-1.5, vv_vh_ra
     cols = ['Flood_Unit', 'unit_acres', 's2_acres_flooded', 's1_acres_flooded', 'fused_acres_flooded']
     units_df = units_df[cols].round(2)
     
-    # Add totals
+    # Add totals (Drew excluded from Total)
+    included = units_df[~units_df['Flood_Unit'].isin(UNITS_EXCLUDED_FROM_TOTAL)]
     totals = pd.DataFrame([{
         'Flood_Unit': 'Total',
-        'unit_acres': units_df['unit_acres'].sum(),
-        's2_acres_flooded': units_df['s2_acres_flooded'].sum(),
-        's1_acres_flooded': units_df['s1_acres_flooded'].sum(),
-        'fused_acres_flooded': units_df['fused_acres_flooded'].sum()
+        'unit_acres': included['unit_acres'].sum(),
+        's2_acres_flooded': included['s2_acres_flooded'].sum(),
+        's1_acres_flooded': included['s1_acres_flooded'].sum(),
+        'fused_acres_flooded': included['fused_acres_flooded'].sum()
     }])
     units_df = pd.concat([units_df.dropna(), totals], ignore_index=True).round(2)
     

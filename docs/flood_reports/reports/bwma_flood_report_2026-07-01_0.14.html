@@ -149,6 +149,26 @@
       font-size: 1.05rem;
       color: var(--rs-nasa-red);
     }
+    .report-table tr.excluded-from-total td {
+      color: var(--rs-muted);
+    }
+    .report-table tr.excluded-from-total .acres-num {
+      color: var(--rs-muted);
+    }
+    .report-table .unit-note {
+      font-family: var(--rs-mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--rs-muted);
+      margin-left: 0.35rem;
+    }
+    .report-drew-note {
+      margin: 0.65rem 0 0;
+      font-size: 0.78rem;
+      color: var(--rs-muted);
+      line-height: 1.4;
+    }
     .report-map-panel iframe {
       display: block;
       width: 100%;
@@ -220,10 +240,7 @@
       <div class="report-tag">Sentinel-2 SR · Cloud-masked median composite</div>
       <h1>BWMA Flood Report · Jul 2026</h1>
       <p class="report-meta">
-        <strong>2026-07-01</strong> to <strong>2026-07-16</strong>
-        · NIR threshold <strong>0.14</strong>
-        · <strong>7</strong> scenes in composite
-        · label date 2026-07-01
+        <strong>2026-07-01</strong> to <strong>2026-07-15</strong> · NIR threshold <strong>0.14</strong> · <strong>0</strong> scenes in composite · label date 2026-07-01
       </p>
     </header>
 
@@ -239,21 +256,22 @@
               </tr>
             </thead>
             <tbody>
-              <tr class=""><td class="unit-name">Drew</td><td class="unit-acres"><span class="acres-num">3</span> ac</td></tr>
+              <tr class="excluded-from-total"><td class="unit-name">Drew <span class="unit-note">(not in Total)</span></td><td class="unit-acres"><span class="acres-num">3</span> ac</td></tr>
 <tr class=""><td class="unit-name">Waggoner</td><td class="unit-acres"><span class="acres-num">0</span> ac</td></tr>
 <tr class=""><td class="unit-name">West Winterton</td><td class="unit-acres"><span class="acres-num">0</span> ac</td></tr>
 <tr class=""><td class="unit-name">East Winterton</td><td class="unit-acres"><span class="acres-num">0</span> ac</td></tr>
 <tr class=""><td class="unit-name">South Winterton</td><td class="unit-acres"><span class="acres-num">0</span> ac</td></tr>
 <tr class=""><td class="unit-name">Thibaut Ponds</td><td class="unit-acres"><span class="acres-num">0</span> ac</td></tr>
 <tr class=""><td class="unit-name">Thibaut</td><td class="unit-acres"><span class="acres-num">0</span> ac</td></tr>
-<tr class="total-row"><td class="unit-name">Total</td><td class="unit-acres"><span class="acres-num">3</span> ac</td></tr>
+<tr class="total-row"><td class="unit-name">Total</td><td class="unit-acres"><span class="acres-num">0</span> ac</td></tr>
             </tbody>
           </table>
         </div>
         <div class="report-summary">
-          <span>Total: <strong>3 ac</strong></span>
+          <span>Total: <strong>0 ac</strong></span>
           <span>Composite window: 15 days</span>
         </div>
+        <p class="report-drew-note">Drew excluded from Total (not in current rotation; detections often Blackrock ditch / reddish false positives).</p>
       </section>
 
       <section class="report-panel report-map-panel">

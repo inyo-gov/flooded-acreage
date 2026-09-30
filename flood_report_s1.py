@@ -11,6 +11,11 @@ import os
 import imageio.v2 as imageio
 from sar_utils import load_s1_collection, s1_composites, s1_flood_indicators, s1_flood_mask, s1_temporal_ensemble, s1_absolute_threshold, s1_temporal_ensemble, s1_absolute_threshold
 
+# Drew excluded from Total (not in current rotation; often Blackrock ditch FPs).
+UNITS_EXCLUDED_FROM_TOTAL = frozenset({"Drew"})
+
+
+
 # Example terminal command
 # > python flood_report_s1.py '2024-10-22' '2024-08-01' '2024-08-31' --dvv-thresh -1.5
 # > python flood_report_s1.py '2024-11-01' '2024-08-01' '2024-08-31' --dvv-thresh -1.5 --orbit-pass ASCENDING
@@ -236,15 +241,18 @@ def main(start_date, dry_start, dry_end, dvv_thresh=-1.5, vv_vh_ratio_max=3, orb
     units_df_properties_reduced = units_df_properties_reduced[['Flood_Unit', 'total_pixels', 'flooded_pixels', 'unit_acres', 'acres_flooded', 'flooded_percentage']]
     units_df_properties_reduced = units_df_properties_reduced.round(2)
 
-    # Calculate Total Acreage and add total row
-    total_acres = units_df_properties_reduced['unit_acres'].sum()
-    total_flooded_acres = units_df_properties_reduced['acres_flooded'].sum()
-    total_flooded_percentage = (total_flooded_acres / total_acres) * 100
+    # Calculate Total Acreage and add total row (Drew excluded from Total)
+    included = units_df_properties_reduced[
+        ~units_df_properties_reduced['Flood_Unit'].isin(UNITS_EXCLUDED_FROM_TOTAL)
+    ]
+    total_acres = included['unit_acres'].sum()
+    total_flooded_acres = included['acres_flooded'].sum()
+    total_flooded_percentage = (total_flooded_acres / total_acres) * 100 if total_acres else 0.0
 
     totals = pd.DataFrame([{
         'Flood_Unit': 'Total',
-        'total_pixels': units_df_properties_reduced['total_pixels'].sum(),
-        'flooded_pixels': units_df_properties_reduced['flooded_pixels'].sum(),
+        'total_pixels': included['total_pixels'].sum(),
+        'flooded_pixels': included['flooded_pixels'].sum(),
         'unit_acres': total_acres,
         'acres_flooded': total_flooded_acres,
         'flooded_percentage': total_flooded_percentage

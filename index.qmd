@@ -77,16 +77,20 @@ stat_label_style <- "font-family:ui-monospace,monospace;font-size:0.58rem;font-w
 stat_detail_style <- "margin-top:0.25rem;font-size:0.68rem;color:#5a6578;line-height:1.25;"
 stat_units_list_style <- "font-family:ui-monospace,monospace;font-size:0.68rem;color:#5a6578;line-height:1.35;"
 
+# KPI totals exclude Drew (not in current rotation; often Blackrock ditch FPs).
+# Recompute from unit rows so historical CSVs whose Total still included Drew stay correct.
 totals <- monthly_raw %>%
-  filter(Flood_Unit == "Total") %>%
+  filter(!Flood_Unit %in% c("Total", "Drew")) %>%
+  group_by(report_date) %>%
+  summarise(acres_flooded = sum(acres_flooded, na.rm = TRUE), .groups = "drop") %>%
   arrange(desc(report_date))
 
 latest <- totals %>% slice(1)
 prev   <- totals %>% slice(2)
 
 latest_month <- floor_date(latest$report_date, "month")
-season_peak <- monthly_raw %>%
-  filter(Flood_Unit == "Total", report_date >= as.Date("2024-09-01")) %>%
+season_peak <- totals %>%
+  filter(report_date >= as.Date("2024-09-01")) %>%
   mutate(month_date = floor_date(report_date, "month")) %>%
   filter(month(report_date) %in% c(11, 12, 1, 2, 3)) %>%
   group_by(month_date) %>%
@@ -158,11 +162,11 @@ tagList(
   tags$div(
     class = "stat-units-bar",
     style = stat_units_style,
-    tags$span(class = "stat-label", style = paste0(stat_label_style, "margin-bottom:0;"), "Reporting units (7)"),
+    tags$span(class = "stat-label", style = paste0(stat_label_style, "margin-bottom:0;"), "Reporting units"),
     tags$span(
       class = "stat-units-list",
       style = stat_units_list_style,
-      "Drew · Waggoner · West Winterton · East Winterton · South Winterton · Thibaut Ponds · Thibaut"
+      "Waggoner · West Winterton · East Winterton · South Winterton · Thibaut Ponds · Thibaut · Drew (shown, excluded from Total — not in rotation; Blackrock ditch / reddish FPs)"
     )
   )
 )
@@ -213,6 +217,9 @@ if (file.exists(scene_file)) {
         )
       ),
       tags$p(class = "scene-card-lead", lead_txt),
+      if (!is.null(s$drew_note) && nzchar(s$drew_note)) {
+        tags$p(class = "scene-card-drew-note", s$drew_note)
+      },
       tags$details(
         class = "scene-card-details",
         tags$summary("Scene selection & NIR method"),
@@ -227,7 +234,7 @@ if (file.exists(scene_file)) {
 ::: {.dashboard-section-header}
 ## Monthly flooded acreage by unit
 
-Stacked totals by flood unit. Dashed line marks the **500 ac** seasonal target (Nov-Mar).
+Stacked totals by flood unit (Drew kept in the stack for QA). KPI cards above exclude Drew from Total. Dashed line marks the **500 ac** seasonal target (Nov-Mar).
 :::
 
 ::: {.dashboard-card .chart-card}
