@@ -281,7 +281,7 @@ Each cell links to that month’s archived report. The **day number** is the **f
 :::
 
 ::: {.dashboard-card .table-card}
-```{r monthly_raw, echo=FALSE, message=FALSE, warning=FALSE}
+```{r monthly_raw, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 library(dplyr)
 library(lubridate)
 library(tidyr)
@@ -297,7 +297,8 @@ html_files <- list.files(
   full.names = FALSE
 )
 
-link_style <- "font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;white-space:nowrap;text-decoration:underline;color:#0b3d91;"
+# Wrapping is owned by .archive-days / .archive-day — do not nowrap the anchor.
+link_style <- "font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;"
 
 df_links <- tibble(file = html_files) %>%
   mutate(
@@ -317,20 +318,66 @@ df_links <- tibble(file = html_files) %>%
       paste0("Archived report · label date ", format(date, "%b %d, %Y"), " (pre-composite workflow)")
     ),
     full_link  = paste0(
-      "<a href='", report_link_dir, "/", file,
-      "' target='_blank' title='", link_title,
+      "<a class='archive-day' href='", report_link_dir, "/", file,
+      "' target='_blank' rel='noopener' title='", link_title,
       "' style='", link_style, "'>", day_only, "</a>"
     )
   )
+
+# HTML separator (nbsp + middot entity) so day digits never concatenate,
+# even if a browser collapses ordinary spaces between inline tags.
+archive_sep <- "<span class='archive-sep' aria-hidden='true'>&nbsp;&middot;&nbsp;</span>"
+
+pack_days <- function(links) {
+  paste0(
+    "<div class='archive-days'>",
+    paste(links, collapse = archive_sep),
+    "</div>"
+  )
+}
 
 # Keep all report days in each FY×month cell (e.g. wet-up 22 · 26), sorted by date
 df_one_per_month <- df_links %>%
   arrange(date) %>%
   group_by(fy_label, month_name) %>%
   summarise(
-    full_link = paste(full_link, collapse = " · "),
+    full_link = pack_days(full_link),
     .groups = "drop"
   )
+
+# Phone: stacked FY accordion (hidden on wide screens). Desktop keeps the FY×month table.
+fy_order <- sort(unique(df_one_per_month$fy_label))
+latest_fy <- if (length(fy_order)) fy_order[length(fy_order)] else ""
+month_levels <- c(
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun"
+)
+
+mobile_html <- vapply(fy_order, function(fy) {
+  g <- df_one_per_month %>%
+    filter(.data$fy_label == fy) %>%
+    mutate(month_chr = as.character(month_name)) %>%
+    arrange(factor(month_chr, levels = month_levels))
+  rows <- paste0(
+    "<div class='archive-m-row'><span class='archive-m-month'>",
+    g$month_chr, "</span>", g$full_link, "</div>",
+    collapse = ""
+  )
+  open_attr <- if (identical(fy, latest_fy)) " open" else ""
+  paste0(
+    "<details class='archive-fy'", open_attr, ">",
+    "<summary>", fy, "</summary>",
+    rows,
+    "</details>"
+  )
+}, character(1))
+
+cat(
+  "<div class='archive-mobile' aria-label='Monthly reports by fiscal year'>\n",
+  paste(mobile_html, collapse = "\n"),
+  "\n</div>\n",
+  sep = ""
+)
 
 all_months_ord <- ordered(month.abb, levels = month.abb)
 
