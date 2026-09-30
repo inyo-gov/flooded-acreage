@@ -470,14 +470,8 @@ def build_flood_map(
 
     m = folium.Map(location=[36.8795, -118.202], tiles=None, control_scale=True)
 
-    folium.TileLayer(
-        tiles="CartoDB positron",
-        name="Light basemap",
-        overlay=False,
-        control=True,
-        show=True,
-    ).add_to(m)
-
+    # Default: Esri World Imagery (free, no API key) — preferred for flood QA.
+    # CartoDB Positron/Voyager now watermark "API KEY REQUIRED"; do not use.
     folium.TileLayer(
         tiles=(
             "https://server.arcgisonline.com/ArcGIS/rest/services/"
@@ -485,6 +479,15 @@ def build_flood_map(
         ),
         attr="Esri World Imagery",
         name="Satellite basemap",
+        overlay=False,
+        control=True,
+        show=True,
+    ).add_to(m)
+
+    # Optional light basemap (OSM — free, no API key).
+    folium.TileLayer(
+        tiles="OpenStreetMap",
+        name="Light basemap",
         overlay=False,
         control=True,
         show=False,
