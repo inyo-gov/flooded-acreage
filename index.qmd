@@ -168,6 +168,46 @@ tagList(
 )
 ```
 
+```{r latest_scene_card, echo=FALSE, message=FALSE, warning=FALSE}
+library(htmltools)
+library(jsonlite)
+
+scene_file <- "includes/latest_scene.json"
+if (file.exists(scene_file)) {
+  s <- jsonlite::fromJSON(scene_file)
+  acres_txt <- format(round(as.numeric(s$acres), 1), nsmall = 1, trim = TRUE)
+  cloud_pct <- sprintf("%.1f%%", 100 * as.numeric(s$aoi_cloud_frac))
+  tagList(
+    tags$div(
+      class = "scene-card",
+      tags$div(class = "scene-card-kicker", "Latest usable scene · release calibration"),
+      tags$div(
+        class = "scene-card-row",
+        tags$div(
+          tags$div(class = "scene-card-acres", paste0(acres_txt, " ac")),
+          tags$div(
+            class = "scene-card-date",
+            paste0(
+              "Scene date ", s$scene_date,
+              " · single Sentinel-2 pass · NIR ", s$threshold,
+              " · AOI cloud ", cloud_pct
+            )
+          )
+        ),
+        tags$a(
+          class = "scene-card-link",
+          href = s$report_href,
+          target = "_blank",
+          rel = "noopener",
+          "Open scene report"
+        )
+      ),
+      tags$p(class = "scene-card-rule", s$cloud_rule)
+    )
+  )
+}
+```
+
 ::: {.dashboard-section}
 ::: {.dashboard-section-header}
 ## Monthly flooded acreage by unit

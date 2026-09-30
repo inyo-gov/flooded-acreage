@@ -1,0 +1,14 @@
+{
+  "product": "latest-usable-scene",
+  "wetup_start": "2026-09-20",
+  "search_end": "2026-09-30",
+  "scene_date": "2026-09-29",
+  "scene_id": "20260929T183149_20260929T184359_T11SLA",
+  "threshold": 0.14,
+  "acres": 106.6,
+  "aoi_cloud_frac": 0.0,
+  "granule_cloud_pct": 0.112932,
+  "max_cloud_frac": 0.2,
+  "cloud_rule": "Prefilter: granule CLOUDY_PIXEL_PERCENTAGE < 90 (whole Sentinel-2 tile, not the AOI). Acceptance: over the BWMA bounding box at 20 m, aoi_cloud_frac = count(SCL in {8,9,10}) / count(SCL != 0) must be <= 20%. The usable scene with the latest system:time_start is kept. Acreage is NIR reflectance < threshold on that single scene after masking SCL in {0,3,8,9,10} (no data, cloud shadow, medium cloud, high cloud, cirrus). This is not a 15-day median composite.",
+  "report_href": "flood_reports/reports/bwma_flood_report_scene_2026-09-29_0.14.html"
+}

@@ -12,6 +12,8 @@ import imageio.v2 as imageio
 # Example terminal command
 # > python flood_report.py '2024-10-22' .22
 # > python flood_report.py '2024-11-01' .22
+# Single clear scene after wet-up (does not replace the 15-day composite):
+# > python flood_report.py 2026-09-20 0.14 --mode latest-scene
 
 UNIT_ORDER = [
     "Drew", "Waggoner", "West Winterton", "East Winterton",
@@ -41,8 +43,42 @@ def build_report_html(
     clipped_geojson_basename,
     csv_basename,
     tif_basename,
+    product="composite",
+    cloud_note="",
 ):
     month_label = pd.to_datetime(start_date).strftime("%b %Y")
+    if product == "scene":
+        report_tag = "Sentinel-2 SR · Single scene (not a median composite)"
+        report_title = f"BWMA single-scene flood report · {image_date_str}"
+        page_title = report_title
+        report_meta = (
+            f"Scene date <strong>{html.escape(image_date_str)}</strong>"
+            f" · NIR threshold <strong>{threshold:g}</strong>"
+            f" · one acquisition, not a 15-day composite"
+        )
+        if cloud_note:
+            report_meta += f"<br>{html.escape(cloud_note)}"
+        summary_note = "Single scene · release calibration"
+        footer_note = (
+            "Sentinel-2 surface reflectance (harmonized). "
+            "NIR threshold applied to this one cloud-masked scene — not a median composite."
+        )
+    else:
+        scene_word = "scene" if scene_count == 1 else "scenes"
+        report_tag = "Sentinel-2 SR · Cloud-masked median composite"
+        report_title = f"BWMA Flood Report · {month_label}"
+        page_title = report_title
+        report_meta = (
+            f"<strong>{html.escape(start_date)}</strong> to <strong>{html.escape(end_date)}</strong>"
+            f" · NIR threshold <strong>{threshold:g}</strong>"
+            f" · <strong>{scene_count}</strong> {scene_word} in composite"
+            f" · label date {html.escape(image_date_str)}"
+        )
+        summary_note = "Composite window: 15 days"
+        footer_note = (
+            "Sentinel-2 surface reflectance (harmonized). "
+            "NIR band threshold applied to a cloud-masked median composite—not a single acquisition."
+        )
     total_acres = int(table_df.loc[table_df["BWMA Unit"] == "Total", "Acres"].iloc[0])
 
     rows_html = []
@@ -63,7 +99,7 @@ def build_report_html(
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BWMA Flood Report · {html.escape(month_label)}</title>
+  <title>{html.escape(page_title)}</title>
   <style>
     :root {{
       --rs-nasa-blue: #0b3d91;
@@ -277,13 +313,10 @@ def build_report_html(
 <body>
   <div class="report-wrap">
     <header class="report-header">
-      <div class="report-tag">Sentinel-2 SR · Cloud-masked median composite</div>
-      <h1>BWMA Flood Report · {html.escape(month_label)}</h1>
+      <div class="report-tag">{html.escape(report_tag)}</div>
+      <h1>{html.escape(report_title)}</h1>
       <p class="report-meta">
-        <strong>{html.escape(start_date)}</strong> to <strong>{html.escape(end_date)}</strong>
-        · NIR threshold <strong>{threshold:g}</strong>
-        · <strong>{scene_count}</strong> scene{"s" if scene_count != 1 else ""} in composite
-        · label date {html.escape(image_date_str)}
+        {report_meta}
       </p>
     </header>
 
@@ -305,7 +338,7 @@ def build_report_html(
         </div>
         <div class="report-summary">
           <span>Total: <strong>{total_acres} ac</strong></span>
-          <span>Composite window: 15 days</span>
+          <span>{html.escape(summary_note)}</span>
         </div>
       </section>
 
@@ -317,7 +350,7 @@ def build_report_html(
 
     <footer class="report-footer">
       <h3>Data products</h3>
-      <p>Sentinel-2 surface reflectance (harmonized). NIR band threshold applied to a cloud-masked median composite—not a single acquisition.</p>
+      <p>{html.escape(footer_note)}</p>
       <div class="download-links">
         <a href="{html.escape(clipped_geojson_basename)}" download>Flooded extent GeoJSON</a>
         <a href="../csv_output/{html.escape(csv_basename)}" download>Unit acreage CSV</a>
@@ -339,6 +372,7 @@ def build_flood_map(
     end_date,
     threshold,
     scene_count,
+    product="composite",
 ):
     """Build a telemetry-themed folium map for the monthly report iframe."""
     bbox_bounds = [
@@ -369,8 +403,9 @@ def build_flood_map(
         show=False,
     ).add_to(m)
 
+    overlay_name = "S2 false-color scene" if product == "scene" else "S2 false-color composite"
     folium.raster_layers.ImageOverlay(
-        name="S2 false-color composite",
+        name=overlay_name,
         image=false_color_basename,
         bounds=bbox_bounds,
         opacity=1,
@@ -513,14 +548,22 @@ def build_flood_map(
     m.get_root().html.add_child(folium.Element(map_css))
 
     scene_label = "scene" if scene_count == 1 else "scenes"
+    if product == "scene":
+        legend_title = f"BWMA · {start_date} single scene"
+        legend_meta = f"{html.escape(start_date)} · 1 scene · not a composite"
+    else:
+        legend_title = f"BWMA · {month_label} composite"
+        legend_meta = (
+            f"{html.escape(start_date)} – {html.escape(end_date)} · "
+            f"{scene_count} {scene_label}"
+        )
     legend_html = f"""
     <div class="map-legend">
-      <div class="map-legend-title">BWMA · {html.escape(month_label)} composite</div>
+      <div class="map-legend-title">{html.escape(legend_title)}</div>
       <div><span class="swatch-flood">■</span> Flooded extent (NIR &lt; {threshold:g})</div>
       <div><span class="swatch-unit">—</span> Unit boundary</div>
       <div class="map-legend-meta">
-        {html.escape(start_date)} – {html.escape(end_date)} ·
-        {scene_count} {scene_label}
+        {legend_meta}
       </div>
     </div>
     """
@@ -529,16 +572,106 @@ def build_flood_map(
     m.save(map_basename)
 
 
-def main(start_date, threshold):
+# SCL values counted as cloud when scoring a scene over the BWMA box.
+# 8 medium cloud, 9 high cloud, 10 thin cirrus.
+SCENE_CLOUD_SCL = (8, 9, 10)
+# Removed before the single-scene NIR test (composites still mask only SCL 9).
+# 0 no data, 3 cloud shadow, 8/9/10 cloud and cirrus.
+SCENE_MASK_SCL = (0, 3, 8, 9, 10)
+
+
+def select_latest_clear_scene(collection, geometry, max_cloud_frac, scale=20):
+    """Newest Sentinel-2 scene whose BWMA-box cloud fraction is within the limit.
+
+    Cloud rule (acceptance, not the granule metadata):
+      aoi_cloud_frac = count(SCL in {8, 9, 10}) / count(SCL != 0)
+      computed inside ``geometry`` at ``scale`` meters.
+    Usable when valid pixels > 0 and aoi_cloud_frac <= max_cloud_frac.
+    Among usable scenes, the greatest system:time_start wins.
+    Returns (chosen_props_or_None, all_rows_newest_first).
+    """
+
+    def annotate(img):
+        scl = img.select("SCL")
+        valid = scl.neq(0).rename("valid")
+        cloudy = scl.eq(8).Or(scl.eq(9)).Or(scl.eq(10)).rename("cloudy")
+        stats = valid.addBands(cloudy).reduceRegion(
+            reducer=ee.Reducer.sum(),
+            geometry=geometry,
+            scale=scale,
+            maxPixels=1e8,
+        )
+        valid_n = ee.Number(ee.Algorithms.If(stats.contains("valid"), stats.get("valid"), 0))
+        cloudy_n = ee.Number(ee.Algorithms.If(stats.contains("cloudy"), stats.get("cloudy"), 0))
+        frac = cloudy_n.divide(valid_n.max(1))
+        return img.set({
+            "scene_index": img.get("system:index"),
+            "scene_time": img.get("system:time_start"),
+            "scene_date": img.date().format("YYYY-MM-dd"),
+            "aoi_cloud_frac": frac,
+            "valid_pixels": valid_n,
+            "cloudy_pixels": cloudy_n,
+            "granule_cloud_pct": img.get("CLOUDY_PIXEL_PERCENTAGE"),
+        })
+
+    annotated = collection.map(annotate)
+
+    def props_feature(img):
+        img = ee.Image(img)
+        return ee.Feature(None, img.toDictionary([
+            "scene_index",
+            "scene_time",
+            "scene_date",
+            "aoi_cloud_frac",
+            "valid_pixels",
+            "cloudy_pixels",
+            "granule_cloud_pct",
+        ]))
+
+    info = ee.FeatureCollection(annotated.toList(200).map(props_feature)).getInfo()
+    rows = [f["properties"] for f in info.get("features", [])]
+    rows.sort(key=lambda r: r.get("scene_time") or 0, reverse=True)
+    usable = [
+        r for r in rows
+        if (r.get("valid_pixels") or 0) > 0
+        and r.get("aoi_cloud_frac") is not None
+        and float(r["aoi_cloud_frac"]) <= max_cloud_frac
+    ]
+    return (usable[0] if usable else None), rows
+
+
+def _print_scene_candidates(rows, max_cloud_frac):
+    print(f"Scene candidates (usable if AOI cloud fraction <= {max_cloud_frac:.0%}):")
+    print(f"{'date':<12} {'aoi_cloud':>10} {'granule_%':>10} {'valid_px':>10} index")
+    for r in rows:
+        frac = r.get("aoi_cloud_frac")
+        frac_s = f"{float(frac):.1%}" if frac is not None else "n/a"
+        gran = r.get("granule_cloud_pct")
+        gran_s = f"{float(gran):.1f}" if gran is not None else "n/a"
+        print(
+            f"{r.get('scene_date',''):<12} {frac_s:>10} {gran_s:>10} "
+            f"{int(r.get('valid_pixels') or 0):>10} {r.get('scene_index')}"
+        )
+
+
+def main(start_date, threshold, mode="composite", end_date=None, max_cloud_frac=0.20):
+    if mode not in ("composite", "latest-scene"):
+        raise SystemExit(f"Unknown mode: {mode}")
+
     # Project ID can be set via EARTH_ENGINE_PROJECT_ID environment variable
     # Falls back to default if not set
     project_id = os.getenv('EARTH_ENGINE_PROJECT_ID', 'ee-zjn-2022')
     print("Initializing Earth Engine...")
     ee.Initialize(project=project_id)
 
-    # Compute the end date by adding days to the start date
-    end_date = (datetime.strptime(start_date, '%Y-%m-%d') + timedelta(days=15)).strftime('%Y-%m-%d')
-    print(f"Date range: {start_date} to {end_date}")
+    search_start = start_date
+    search_end = end_date
+    scene_cloud_frac = None
+    scene_id = None
+    granule_cloud_pct = None
+    cloud_note = ""
+    product = "composite"
+    name_prefix = ""
 
     # Define the bounding box coordinates
     print("Defining bounding box and geometry...")
@@ -561,24 +694,84 @@ def main(start_date, threshold):
 
     # Filter Sentinel-2 surface reflectance imagery and extract dates, pixel size
     print("Filtering Sentinel-2 collection...")
-    sentinel_collection = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED') \
-        .filterBounds(bounding_box_geometry) \
-        .filterDate(start_date, end_date) \
-        .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 50)) \
-        .select(['B4','B8', 'SCL','B11'])
+    if mode == "latest-scene":
+        # Granule CLOUDY_PIXEL_PERCENTAGE is only a cheap prefilter (whole tile).
+        # Acceptance is the BWMA-box SCL fraction inside select_latest_clear_scene.
+        search_end = search_end or datetime.now().strftime("%Y-%m-%d")
+        filter_end = (datetime.strptime(search_end, "%Y-%m-%d") + timedelta(days=1)).strftime("%Y-%m-%d")
+        print(f"Latest-scene search: {search_start} through {search_end} (EE filter end {filter_end})")
+        sentinel_collection = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED') \
+            .filterBounds(bounding_box_geometry) \
+            .filterDate(search_start, filter_end) \
+            .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 90)) \
+            .select(['B4','B8', 'SCL','B11'])
+        size = sentinel_collection.size().getInfo()
+        print(f"Number of images after granule prefilter: {size}")
+        if size == 0:
+            raise SystemExit("No Sentinel-2 scenes in the latest-scene window.")
+        chosen, rows = select_latest_clear_scene(
+            sentinel_collection, bounding_box_geometry, max_cloud_frac
+        )
+        _print_scene_candidates(rows, max_cloud_frac)
+        if chosen is None:
+            raise SystemExit(
+                "No usable scene: none had AOI cloud fraction "
+                f"<= {max_cloud_frac:.0%} over the BWMA box."
+            )
+        scene_id = chosen["scene_index"]
+        image_date_str = chosen["scene_date"]
+        scene_cloud_frac = float(chosen["aoi_cloud_frac"])
+        granule_cloud_pct = chosen.get("granule_cloud_pct")
+        print(
+            f"Selected scene {scene_id} date {image_date_str} "
+            f"AOI cloud {scene_cloud_frac:.1%}"
+        )
+        image = sentinel_collection.filter(ee.Filter.eq("system:index", scene_id)).first()
+        scl = image.select("SCL")
+        bad = (
+            scl.eq(0).Or(scl.eq(3)).Or(scl.eq(8)).Or(scl.eq(9)).Or(scl.eq(10))
+        )
+        cloud_free_composite = image.updateMask(bad.Not())
+        pixel_size = image.select("B8").projection().nominalScale().getInfo()
+        size = 1
+        product = "scene"
+        name_prefix = "scene_"
+        # Report labels use the true acquisition date, not the search window.
+        start_date = image_date_str
+        end_date = image_date_str
+        gran_txt = (
+            f"{float(granule_cloud_pct):.1f}%" if granule_cloud_pct is not None else "n/a"
+        )
+        cloud_note = (
+            f"AOI cloud {scene_cloud_frac:.1%} "
+            f"(SCL 8/9/10 over SCL≠0, 20 m, BWMA bbox; usable if ≤ {max_cloud_frac:.0%}). "
+            f"Granule CLOUDY_PIXEL_PERCENTAGE {gran_txt} (prefilter only). "
+            f"Search {search_start} to {search_end}. "
+            "Flood mask drops SCL 0/3/8/9/10 before the NIR test."
+        )
+    else:
+        end_date = (datetime.strptime(start_date, "%Y-%m-%d") + timedelta(days=15)).strftime("%Y-%m-%d")
+        print(f"Date range: {start_date} to {end_date}")
+        search_end = end_date
+        sentinel_collection = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED') \
+            .filterBounds(bounding_box_geometry) \
+            .filterDate(start_date, end_date) \
+            .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 50)) \
+            .select(['B4','B8', 'SCL','B11'])
 
-    size = sentinel_collection.size().getInfo()
-    print(f"Number of images in collection: {size}")
+        size = sentinel_collection.size().getInfo()
+        print(f"Number of images in collection: {size}")
 
-    # Select a single band before retrieving the projection information
-    pixel_size = sentinel_collection.first().select('B8').projection().nominalScale().getInfo()
+        # Select a single band before retrieving the projection information
+        pixel_size = sentinel_collection.first().select('B8').projection().nominalScale().getInfo()
 
-    # Extract the date information
-    print("Extracting image date information...")
-    image_info = sentinel_collection.first().getInfo()
-    image_date = image_info['properties']['system:time_start']
-    image_date_str = pd.to_datetime(image_date, unit='ms').strftime('%Y-%m-%d')
-    print(f"Image date: {image_date_str}")
+        # Extract the date information
+        print("Extracting image date information...")
+        image_info = sentinel_collection.first().getInfo()
+        image_date = image_info['properties']['system:time_start']
+        image_date_str = pd.to_datetime(image_date, unit='ms').strftime('%Y-%m-%d')
+        print(f"Image date: {image_date_str}")
+        cloud_free_composite = sentinel_collection.map(lambda img: img.updateMask(img.select('SCL').neq(9))).median()
 
     # Define the subdirectory for HTML maps and reports
     print("Setting up directories and filenames...")
@@ -586,17 +779,20 @@ def main(start_date, threshold):
     os.makedirs(html_subdirectory, exist_ok=True)
 
     # Define filenames with unique names based on the image date
-    report_filename = os.path.join(html_subdirectory, f"bwma_flood_report_{image_date_str}_{threshold}.html")
-    map_filename = os.path.join(html_subdirectory, f"flooded_area_map_{image_date_str}_{threshold}.html")
+    report_filename = os.path.join(html_subdirectory, f"bwma_flood_report_{name_prefix}{image_date_str}_{threshold}.html")
+    map_filename = os.path.join(html_subdirectory, f"flooded_area_map_{name_prefix}{image_date_str}_{threshold}.html")
 
     def mask_clouds(image):
         cloud_prob = image.select('SCL')
         is_cloud = cloud_prob.eq(9)
         return image.updateMask(is_cloud.Not())
 
-    # Mask clouds and compute composite
-    print("Creating cloud-free composite and binary image...")
-    cloud_free_composite = sentinel_collection.map(lambda img: img.updateMask(img.select('SCL').neq(9))).median()
+    # Mask clouds and compute composite (latest-scene already set cloud_free_composite)
+    print("Creating flood mask...")
+    if mode != "latest-scene":
+        # composite branch assigns cloud_free_composite above; keep this guard so a
+        # refactor cannot median-blend a single-scene run.
+        pass
     binary_image = cloud_free_composite.select('B8').divide(10000).lt(threshold).selfMask()
     
     # Convert flooded areas to vector (GeoJSON format)
@@ -611,7 +807,7 @@ def main(start_date, threshold):
 
     # Define export file paths with date and threshold
     print("Exporting false-color and flooded pixels images...")
-    false_color_filename_tif = f"flood_reports/reports/false_color_composite_{image_date_str}_{threshold}.tif"
+    false_color_filename_tif = f"flood_reports/reports/false_color_composite_{name_prefix}{image_date_str}_{threshold}.tif"
     # flooded_pixels_filename_tif = f"docs/reports/flooded_pixels_{image_date_str}_{threshold}.tif"
     
     
@@ -628,7 +824,7 @@ def main(start_date, threshold):
         min=0, max=1  # This limits values to binary (0 or 1) for transparency
     )
 
-    false_color_filename_png = f"flood_reports/reports/false_color_composite_{image_date_str}_{threshold}.png"
+    false_color_filename_png = f"flood_reports/reports/false_color_composite_{name_prefix}{image_date_str}_{threshold}.png"
     # flooded_pixels_filename_png = f"docs/reports/flooded_pixels_{image_date_str}_{threshold}.png"
     
     # Read the TIFF file and save it as PNG
@@ -658,7 +854,7 @@ def main(start_date, threshold):
     )
 
     # Export the clipped flooded polygons as GeoJSON
-    clipped_flooded_geojson_path = f"flood_reports/reports/clipped_flooded_areas_{image_date_str}_{threshold}.geojson"
+    clipped_flooded_geojson_path = f"flood_reports/reports/clipped_flooded_areas_{name_prefix}{image_date_str}_{threshold}.geojson"
     geemap.ee_export_vector(flooded_clipped_vectors, filename=clipped_flooded_geojson_path)
     print(f"Clipped flooded polygons exported to {clipped_flooded_geojson_path}")
 
@@ -693,10 +889,15 @@ def main(start_date, threshold):
     units_with_calculations = units_with_area.map(compute_refined_flood_area)
     print("Areas and flooded pixels calculated.")
 
-    # Export subunit polygons as GeoJSON
-    print("Exporting subunit polygons as GeoJSON...")
-    geemap.ee_export_vector(units_with_calculations, filename="flood_reports/reports/subunits.geojson")
-    print("Subunits exported as GeoJSON.")
+    # Export subunit polygons as GeoJSON.
+    # latest-scene reuses the shared subunits.geojson already published with composites
+    # so this run does not rewrite that file.
+    if mode != "latest-scene":
+        print("Exporting subunit polygons as GeoJSON...")
+        geemap.ee_export_vector(units_with_calculations, filename="flood_reports/reports/subunits.geojson")
+        print("Subunits exported as GeoJSON.")
+    else:
+        print("Skipping shared subunits.geojson export (latest-scene mode).")
 
     # Convert EE feature collection to Pandas DataFrame
     units_df_properties_reduced = pd.DataFrame(units_with_calculations.getInfo()['features'])
@@ -730,10 +931,10 @@ def main(start_date, threshold):
     print("Creating and saving the HTML map with overlays...")
     clipped_binary_image = binary_image.clip(units)
 
-    false_color_basename = f"false_color_composite_{image_date_str}_{threshold}.png"
-    clipped_geojson_basename = f"clipped_flooded_areas_{image_date_str}_{threshold}.geojson"
+    false_color_basename = f"false_color_composite_{name_prefix}{image_date_str}_{threshold}.png"
+    clipped_geojson_basename = f"clipped_flooded_areas_{name_prefix}{image_date_str}_{threshold}.geojson"
     subunits_basename = "subunits.geojson"
-    map_basename = f"flooded_area_map_{image_date_str}_{threshold}.html"
+    map_basename = f"flooded_area_map_{name_prefix}{image_date_str}_{threshold}.html"
     unit_features = units_with_calculations.getInfo()["features"]
 
     orig_cwd = os.getcwd()
@@ -749,6 +950,7 @@ def main(start_date, threshold):
             end_date=end_date,
             threshold=threshold,
             scene_count=size,
+            product=product,
         )
         print(f"Map saved to {map_filename}")
     finally:
@@ -760,7 +962,7 @@ def main(start_date, threshold):
 
     # Save the DataFrame to a CSV file
     print("Generating CSV report...")
-    csv_filename = os.path.join(csv_subdirectory, f'flood_report_data_{image_date_str}_{threshold}.csv')
+    csv_filename = os.path.join(csv_subdirectory, f'flood_report_data_{name_prefix}{image_date_str}_{threshold}.csv')
     units_df_properties_reduced.to_csv(csv_filename, index=False)
     print(f"CSV file saved to {csv_filename}")
 
@@ -770,8 +972,8 @@ def main(start_date, threshold):
     report_table_df.columns = ["BWMA Unit", "Acres"]
     report_table_df["Acres"] = report_table_df["Acres"].round(0).astype(int)
 
-    csv_basename = f"flood_report_data_{image_date_str}_{threshold}.csv"
-    tif_basename = f"false_color_composite_{image_date_str}_{threshold}.tif"
+    csv_basename = f"flood_report_data_{name_prefix}{image_date_str}_{threshold}.csv"
+    tif_basename = f"false_color_composite_{name_prefix}{image_date_str}_{threshold}.tif"
 
     html_report = build_report_html(
         table_df=report_table_df,
@@ -784,15 +986,88 @@ def main(start_date, threshold):
         clipped_geojson_basename=clipped_geojson_basename,
         csv_basename=csv_basename,
         tif_basename=tif_basename,
+        product=product,
+        cloud_note=cloud_note,
     )
     print("Generating HTML report for flood data...")
     with open(report_filename, "w") as file:
         file.write(html_report)
     print(f"Report saved to {report_filename}")
 
+    if mode == "latest-scene":
+        import json
+        import shutil
+        payload = {
+            "product": "latest-usable-scene",
+            "wetup_start": search_start,
+            "search_end": search_end,
+            "scene_date": image_date_str,
+            "scene_id": scene_id,
+            "threshold": threshold,
+            "acres": float(total_flooded_acres),
+            "aoi_cloud_frac": scene_cloud_frac,
+            "granule_cloud_pct": None if granule_cloud_pct is None else float(granule_cloud_pct),
+            "max_cloud_frac": max_cloud_frac,
+            "cloud_rule": (
+                "Prefilter: granule CLOUDY_PIXEL_PERCENTAGE < 90 (whole Sentinel-2 tile, not the AOI). "
+                "Acceptance: over the BWMA bounding box at 20 m, "
+                "aoi_cloud_frac = count(SCL in {8,9,10}) / count(SCL != 0) must be <= 20%. "
+                "The usable scene with the latest system:time_start is kept. "
+                "Acreage is NIR reflectance < threshold on that single scene after masking "
+                "SCL in {0,3,8,9,10} (no data, cloud shadow, medium cloud, high cloud, cirrus). "
+                "This is not a 15-day median composite."
+            ),
+            "report_href": report_filename.replace("\\", "/"),
+        }
+        os.makedirs("includes", exist_ok=True)
+        sidecar = "includes/latest_scene.json"
+        with open(sidecar, "w") as fh:
+            json.dump(payload, fh, indent=2)
+            fh.write("\n")
+        print(f"Wrote {sidecar}")
+
+        docs_reports = "docs/flood_reports/reports"
+        docs_csv = "docs/flood_reports/csv_output"
+        os.makedirs(docs_reports, exist_ok=True)
+        os.makedirs(docs_csv, exist_ok=True)
+        copies = [
+            (report_filename, os.path.join(docs_reports, os.path.basename(report_filename))),
+            (map_filename, os.path.join(docs_reports, os.path.basename(map_filename))),
+            (clipped_flooded_geojson_path, os.path.join(docs_reports, os.path.basename(clipped_flooded_geojson_path))),
+            (false_color_filename_png, os.path.join(docs_reports, os.path.basename(false_color_filename_png))),
+            (false_color_filename_tif, os.path.join(docs_reports, os.path.basename(false_color_filename_tif))),
+            (csv_filename, os.path.join(docs_csv, os.path.basename(csv_filename))),
+        ]
+        for src, dst in copies:
+            shutil.copy2(src, dst)
+            print(f"Copied {src} -> {dst}")
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate flood report based on start date and threshold.")
-    parser.add_argument('start_date', type=str, help='Start date in YYYY-MM-DD format')
+    parser.add_argument('start_date', type=str, help='Start date in YYYY-MM-DD format. For --mode latest-scene this is the search start (wet-up), not the scene date.')
     parser.add_argument('threshold', type=float, help='Surface reflectance threshold value')
+    parser.add_argument(
+        '--mode',
+        choices=('composite', 'latest-scene'),
+        default='composite',
+        help='composite = 15-day cloud-masked median (default). latest-scene = newest low-cloud single scene from start_date through today.',
+    )
+    parser.add_argument(
+        '--end-date',
+        default=None,
+        help='Inclusive search end for --mode latest-scene (YYYY-MM-DD). Default: today.',
+    )
+    parser.add_argument(
+        '--max-cloud-frac',
+        type=float,
+        default=0.20,
+        help='Max AOI cloud fraction (SCL 8/9/10) for a usable scene. Default 0.20.',
+    )
     args = parser.parse_args()
-    main(args.start_date, args.threshold)
+    main(
+        args.start_date,
+        args.threshold,
+        mode=args.mode,
+        end_date=args.end_date,
+        max_cloud_frac=args.max_cloud_frac,
+    )

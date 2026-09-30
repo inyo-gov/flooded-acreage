@@ -454,6 +454,70 @@ a.archive-day {
   border-radius: 2px;
 }
 
+/* Latest usable scene (single acquisition; not the mid-month composite) */
+.scene-card {
+  margin: 0 0 0.85rem;
+  padding: 0.7rem 0.8rem 0.65rem;
+  background: #fff;
+  border: 1px solid var(--rs-border);
+  border-left: 4px solid var(--rs-nasa-red);
+  border-radius: var(--rs-radius);
+}
+
+.scene-card-kicker {
+  font-family: var(--rs-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rs-nasa-red);
+  margin-bottom: 0.2rem;
+}
+
+.scene-card-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.45rem 0.9rem;
+}
+
+.scene-card-acres {
+  font-family: Georgia, Cambria, "Times New Roman", serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 1.65rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--rs-nasa-blue);
+}
+
+.scene-card-date {
+  margin-top: 0.15rem;
+  font-family: var(--rs-mono);
+  font-size: 0.72rem;
+  color: var(--rs-text);
+}
+
+.scene-card-link {
+  font-family: var(--rs-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.55rem;
+  border-radius: var(--rs-radius);
+  border: 1px solid var(--rs-nasa-blue);
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+.scene-card-rule {
+  margin: 0.45rem 0 0;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  color: var(--rs-muted);
+}
+
 /* Report embed */
 .report-embed-card {
   background: #fff;

@@ -212,6 +212,21 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
+<div class="cell">
+<div class="cell-output-display">
+<div class="scene-card">
+<div class="scene-card-kicker">Latest usable scene · release calibration</div>
+<div class="scene-card-row">
+<div>
+<div class="scene-card-acres">106.6 ac</div>
+<div class="scene-card-date">Scene date 2026-09-29 · single Sentinel-2 pass · NIR 0.14 · AOI cloud 0.0%</div>
+</div>
+<a class="scene-card-link" href="flood_reports/reports/bwma_flood_report_scene_2026-09-29_0.14.html" target="_blank" rel="noopener">Open scene report</a>
+</div>
+<p class="scene-card-rule">Prefilter: granule CLOUDY_PIXEL_PERCENTAGE &lt; 90 (whole Sentinel-2 tile, not the AOI). Acceptance: over the BWMA bounding box at 20 m, aoi_cloud_frac = count(SCL in {8,9,10}) / count(SCL != 0) must be &lt;= 20%. The usable scene with the latest system:time_start is kept. Acreage is NIR reflectance &lt; threshold on that single scene after masking SCL in {0,3,8,9,10} (no data, cloud shadow, medium cloud, high cloud, cirrus). This is not a 15-day median composite.</p>
+</div>
+</div>
+</div>
 <div class="dashboard-section">
 <section id="monthly-flooded-acreage-by-unit" class="level2 dashboard-section-header">
 <h2 class="anchored" data-anchor-id="monthly-flooded-acreage-by-unit">Monthly flooded acreage by unit</h2>
