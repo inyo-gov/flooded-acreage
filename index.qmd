@@ -323,10 +323,14 @@ df_links <- tibble(file = html_files) %>%
     )
   )
 
+# Keep all report days in each FY×month cell (e.g. wet-up 22 · 26), sorted by date
 df_one_per_month <- df_links %>%
+  arrange(date) %>%
   group_by(fy_label, month_name) %>%
-  slice_min(date, n = 1, with_ties = FALSE) %>%
-  ungroup()
+  summarise(
+    full_link = paste(full_link, collapse = " · "),
+    .groups = "drop"
+  )
 
 all_months_ord <- ordered(month.abb, levels = month.abb)
 
@@ -380,18 +384,18 @@ knitr::kable(
 :::
 
 ```{=html}
-<!-- Latest monthly run: August 2026 (threshold 0.14; window 2026-08-01–16, filename date 2026-08-03). July: bwma_flood_report_2026-07-01_0.14.html -->
+<!-- Latest: September 2026 wet-up (threshold 0.14; mid-month composite label date 2026-09-26). Prior wet-up: bwma_flood_report_2026-09-22_0.14.html (~87.3 ac). August: bwma_flood_report_2026-08-03_0.14.html -->
 <div class="dashboard-section">
   <div class="report-embed-card">
     <div class="report-embed-header">
       <div>
         <h2>Most recent report</h2>
-        <p>August 2026 · Sentinel-2 composite · threshold 0.14 · ~3.1 ac (Drew)</p>
+        <p>September 2026 · wet-up / mid-month composite · label date 2026-09-26 · threshold 0.14 · ~115.7 ac</p>
       </div>
-      <a href="flood_reports/reports/bwma_flood_report_2026-08-03_0.14.html" target="_blank" rel="noopener">Open full report ↗</a>
+      <a href="flood_reports/reports/bwma_flood_report_2026-09-26_0.14.html" target="_blank" rel="noopener">Open full report ↗</a>
     </div>
     <iframe
-      src="flood_reports/reports/bwma_flood_report_2026-08-03_0.14.html"
+      src="flood_reports/reports/bwma_flood_report_2026-09-26_0.14.html"
       class="report-iframe"
       id="report-frame"
       title="Latest BWMA flood acreage report">
