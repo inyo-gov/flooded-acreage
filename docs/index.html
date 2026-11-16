@@ -79,6 +79,8 @@ ul.task-list li input[type="checkbox"] {
     box-shadow: none !important;
   }
 </style>
+
+
 <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -160,40 +162,58 @@ ul.task-list li input[type="checkbox"] {
     <div class="hero-meta">
       <span>NIR threshold</span>
       <span>15-day composite</span>
+      <span>Nov 2026: cumulative inventory</span>
     </div>
   </div>
+</div>
+<div class="dashboard-section">
+<section id="monthly-flooded-acreage-by-unit" class="level2 dashboard-section-header">
+<h2 class="anchored" data-anchor-id="monthly-flooded-acreage-by-unit">Monthly flooded acreage by unit</h2>
+<p>Stacked totals by flood unit (Drew kept in the stack for QA). Months before November 2026 are restated with true 10 m pixel area (Nov 2026); see About. KPI cards below exclude Drew from Total. Dashed line marks the <strong>500 ac</strong> seasonal target (Nov-Mar).</p>
+</section>
+<div class="dashboard-card chart-card">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/monthly_flooded_acres-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="cell stat-chunk">
 <div class="cell-output-display">
 <div class="stat-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.45rem;margin-bottom:0.45rem;">
 <div class="stat-card stat-highlight" style="background:#f8f9fb;border:1px solid #c5cdd8;border-left:3px solid #0b3d91;border-radius:3px;padding:0.5rem 0.6rem;border-left-color:#fc3d21;background:#fff;">
-<div class="stat-label" style="font-family:ui-monospace,monospace;font-size:0.58rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5a6578;margin-bottom:0.2rem;">Latest flooded</div>
+<div class="stat-label" style="font-family:ui-monospace,monospace;font-size:0.58rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5a6578;margin-bottom:0.2rem;">Estimate</div>
 <span class="stat-value" style="font-size:1.15rem;font-weight:700;line-height:1.15;white-space:nowrap;">
-<span class="stat-acres-num" style="font-family:Georgia,Cambria,serif;font-variant-numeric:tabular-nums;font-size:1.25rem;color:#0b3d91;">114.1</span>
+<span class="stat-acres-num" style="font-family:Georgia,Cambria,serif;font-variant-numeric:tabular-nums;font-size:1.25rem;color:#0b3d91;">499.60</span>
 <span class="stat-acres-unit" style="font-family:ui-monospace,monospace;font-size:0.78rem;font-weight:600;color:#5a6578;margin-left:0.1rem;">ac</span>
 </span>
-<div class="stat-detail" style="margin-top:0.25rem;font-size:0.68rem;color:#5a6578;line-height:1.25;white-space:nowrap;">Sep 2026 · 15-day composite</div>
+<div class="stat-detail" style="margin-top:0.25rem;font-size:0.68rem;color:#5a6578;line-height:1.25;white-space:nowrap;">Nov 1, 2026 · latest scene Nov 11</div>
 </div>
 <div class="stat-card" style="background:#f8f9fb;border:1px solid #c5cdd8;border-left:3px solid #0b3d91;border-radius:3px;padding:0.5rem 0.6rem;">
 <div class="stat-label" style="font-family:ui-monospace,monospace;font-size:0.58rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5a6578;margin-bottom:0.2rem;">Month-over-month change</div>
 <span class="stat-value" style="font-size:1.15rem;font-weight:700;line-height:1.15;white-space:nowrap;">
-<span class="stat-acres-num" style="font-family:Georgia,Cambria,serif;font-variant-numeric:tabular-nums;font-size:1.25rem;color:#0b3d91;">28.5</span>
+<span class="stat-acres-num" style="font-family:Georgia,Cambria,serif;font-variant-numeric:tabular-nums;font-size:1.25rem;color:#0b3d91;">345.9</span>
 <span class="stat-acres-unit" style="font-family:ui-monospace,monospace;font-size:0.78rem;font-weight:600;color:#5a6578;margin-left:0.1rem;">ac change</span>
 </span>
 <div class="stat-detail" style="margin-top:0.25rem;font-size:0.68rem;color:#5a6578;line-height:1.25;">
-<span class="stat-delta-up">+28.5 ac vs prior month</span>
+<span class="stat-delta-up">+345.9 ac vs our best estimate for October 2026 (153.7 ac, restated with true pixel area)</span>
 </div>
 </div>
 <div class="stat-card" style="background:#f8f9fb;border:1px solid #c5cdd8;border-left:3px solid #0b3d91;border-radius:3px;padding:0.5rem 0.6rem;">
 <div class="stat-label" style="font-family:ui-monospace,monospace;font-size:0.58rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5a6578;margin-bottom:0.2rem;">Season peak</div>
 <span>
 <span class="stat-value" style="font-size:1.15rem;font-weight:700;line-height:1.15;white-space:nowrap;">
-<span class="stat-acres-num" style="font-family:Georgia,Cambria,serif;font-variant-numeric:tabular-nums;font-size:1.25rem;color:#0b3d91;">788.5</span>
+<span class="stat-acres-num" style="font-family:Georgia,Cambria,serif;font-variant-numeric:tabular-nums;font-size:1.25rem;color:#0b3d91;">499.60</span>
 <span class="stat-acres-unit" style="font-family:ui-monospace,monospace;font-size:0.78rem;font-weight:600;color:#5a6578;margin-left:0.1rem;">ac</span>
 </span>
-<span class="stat-acres-unit" style="font-family:ui-monospace,monospace;font-size:0.78rem;font-weight:600;color:#5a6578;margin-left:0.25rem;">in Mar 2026</span>
+<span class="stat-acres-unit" style="font-family:ui-monospace,monospace;font-size:0.78rem;font-weight:600;color:#5a6578;margin-left:0.25rem;">in Nov 2026</span>
 </span>
-<div class="stat-detail" style="margin-top:0.25rem;font-size:0.68rem;color:#5a6578;line-height:1.25;">2025–26 · Nov–Mar · 500 ac target</div>
+<div class="stat-detail" style="margin-top:0.25rem;font-size:0.68rem;color:#5a6578;line-height:1.25;">2026–27 · Nov–Mar · 500 ac target</div>
 </div>
 </div>
 <div class="stat-units-bar" style="display:flex;flex-wrap:wrap;align-items:baseline;gap:0.35rem 0.65rem;margin-bottom:1rem;padding:0.45rem 0.6rem;background:#f8f9fb;border:1px solid #c5cdd8;border-left:3px solid #0b3d91;border-radius:3px;">
@@ -205,37 +225,19 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell">
 <div class="cell-output-display">
 <div class="scene-card">
-<div class="scene-card-kicker">Latest usable scene · release calibration</div>
+<div class="scene-card-kicker">Latest usable scene</div>
 <div class="scene-card-row">
 <div>
-<div class="scene-card-acres">118.1 ac</div>
-<div class="scene-card-date">Scene date 2026-09-29 · NIR 0.16</div>
+<div class="scene-card-acres">499.60 ac</div>
+<div class="scene-card-date">Scene date 2026-11-11 · Sentinel-2 · 0% cloud over BWMA · Estimate as of this scene</div>
 </div>
-<a class="scene-card-link" href="flood_reports/reports/bwma_flood_report_scene_2026-09-29_0.16.html" target="_blank" rel="noopener">Open scene report</a>
+<a class="scene-card-link" href="flood_reports/reports/bwma_flood_report_2026-11-01_official.html" target="_blank" rel="noopener">Open current report</a>
 </div>
-<p class="scene-card-lead">Newest clear Sentinel-2 pass over BWMA since wet-up began — for release calibration, not the monthly composite.</p>
-<p class="scene-card-drew-note">Drew excluded (~19 ac) — Total without Drew.</p>
+<p class="scene-card-lead">Newest clear Sentinel-2 pass over BWMA, accepted into the current report on Nov 13, 2026. The acreage is the Estimate after this scene (it added 7.12 ac), not a single-scene measurement. It also includes official correction #4 (Nov 16, 2026; +2.57 ac in the West Winterton north arm).</p>
 <details class="scene-card-details">
-<summary>Scene selection &amp; NIR method</summary>
-<p>Prefilter: granule CLOUDY_PIXEL_PERCENTAGE &lt; 90 (whole Sentinel-2 tile, not the AOI). Acceptance: over the BWMA bounding box at 20 m, aoi_cloud_frac = count(SCL in {8,9,10}) / count(SCL != 0) must be &lt;= 20%. The usable scene with the latest system:time_start is kept. Acreage is NIR reflectance &lt; threshold on that single scene after masking SCL in {0,3,8,9,10} (no data, cloud shadow, medium cloud, high cloud, cirrus). Displayed threshold 0.16 (raised from 0.14 to include dark fringe wet pixels in fall imagery). This is not a 15-day median composite. Total acreage excludes Drew (not in current rotation; often Blackrock ditch / reddish false positives); Drew row kept for QA. False-color PNG for the Folium map is warped to EPSG:4326 so the image overlay matches unit GeoJSON; downloadable GeoTIFF stays in the EE export CRS (typically UTM 11N).</p>
+<summary>Scene selection &amp; method</summary>
+<p>The scene passed the cloud screen (counted-unit cloud and shadow at or below 20%) and was added to the cumulative inventory under the existing rules: open water where Sentinel-2 NIR is below 0.16, plus radar flooded vegetation, with patch-size and connection checks. Only new area outside the existing footprint is added. Drew and East Winterton are not counted.</p>
 </details>
-</div>
-</div>
-</div>
-<div class="dashboard-section">
-<section id="monthly-flooded-acreage-by-unit" class="level2 dashboard-section-header">
-<h2 class="anchored" data-anchor-id="monthly-flooded-acreage-by-unit">Monthly flooded acreage by unit</h2>
-<p>Stacked totals by flood unit (Drew kept in the stack for QA). KPI cards above exclude Drew from Total. Dashed line marks the <strong>500 ac</strong> seasonal target (Nov-Mar).</p>
-</section>
-<div class="dashboard-card chart-card">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/monthly_flooded_acres-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960"></p>
-</figure>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -410,6 +412,18 @@ ul.task-list li input[type="checkbox"] {
 <a class="archive-day" href="flood_reports/reports/bwma_flood_report_2026-09-22_0.14.html" target="_blank" rel="noopener" title="Composite report · label date Sep 22, 2026" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">22</a>
 </div>
 </div>
+<div class="archive-m-row">
+<span class="archive-m-month">Oct</span>
+<div class="archive-days">
+<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2026-10-02_0.14.html" target="_blank" rel="noopener" title="Composite report · label date Oct 02, 2026" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">02</a>
+</div>
+</div>
+<div class="archive-m-row">
+<span class="archive-m-month">Nov</span>
+<div class="archive-days">
+<a class="archive-day" href="flood_reports/reports/bwma_flood_report_2026-11-01_official.html" target="_blank" rel="noopener" title="Composite report · label date Nov 01, 2026" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;">01</a>
+</div>
+</div>
 </details>
 </div>
 <table class="table dashboard-reports-table caption-top" data-quarto-postprocess="true">
@@ -532,8 +546,12 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;"><div class="archive-days">
 <a href="flood_reports/reports/bwma_flood_report_2026-09-22_0.14.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Composite report · label date Sep 22, 2026">22</a>
 </div></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;"><div class="archive-days">
+<a href="flood_reports/reports/bwma_flood_report_2026-10-02_0.14.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Composite report · label date Oct 02, 2026">02</a>
+</div></td>
+<td style="text-align: left;"><div class="archive-days">
+<a href="flood_reports/reports/bwma_flood_report_2026-11-01_official.html" class="archive-day" target="_blank" rel="noopener" style="font-family:ui-monospace,monospace;font-size:0.75rem;font-weight:600;text-decoration:underline;color:#0b3d91;" title="Composite report · label date Nov 01, 2026">01</a>
+</div></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
@@ -555,23 +573,27 @@ Click a day number to open the HTML report (unit table, map, downloads).
   <br><br>
   <strong>Earlier archive (before Apr 2026):</strong>
   The script always built a median composite, but reports were often run on ad-hoc dates when a clear scene was available—sometimes with only one pass in the window. Legacy report pages may say “imagery date”; that label is the filename date, not proof of a single scene.
+  <br><br>
+  <strong>October 2026 entry:</strong> Label date Oct 2, 2026. Standard composite workflow: Oct 1–16 window, 6 scenes, NIR 0.14, 186.1 ac as originally computed (Drew excluded). Restated Nov 2026 for pixel-area correction: 153.7 ac (15-day composite rerun on true 10 m pixel area; the original scene set could not be reproduced exactly).
+
 </div>
 </div>
 </div>
-<!-- Latest: September 2026 wet-up (threshold 0.14; mid-month composite label date 2026-09-26). Prior wet-up: bwma_flood_report_2026-09-22_0.14.html (~87.3 ac). August: bwma_flood_report_2026-08-03_0.14.html -->
 <div class="dashboard-section">
   <div class="report-embed-card">
     <div class="report-embed-header">
       <div>
         <h2 class="anchored">Most recent report</h2>
-        <p>September 2026 · wet-up / mid-month composite · label date 2026-09-26 · threshold 0.14 · ~115.7 ac</p>
+        <p>Nov 1, 2026 · Estimate 499.60 ac · scenes Nov 1–11 · latest scene Nov 11</p>
       </div>
-      <a href="flood_reports/reports/bwma_flood_report_2026-09-26_0.14.html" target="_blank" rel="noopener">Open full report ↗</a>
+      <a href="flood_reports/reports/bwma_flood_report_2026-11-01_official.html" target="_blank" rel="noopener">Open full report ↗</a>
     </div>
-    <iframe src="flood_reports/reports/bwma_flood_report_2026-09-26_0.14.html" class="report-iframe" id="report-frame" title="Latest BWMA flood acreage report">
+    <iframe src="flood_reports/reports/bwma_flood_report_2026-11-01_official.html" class="report-iframe" id="report-frame" title="Latest BWMA flooded acreage report (Nov 1, 2026)">
     </iframe>
   </div>
 </div>
+
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

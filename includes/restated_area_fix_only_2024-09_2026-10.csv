@@ -1,0 +1,316 @@
+report_date,Flood_Unit,acres_flooded,original_acres,source_csv
+2023-03-02,Thibaut,452.97,568.04,flood_report_data_2023-03-02_0.22.csv
+2023-03-02,Drew,50.95,64.64,flood_report_data_2023-03-02_0.22.csv
+2023-03-02,Waggoner,411.18,517.19,flood_report_data_2023-03-02_0.22.csv
+2023-03-02,West Winterton,183.6,232.82,flood_report_data_2023-03-02_0.22.csv
+2023-03-02,East Winterton,176.38,223.75,flood_report_data_2023-03-02_0.22.csv
+2023-03-02,South Winterton,166.13,208.9,flood_report_data_2023-03-02_0.22.csv
+2023-03-02,Thibaut Ponds,107.44,135.91,flood_report_data_2023-03-02_0.22.csv
+2023-11-02,Thibaut,521.69,587.25,flood_report_data_2023-11-02_0.22.csv
+2023-11-02,Drew,110.88,128.72,flood_report_data_2023-11-02_0.22.csv
+2023-11-02,Waggoner,247.15,309.05,flood_report_data_2023-11-02_0.22.csv
+2023-11-02,West Winterton,92.99,114.63,flood_report_data_2023-11-02_0.22.csv
+2023-11-02,East Winterton,54.31,68.18,flood_report_data_2023-11-02_0.22.csv
+2023-11-02,South Winterton,93.8,115.77,flood_report_data_2023-11-02_0.22.csv
+2023-11-02,Thibaut Ponds,65.48,76.8,flood_report_data_2023-11-02_0.22.csv
+2024-02-25,Thibaut,943.2,1218.72,flood_report_data_2024-02-25_0.21.csv
+2024-02-25,Drew,168.43,224.64,flood_report_data_2024-02-25_0.21.csv
+2024-02-25,Waggoner,460.28,605.01,flood_report_data_2024-02-25_0.21.csv
+2024-02-25,West Winterton,177.25,257.61,flood_report_data_2024-02-25_0.21.csv
+2024-02-25,East Winterton,130.08,176.66,flood_report_data_2024-02-25_0.21.csv
+2024-02-25,South Winterton,170.82,229.51,flood_report_data_2024-02-25_0.21.csv
+2024-02-25,Thibaut Ponds,150.59,207.37,flood_report_data_2024-02-25_0.21.csv
+2024-03-06,Thibaut,1003.35,1256.75,flood_report_data_2024-03-06_0.22.csv
+2024-03-06,Drew,219.33,269.3,flood_report_data_2024-03-06_0.22.csv
+2024-03-06,Waggoner,491.0,617.29,flood_report_data_2024-03-06_0.22.csv
+2024-03-06,West Winterton,248.49,307.6,flood_report_data_2024-03-06_0.22.csv
+2024-03-06,East Winterton,136.62,173.29,flood_report_data_2024-03-06_0.22.csv
+2024-03-06,South Winterton,177.77,224.89,flood_report_data_2024-03-06_0.22.csv
+2024-03-06,Thibaut Ponds,159.06,200.2,flood_report_data_2024-03-06_0.22.csv
+2024-09-22,Thibaut,48.73,61.73,flood_report_data_2024-09-22_0.18.csv
+2024-09-22,Drew,4.42,5.46,flood_report_data_2024-09-22_0.18.csv
+2024-09-22,Waggoner,29.38,37.49,flood_report_data_2024-09-22_0.18.csv
+2024-09-22,West Winterton,15.3,19.3,flood_report_data_2024-09-22_0.18.csv
+2024-09-22,East Winterton,0.0,0.0,flood_report_data_2024-09-22_0.18.csv
+2024-09-22,South Winterton,0.12,0.2,flood_report_data_2024-09-22_0.18.csv
+2024-09-22,Thibaut Ponds,7.68,9.54,flood_report_data_2024-09-22_0.18.csv
+2024-10-22,Thibaut,140.85,191.16,flood_report_data_2024-10-22_0.22.csv
+2024-10-22,Drew,19.79,31.36,flood_report_data_2024-10-22_0.22.csv
+2024-10-22,Waggoner,97.9,126.27,flood_report_data_2024-10-22_0.22.csv
+2024-10-22,West Winterton,44.7,57.28,flood_report_data_2024-10-22_0.22.csv
+2024-10-22,East Winterton,0.4,0.77,flood_report_data_2024-10-22_0.22.csv
+2024-10-22,South Winterton,40.06,51.6,flood_report_data_2024-10-22_0.22.csv
+2024-10-22,Thibaut Ponds,22.02,35.01,flood_report_data_2024-10-22_0.22.csv
+2024-11-03,Thibaut,153.53,197.29,flood_report_data_2024-11-03_0.22.csv
+2024-11-03,Drew,25.97,31.51,flood_report_data_2024-11-03_0.22.csv
+2024-11-03,Waggoner,115.62,145.96,flood_report_data_2024-11-03_0.22.csv
+2024-11-03,West Winterton,47.62,60.61,flood_report_data_2024-11-03_0.22.csv
+2024-11-03,East Winterton,0.49,0.79,flood_report_data_2024-11-03_0.22.csv
+2024-11-03,South Winterton,46.51,59.26,flood_report_data_2024-11-03_0.22.csv
+2024-11-03,Thibaut Ponds,27.43,31.68,flood_report_data_2024-11-03_0.22.csv
+2024-11-06,Thibaut,95.26,119.6,flood_report_data_2024-11-06_0.16.csv
+2024-11-06,Drew,5.31,6.35,flood_report_data_2024-11-06_0.16.csv
+2024-11-06,Waggoner,85.75,107.91,flood_report_data_2024-11-06_0.16.csv
+2024-11-06,West Winterton,32.47,40.9,flood_report_data_2024-11-06_0.16.csv
+2024-11-06,East Winterton,0.0,0.0,flood_report_data_2024-11-06_0.16.csv
+2024-11-06,South Winterton,41.83,52.24,flood_report_data_2024-11-06_0.16.csv
+2024-11-06,Thibaut Ponds,6.92,8.62,flood_report_data_2024-11-06_0.16.csv
+2024-11-08,Thibaut,218.34,273.5,flood_report_data_2024-11-08_0.22.csv
+2024-11-08,Drew,24.91,31.04,flood_report_data_2024-11-08_0.22.csv
+2024-11-08,Waggoner,120.56,151.15,flood_report_data_2024-11-08_0.22.csv
+2024-11-08,West Winterton,55.4,68.67,flood_report_data_2024-11-08_0.22.csv
+2024-11-08,East Winterton,0.89,1.19,flood_report_data_2024-11-08_0.22.csv
+2024-11-08,South Winterton,49.5,61.75,flood_report_data_2024-11-08_0.22.csv
+2024-11-08,Thibaut Ponds,25.85,32.54,flood_report_data_2024-11-08_0.22.csv
+2024-11-13,Thibaut,233.34,283.9,flood_report_data_2024-11-13_0.22.csv
+2024-11-13,Drew,25.33,28.59,flood_report_data_2024-11-13_0.22.csv
+2024-11-13,Waggoner,124.81,149.03,flood_report_data_2024-11-13_0.22.csv
+2024-11-13,West Winterton,59.16,69.26,flood_report_data_2024-11-13_0.22.csv
+2024-11-13,East Winterton,1.83,1.26,flood_report_data_2024-11-13_0.22.csv
+2024-11-13,South Winterton,51.13,62.42,flood_report_data_2024-11-13_0.22.csv
+2024-11-13,Thibaut Ponds,25.87,32.96,flood_report_data_2024-11-13_0.22.csv
+2024-11-16,Thibaut,212.26,231.91,flood_report_data_2024-11-16_0.22.csv
+2024-11-16,Drew,23.57,28.59,flood_report_data_2024-11-16_0.22.csv
+2024-11-16,Waggoner,130.42,156.94,flood_report_data_2024-11-16_0.22.csv
+2024-11-16,West Winterton,60.37,70.03,flood_report_data_2024-11-16_0.22.csv
+2024-11-16,East Winterton,1.66,1.31,flood_report_data_2024-11-16_0.22.csv
+2024-11-16,South Winterton,53.37,64.47,flood_report_data_2024-11-16_0.22.csv
+2024-11-16,Thibaut Ponds,24.17,29.95,flood_report_data_2024-11-16_0.22.csv
+2024-11-18,Thibaut,172.06,215.7,flood_report_data_2024-11-18_0.22.csv
+2024-11-18,Drew,24.49,30.27,flood_report_data_2024-11-18_0.22.csv
+2024-11-18,Waggoner,124.62,155.97,flood_report_data_2024-11-18_0.22.csv
+2024-11-18,West Winterton,56.78,70.47,flood_report_data_2024-11-18_0.22.csv
+2024-11-18,East Winterton,0.86,1.16,flood_report_data_2024-11-18_0.22.csv
+2024-11-18,South Winterton,51.08,63.68,flood_report_data_2024-11-18_0.22.csv
+2024-11-18,Thibaut Ponds,22.91,28.94,flood_report_data_2024-11-18_0.22.csv
+2024-11-28,Thibaut,204.23,256.22,flood_report_data_2024-11-28_0.2.csv
+2024-11-28,Drew,10.92,13.57,flood_report_data_2024-11-28_0.2.csv
+2024-11-28,Waggoner,131.56,164.97,flood_report_data_2024-11-28_0.2.csv
+2024-11-28,West Winterton,60.52,74.85,flood_report_data_2024-11-28_0.2.csv
+2024-11-28,East Winterton,0.42,0.57,flood_report_data_2024-11-28_0.2.csv
+2024-11-28,South Winterton,55.72,69.49,flood_report_data_2024-11-28_0.2.csv
+2024-11-28,Thibaut Ponds,17.03,21.28,flood_report_data_2024-11-28_0.2.csv
+2024-12-06,Thibaut,203.79,254.91,flood_report_data_2024-12-06_0.2.csv
+2024-12-06,Drew,12.01,15.1,flood_report_data_2024-12-06_0.2.csv
+2024-12-06,Waggoner,146.61,184.49,flood_report_data_2024-12-06_0.2.csv
+2024-12-06,West Winterton,67.93,84.49,flood_report_data_2024-12-06_0.2.csv
+2024-12-06,East Winterton,0.74,0.99,flood_report_data_2024-12-06_0.2.csv
+2024-12-06,South Winterton,59.13,73.61,flood_report_data_2024-12-06_0.2.csv
+2024-12-06,Thibaut Ponds,12.97,16.21,flood_report_data_2024-12-06_0.2.csv
+2025-01-05,Thibaut,156.47,196.42,flood_report_data_2025-01-05_0.18.csv
+2025-01-05,Drew,7.59,9.44,flood_report_data_2025-01-05_0.18.csv
+2025-01-05,Waggoner,126.54,159.09,flood_report_data_2025-01-05_0.18.csv
+2025-01-05,West Winterton,88.34,109.94,flood_report_data_2025-01-05_0.18.csv
+2025-01-05,East Winterton,0.0,0.0,flood_report_data_2025-01-05_0.18.csv
+2025-01-05,South Winterton,56.36,70.3,flood_report_data_2025-01-05_0.18.csv
+2025-01-05,Thibaut Ponds,28.47,35.41,flood_report_data_2025-01-05_0.18.csv
+2025-02-21,Thibaut,169.17,213.75,flood_report_data_2025-02-21_0.16.csv
+2025-02-21,Drew,5.96,7.98,flood_report_data_2025-02-21_0.16.csv
+2025-02-21,Waggoner,147.05,188.52,flood_report_data_2025-02-21_0.16.csv
+2025-02-21,West Winterton,128.4,156.32,flood_report_data_2025-02-21_0.16.csv
+2025-02-21,East Winterton,0.0,0.0,flood_report_data_2025-02-21_0.16.csv
+2025-02-21,South Winterton,61.75,75.69,flood_report_data_2025-02-21_0.16.csv
+2025-02-21,Thibaut Ponds,29.75,36.45,flood_report_data_2025-02-21_0.16.csv
+2025-03-01,Thibaut,169.17,212.31,flood_report_data_2025-03-01_0.16.csv
+2025-03-01,Drew,5.96,7.51,flood_report_data_2025-03-01_0.16.csv
+2025-03-01,Waggoner,147.05,184.69,flood_report_data_2025-03-01_0.16.csv
+2025-03-01,West Winterton,128.4,160.1,flood_report_data_2025-03-01_0.16.csv
+2025-03-01,East Winterton,0.0,0.0,flood_report_data_2025-03-01_0.16.csv
+2025-03-01,South Winterton,61.75,77.12,flood_report_data_2025-03-01_0.16.csv
+2025-03-01,Thibaut Ponds,29.75,37.29,flood_report_data_2025-03-01_0.16.csv
+2025-03-08,Thibaut,152.46,191.33,flood_report_data_2025-03-08_0.16.csv
+2025-03-08,Drew,5.88,7.31,flood_report_data_2025-03-08_0.16.csv
+2025-03-08,Waggoner,133.19,166.82,flood_report_data_2025-03-08_0.16.csv
+2025-03-08,West Winterton,78.75,98.05,flood_report_data_2025-03-08_0.16.csv
+2025-03-08,East Winterton,0.0,0.0,flood_report_data_2025-03-08_0.16.csv
+2025-03-08,South Winterton,59.63,74.33,flood_report_data_2025-03-08_0.16.csv
+2025-03-08,Thibaut Ponds,22.44,28.05,flood_report_data_2025-03-08_0.16.csv
+2025-03-15,Thibaut,177.05,221.78,flood_report_data_2025-03-15_0.2.csv
+2025-03-15,Drew,7.29,8.85,flood_report_data_2025-03-15_0.2.csv
+2025-03-15,Waggoner,139.89,175.57,flood_report_data_2025-03-15_0.2.csv
+2025-03-15,West Winterton,101.31,125.83,flood_report_data_2025-03-15_0.2.csv
+2025-03-15,East Winterton,0.0,0.0,flood_report_data_2025-03-15_0.2.csv
+2025-03-15,South Winterton,65.33,81.52,flood_report_data_2025-03-15_0.2.csv
+2025-03-15,Thibaut Ponds,23.75,29.6,flood_report_data_2025-03-15_0.2.csv
+2025-03-26,Thibaut,126.74,159.04,flood_report_data_2025-03-26_0.14.csv
+2025-03-26,Drew,5.12,6.42,flood_report_data_2025-03-26_0.14.csv
+2025-03-26,Waggoner,90.84,114.11,flood_report_data_2025-03-26_0.14.csv
+2025-03-26,West Winterton,16.78,20.95,flood_report_data_2025-03-26_0.14.csv
+2025-03-26,East Winterton,0.0,0.0,flood_report_data_2025-03-26_0.14.csv
+2025-03-26,South Winterton,52.14,65.16,flood_report_data_2025-03-26_0.14.csv
+2025-03-26,Thibaut Ponds,8.7,10.92,flood_report_data_2025-03-26_0.14.csv
+2025-04-04,Thibaut,128.79,162.79,flood_report_data_2025-04-04_0.16.csv
+2025-04-04,Drew,5.56,6.99,flood_report_data_2025-04-04_0.16.csv
+2025-04-04,Waggoner,85.6,112.98,flood_report_data_2025-04-04_0.16.csv
+2025-04-04,West Winterton,5.73,11.34,flood_report_data_2025-04-04_0.16.csv
+2025-04-04,East Winterton,0.0,0.0,flood_report_data_2025-04-04_0.16.csv
+2025-04-04,South Winterton,49.57,64.1,flood_report_data_2025-04-04_0.16.csv
+2025-04-04,Thibaut Ponds,0.49,3.61,flood_report_data_2025-04-04_0.16.csv
+2025-05-02,Thibaut,107.99,135.76,flood_report_data_2025-05-02_0.14.csv
+2025-05-02,Drew,4.99,6.15,flood_report_data_2025-05-02_0.14.csv
+2025-05-02,Waggoner,61.33,77.22,flood_report_data_2025-05-02_0.14.csv
+2025-05-02,West Winterton,1.09,1.38,flood_report_data_2025-05-02_0.14.csv
+2025-05-02,East Winterton,0.0,0.0,flood_report_data_2025-05-02_0.14.csv
+2025-05-02,South Winterton,44.36,55.45,flood_report_data_2025-05-02_0.14.csv
+2025-05-02,Thibaut Ponds,0.0,0.0,flood_report_data_2025-05-02_0.14.csv
+2025-06-04,Thibaut,18.51,23.03,flood_report_data_2025-06-04_0.1.csv
+2025-06-04,Drew,2.47,3.14,flood_report_data_2025-06-04_0.1.csv
+2025-06-04,Waggoner,3.11,3.9,flood_report_data_2025-06-04_0.1.csv
+2025-06-04,West Winterton,0.0,0.0,flood_report_data_2025-06-04_0.1.csv
+2025-06-04,East Winterton,0.0,0.0,flood_report_data_2025-06-04_0.1.csv
+2025-06-04,South Winterton,9.24,11.79,flood_report_data_2025-06-04_0.1.csv
+2025-06-04,Thibaut Ponds,0.0,0.0,flood_report_data_2025-06-04_0.1.csv
+2025-07-01,Thibaut,0.0,0.0,flood_report_data_2025-07-01_0.1.csv
+2025-07-01,Drew,2.25,2.82,flood_report_data_2025-07-01_0.1.csv
+2025-07-01,Waggoner,0.0,0.0,flood_report_data_2025-07-01_0.1.csv
+2025-07-01,West Winterton,0.0,0.0,flood_report_data_2025-07-01_0.1.csv
+2025-07-01,East Winterton,0.0,0.0,flood_report_data_2025-07-01_0.1.csv
+2025-07-01,South Winterton,0.0,0.0,flood_report_data_2025-07-01_0.1.csv
+2025-07-01,Thibaut Ponds,0.0,0.0,flood_report_data_2025-07-01_0.1.csv
+2025-08-02,Thibaut,0.0,0.0,flood_report_data_2025-08-02_0.1.csv
+2025-08-02,Drew,2.05,3.29,flood_report_data_2025-08-02_0.1.csv
+2025-08-02,Waggoner,0.0,0.02,flood_report_data_2025-08-02_0.1.csv
+2025-08-02,West Winterton,0.0,0.0,flood_report_data_2025-08-02_0.1.csv
+2025-08-02,East Winterton,0.0,0.0,flood_report_data_2025-08-02_0.1.csv
+2025-08-02,South Winterton,0.0,0.0,flood_report_data_2025-08-02_0.1.csv
+2025-08-02,Thibaut Ponds,0.0,0.0,flood_report_data_2025-08-02_0.1.csv
+2025-09-04,Thibaut,0.0,0.0,flood_report_data_2025-09-04_0.15.csv
+2025-09-04,Drew,2.72,3.63,flood_report_data_2025-09-04_0.15.csv
+2025-09-04,Waggoner,0.05,0.05,flood_report_data_2025-09-04_0.15.csv
+2025-09-04,West Winterton,0.0,0.0,flood_report_data_2025-09-04_0.15.csv
+2025-09-04,East Winterton,0.0,0.0,flood_report_data_2025-09-04_0.15.csv
+2025-09-04,South Winterton,0.0,0.0,flood_report_data_2025-09-04_0.15.csv
+2025-09-04,Thibaut Ponds,0.0,0.0,flood_report_data_2025-09-04_0.15.csv
+2025-09-17,Thibaut,8.87,9.17,flood_report_data_2025-09-17_0.15.csv
+2025-09-17,Drew,2.97,3.48,flood_report_data_2025-09-17_0.15.csv
+2025-09-17,Waggoner,17.25,11.59,flood_report_data_2025-09-17_0.15.csv
+2025-09-17,West Winterton,32.57,30.44,flood_report_data_2025-09-17_0.15.csv
+2025-09-17,East Winterton,0.0,0.0,flood_report_data_2025-09-17_0.15.csv
+2025-09-17,South Winterton,0.0,0.0,flood_report_data_2025-09-17_0.15.csv
+2025-09-17,Thibaut Ponds,12.92,15.02,flood_report_data_2025-09-17_0.15.csv
+2025-09-29,Thibaut,20.19,25.3,flood_report_data_2025-09-29_0.15.csv
+2025-09-29,Drew,1.83,2.3,flood_report_data_2025-09-29_0.15.csv
+2025-09-29,Waggoner,28.66,36.4,flood_report_data_2025-09-29_0.15.csv
+2025-09-29,West Winterton,37.66,46.48,flood_report_data_2025-09-29_0.15.csv
+2025-09-29,East Winterton,0.0,0.0,flood_report_data_2025-09-29_0.15.csv
+2025-09-29,South Winterton,0.0,0.0,flood_report_data_2025-09-29_0.15.csv
+2025-09-29,Thibaut Ponds,12.06,15.15,flood_report_data_2025-09-29_0.15.csv
+2025-10-17,Thibaut,63.48,79.67,flood_report_data_2025-10-17_0.2.csv
+2025-10-17,Drew,8.25,10.18,flood_report_data_2025-10-17_0.2.csv
+2025-10-17,Waggoner,98.87,123.8,flood_report_data_2025-10-17_0.2.csv
+2025-10-17,West Winterton,108.9,136.18,flood_report_data_2025-10-17_0.2.csv
+2025-10-17,East Winterton,0.0,0.0,flood_report_data_2025-10-17_0.2.csv
+2025-10-17,South Winterton,0.1,0.12,flood_report_data_2025-10-17_0.2.csv
+2025-10-17,Thibaut Ponds,42.6,53.2,flood_report_data_2025-10-17_0.2.csv
+2025-11-01,Thibaut,71.09,89.18,flood_report_data_2025-11-01_0.2.csv
+2025-11-01,Drew,7.64,9.44,flood_report_data_2025-11-01_0.2.csv
+2025-11-01,Waggoner,114.85,144.06,flood_report_data_2025-11-01_0.2.csv
+2025-11-01,West Winterton,120.76,150.81,flood_report_data_2025-11-01_0.2.csv
+2025-11-01,East Winterton,0.1,0.15,flood_report_data_2025-11-01_0.2.csv
+2025-11-01,South Winterton,10.9,13.57,flood_report_data_2025-11-01_0.2.csv
+2025-11-01,Thibaut Ponds,50.53,63.11,flood_report_data_2025-11-01_0.2.csv
+2025-11-10,Thibaut,70.5,88.41,flood_report_data_2025-11-10_0.21.csv
+2025-11-10,Drew,10.7,13.02,flood_report_data_2025-11-10_0.21.csv
+2025-11-10,Waggoner,113.4,142.23,flood_report_data_2025-11-10_0.21.csv
+2025-11-10,West Winterton,124.79,156.37,flood_report_data_2025-11-10_0.21.csv
+2025-11-10,East Winterton,0.15,0.22,flood_report_data_2025-11-10_0.21.csv
+2025-11-10,South Winterton,14.93,18.43,flood_report_data_2025-11-10_0.21.csv
+2025-11-10,Thibaut Ponds,50.56,63.28,flood_report_data_2025-11-10_0.21.csv
+2025-12-01,Thibaut,70.55,88.88,flood_report_data_2025-12-01_0.16.csv
+2025-12-01,Drew,7.24,9.49,flood_report_data_2025-12-01_0.16.csv
+2025-12-01,Waggoner,128.62,161.61,flood_report_data_2025-12-01_0.16.csv
+2025-12-01,West Winterton,152.79,192.87,flood_report_data_2025-12-01_0.16.csv
+2025-12-01,East Winterton,0.15,0.22,flood_report_data_2025-12-01_0.16.csv
+2025-12-01,South Winterton,31.21,40.28,flood_report_data_2025-12-01_0.16.csv
+2025-12-01,Thibaut Ponds,41.64,50.95,flood_report_data_2025-12-01_0.16.csv
+2025-12-08,Thibaut,87.06,109.25,flood_report_data_2025-12-08_0.18.csv
+2025-12-08,Drew,16.85,21.08,flood_report_data_2025-12-08_0.18.csv
+2025-12-08,Waggoner,139.86,175.02,flood_report_data_2025-12-08_0.18.csv
+2025-12-08,West Winterton,167.36,209.69,flood_report_data_2025-12-08_0.18.csv
+2025-12-08,East Winterton,0.77,0.94,flood_report_data_2025-12-08_0.18.csv
+2025-12-08,South Winterton,37.16,46.41,flood_report_data_2025-12-08_0.18.csv
+2025-12-08,Thibaut Ponds,44.21,55.2,flood_report_data_2025-12-08_0.18.csv
+2026-01-02,Thibaut,82.95,103.98,flood_report_data_2026-01-02_0.14.csv
+2026-01-02,Drew,8.15,10.21,flood_report_data_2026-01-02_0.14.csv
+2026-01-02,Waggoner,166.57,208.88,flood_report_data_2026-01-02_0.14.csv
+2026-01-02,West Winterton,193.63,242.11,flood_report_data_2026-01-02_0.14.csv
+2026-01-02,East Winterton,3.81,4.92,flood_report_data_2026-01-02_0.14.csv
+2026-01-02,South Winterton,53.18,66.2,flood_report_data_2026-01-02_0.14.csv
+2026-01-02,Thibaut Ponds,34.25,42.85,flood_report_data_2026-01-02_0.14.csv
+2026-02-01,Thibaut,88.44,110.88,flood_report_data_2026-02-01_0.14.csv
+2026-02-01,Drew,6.33,7.93,flood_report_data_2026-02-01_0.14.csv
+2026-02-01,Waggoner,175.35,219.36,flood_report_data_2026-02-01_0.14.csv
+2026-02-01,West Winterton,202.06,252.64,flood_report_data_2026-02-01_0.14.csv
+2026-02-01,East Winterton,0.02,0.02,flood_report_data_2026-02-01_0.14.csv
+2026-02-01,South Winterton,63.63,79.64,flood_report_data_2026-02-01_0.14.csv
+2026-02-01,Thibaut Ponds,37.04,46.28,flood_report_data_2026-02-01_0.14.csv
+2026-03-01,Thibaut,111.47,143.54,flood_report_data_2026-03-01_0.14.csv
+2026-03-01,Drew,6.38,8.72,flood_report_data_2026-03-01_0.14.csv
+2026-03-01,Waggoner,199.32,252.17,flood_report_data_2026-03-01_0.14.csv
+2026-03-01,West Winterton,198.65,248.32,flood_report_data_2026-03-01_0.14.csv
+2026-03-01,East Winterton,0.42,0.59,flood_report_data_2026-03-01_0.14.csv
+2026-03-01,South Winterton,79.59,100.35,flood_report_data_2026-03-01_0.14.csv
+2026-03-01,Thibaut Ponds,35.21,43.49,flood_report_data_2026-03-01_0.14.csv
+2026-03-16,Thibaut,93.01,116.34,flood_report_data_2026-03-16_0.14.csv
+2026-03-16,Drew,6.2,7.73,flood_report_data_2026-03-16_0.14.csv
+2026-03-16,Waggoner,143.07,179.2,flood_report_data_2026-03-16_0.14.csv
+2026-03-16,West Winterton,144.04,179.97,flood_report_data_2026-03-16_0.14.csv
+2026-03-16,East Winterton,0.0,0.0,flood_report_data_2026-03-16_0.14.csv
+2026-03-16,South Winterton,69.36,86.93,flood_report_data_2026-03-16_0.14.csv
+2026-03-16,Thibaut Ponds,22.39,28.0,flood_report_data_2026-03-16_0.14.csv
+2026-04-02,Thibaut,65.61,82.48,flood_report_data_2026-04-02_0.14.csv
+2026-04-02,Drew,5.31,6.55,flood_report_data_2026-04-02_0.14.csv
+2026-04-02,Waggoner,95.75,119.7,flood_report_data_2026-04-02_0.14.csv
+2026-04-02,West Winterton,48.83,61.08,flood_report_data_2026-04-02_0.14.csv
+2026-04-02,East Winterton,0.0,0.0,flood_report_data_2026-04-02_0.14.csv
+2026-04-02,South Winterton,48.14,60.07,flood_report_data_2026-04-02_0.14.csv
+2026-04-02,Thibaut Ponds,3.19,4.03,flood_report_data_2026-04-02_0.14.csv
+2026-05-07,Thibaut,35.63,53.7,flood_report_data_2026-05-07_0.14.csv
+2026-05-07,Drew,4.32,5.91,flood_report_data_2026-05-07_0.14.csv
+2026-05-07,Waggoner,39.29,64.89,flood_report_data_2026-05-07_0.14.csv
+2026-05-07,West Winterton,0.77,2.13,flood_report_data_2026-05-07_0.14.csv
+2026-05-07,East Winterton,0.0,0.0,flood_report_data_2026-05-07_0.14.csv
+2026-05-07,South Winterton,26.96,40.23,flood_report_data_2026-05-07_0.14.csv
+2026-05-07,Thibaut Ponds,0.0,0.0,flood_report_data_2026-05-07_0.14.csv
+2026-06-01,Thibaut,5.76,7.61,flood_report_data_2026-06-01_0.14.csv
+2026-06-01,Drew,3.36,4.25,flood_report_data_2026-06-01_0.14.csv
+2026-06-01,Waggoner,0.12,0.22,flood_report_data_2026-06-01_0.14.csv
+2026-06-01,West Winterton,0.0,0.0,flood_report_data_2026-06-01_0.14.csv
+2026-06-01,East Winterton,0.0,0.0,flood_report_data_2026-06-01_0.14.csv
+2026-06-01,South Winterton,0.52,0.67,flood_report_data_2026-06-01_0.14.csv
+2026-06-01,Thibaut Ponds,0.0,0.0,flood_report_data_2026-06-01_0.14.csv
+2026-07-01,Thibaut,0.02,0.02,flood_report_data_2026-07-01_0.14.csv
+2026-07-01,Drew,2.64,3.36,flood_report_data_2026-07-01_0.14.csv
+2026-07-01,Waggoner,0.0,0.0,flood_report_data_2026-07-01_0.14.csv
+2026-07-01,West Winterton,0.0,0.0,flood_report_data_2026-07-01_0.14.csv
+2026-07-01,East Winterton,0.0,0.0,flood_report_data_2026-07-01_0.14.csv
+2026-07-01,South Winterton,0.0,0.0,flood_report_data_2026-07-01_0.14.csv
+2026-07-01,Thibaut Ponds,0.0,0.0,flood_report_data_2026-07-01_0.14.csv
+2026-08-03,Thibaut,0.0,0.0,flood_report_data_2026-08-03_0.14.csv
+2026-08-03,Drew,2.42,3.06,flood_report_data_2026-08-03_0.14.csv
+2026-08-03,Waggoner,0.0,0.0,flood_report_data_2026-08-03_0.14.csv
+2026-08-03,West Winterton,0.0,0.0,flood_report_data_2026-08-03_0.14.csv
+2026-08-03,East Winterton,0.0,0.0,flood_report_data_2026-08-03_0.14.csv
+2026-08-03,South Winterton,0.0,0.0,flood_report_data_2026-08-03_0.14.csv
+2026-08-03,Thibaut Ponds,0.0,0.0,flood_report_data_2026-08-03_0.14.csv
+2026-09-22,Thibaut,30.42,27.87,flood_report_data_2026-09-22_0.14.csv
+2026-09-22,Drew,1.26,1.66,flood_report_data_2026-09-22_0.14.csv
+2026-09-22,Waggoner,34.52,35.93,flood_report_data_2026-09-22_0.14.csv
+2026-09-22,West Winterton,14.83,13.57,flood_report_data_2026-09-22_0.14.csv
+2026-09-22,East Winterton,0.0,0.0,flood_report_data_2026-09-22_0.14.csv
+2026-09-22,South Winterton,0.0,0.0,flood_report_data_2026-09-22_0.14.csv
+2026-09-22,Thibaut Ponds,7.59,8.3,flood_report_data_2026-09-22_0.14.csv
+2026-09-26,Thibaut,41.09,38.38,flood_report_data_2026-09-26_0.14.csv
+2026-09-26,Drew,1.06,1.56,flood_report_data_2026-09-26_0.14.csv
+2026-09-26,Waggoner,52.14,45.47,flood_report_data_2026-09-26_0.14.csv
+2026-09-26,West Winterton,21.47,21.03,flood_report_data_2026-09-26_0.14.csv
+2026-09-26,East Winterton,0.0,0.0,flood_report_data_2026-09-26_0.14.csv
+2026-09-26,South Winterton,0.0,0.0,flood_report_data_2026-09-26_0.14.csv
+2026-09-26,Thibaut Ponds,13.76,9.27,flood_report_data_2026-09-26_0.14.csv
+2026-10-02,Thibaut,42.03,52.93,flood_report_data_2026-10-02_0.14.csv
+2026-10-02,Drew,0.94,1.04,flood_report_data_2026-10-02_0.14.csv
+2026-10-02,Waggoner,60.27,74.35,flood_report_data_2026-10-02_0.14.csv
+2026-10-02,West Winterton,27.7,31.14,flood_report_data_2026-10-02_0.14.csv
+2026-10-02,East Winterton,0.0,0.0,flood_report_data_2026-10-02_0.14.csv
+2026-10-02,South Winterton,0.0,0.0,flood_report_data_2026-10-02_0.14.csv
+2026-10-02,Thibaut Ponds,23.72,27.7,flood_report_data_2026-10-02_0.14.csv

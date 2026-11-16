@@ -1,9 +1,9 @@
-Flood_Unit,total_pixels,flooded_pixels,unit_acres,acres_flooded,flooded_percentage
-Thibaut,99955,23765,1971.07,587.25,23.78
-Drew,25462,5209,502.65,128.72,20.46
-Waggoner,63198,12507,1246.13,309.05,19.79
-West Winterton,40855,4639,805.68,114.63,11.35
-East Winterton,17010,2759,335.14,68.18,16.22
-South Winterton,26035,4685,513.46,115.77,18.0
-Thibaut Ponds,26753,3108,527.63,76.8,11.62
-Total,273806,51463,5399.11,1271.68,23.55
+Flood_Unit,total_pixels,flooded_pixels,unit_acres,acres_flooded,flooded_percentage,original_acres_flooded,original_flooded_pixels,restatement_note
+Thibaut,99955,21112,1971.07,521.69,26.47,587.25,23765,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 587.25 ac
+Drew,25462,4487,502.65,110.88,22.06,128.72,5209,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 128.72 ac
+Waggoner,63198,10002,1246.13,247.15,19.83,309.05,12507,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 309.05 ac
+West Winterton,40855,3763,805.68,92.99,11.54,114.63,4639,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 114.63 ac
+East Winterton,17010,2198,335.14,54.31,16.21,68.18,2759,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 68.18 ac
+South Winterton,26035,3796,513.46,93.8,18.27,115.77,4685,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 115.77 ac
+Thibaut Ponds,26753,2650,527.63,65.48,12.41,76.8,3108,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 76.80 ac
+Total,273806,43521,5399.11,1075.42,19.92,1271.68,51463,restated Nov 2026 for pixel-area correction; originally reported 1271.68 ac

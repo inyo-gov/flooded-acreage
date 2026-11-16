@@ -1,0 +1,89 @@
+report_date,threshold,source_csv,site_page,method,matched_candidate,original_total_excl_drew,restated_total_excl_drew,nov2_composite_rerun_total,reference_original_on_own_pixel_area,change_ac
+2023-03-02,0.22,flood_report_data_2023-03-02_0.22.csv,bwma_flood_report_2023-03-02_0.22.html,composite,composite_15day,1886.61,1497.7,1497.7,1505.4,-388.91
+2023-11-02,0.22,flood_report_data_2023-11-02_0.22.csv,bwma_flood_report_2023-11-02_0.22.html,unresolved,20231114T183629_20231114T183852_T11SLA,1271.68,1075.42,1075.42,1014.79,-196.26
+2024-02-25,0.21,flood_report_data_2024-02-25_0.21.csv,bwma_flood_report_2024-02-25_0.21.html,unresolved,composite_15day,2694.88,2032.22,2032.22,2150.48,-662.66
+2024-02-25,0.22,flood_report_data_2024-02-25_0.22.csv,bwma_flood_report_2024-02-25_0.22.html,unresolved,composite_15day,3125.41,2381.4,2381.4,2494.02,-744.01
+2024-03-06,0.22,flood_report_data_2024-03-06_0.22.csv,bwma_flood_report_2024-03-06_0.22.html,single scene,20240311T184151_20240311T184844_T11SLA,2780.02,2216.29,1773.14,2218.42,-563.73
+2024-09-22,0.18,flood_report_data_2024-09-22_0.18.csv,bwma_flood_report_2024-09-22_0.18.html,composite,composite_15day,128.26,101.21,101.21,102.35,-27.05
+2024-10-22,0.22,flood_report_data_2024-10-22_0.22.csv,bwma_flood_report_2024-10-22_0.22.html,unresolved,20241022T184339_20241022T184335_T11SLA,462.09,345.93,345.93,368.75,-116.16
+2024-11-03,0.22,flood_report_data_2024-11-03_0.22.csv,bwma_flood_report_2024-11-03_0.22.html,single scene,20241103T183531_20241103T183533_T11SLA,495.59,391.2,426.14,395.49,-104.39
+2024-11-03,0.225,flood_report_data_2024-11-03_0.225.csv,bwma_flood_report_2024-11-03_0.225.html,composite,composite_15day,571.16,456.36,456.36,455.81,-114.8
+2024-11-03,0.227,flood_report_data_2024-11-03_0.227.csv,bwma_flood_report_2024-11-03_0.227.html,composite,composite_15day,587.99,469.72,469.72,469.23,-118.27
+2024-11-03,0.23,flood_report_data_2024-11-03_0.23.csv,bwma_flood_report_2024-11-03_0.23.html,composite,composite_15day,616.7,492.71,492.71,492.14,-123.99
+2024-11-03,0.232,flood_report_data_2024-11-03_0.232.csv,bwma_flood_report_2024-11-03_0.232.html,composite,composite_15day,638.7,509.72,509.72,509.7,-128.98
+2024-11-03,0.234,flood_report_data_2024-11-03_0.234.csv,bwma_flood_report_2024-11-03_0.234.html,composite,composite_15day,660.05,526.77,526.77,526.74,-133.28
+2024-11-03,0.236,flood_report_data_2024-11-03_0.236.csv,bwma_flood_report_2024-11-03_0.236.html,composite,composite_15day,682.67,545.19,545.19,544.77,-137.48
+2024-11-06,0.16,flood_report_data_2024-11-06_0.16.csv,bwma_flood_report_2024-11-06_0.16.html,composite,composite_15day,329.27,262.23,262.23,262.76,-67.04
+2024-11-06,0.18,flood_report_data_2024-11-06_0.18.csv,bwma_flood_report_2024-11-06_0.18.html,composite,composite_15day,375.49,299.74,299.74,299.66,-75.75
+2024-11-06,0.2,flood_report_data_2024-11-06_0.2.csv,bwma_flood_report_2024-11-06_0.2.html,composite,composite_15day,439.8,350.86,350.86,350.97,-88.94
+2024-11-06,0.22,flood_report_data_2024-11-06_0.22.csv,bwma_flood_report_2024-11-06_0.22.html,single scene,20241106T184551_20241106T184550_T11SLA,547.24,437.04,439.67,436.72,-110.2
+2024-11-06,0.236,flood_report_data_2024-11-06_0.236.csv,bwma_flood_report_2024-11-06_0.236.html,composite,composite_15day,702.03,560.66,560.66,560.23,-141.37
+2024-11-06,0.24,flood_report_data_2024-11-06_0.24.csv,bwma_flood_report_2024-11-06_0.24.html,composite,composite_15day,751.43,600.56,600.56,599.66,-150.87
+2024-11-06,0.245,flood_report_data_2024-11-06_0.245.csv,bwma_flood_report_2024-11-06_0.245.html,composite,composite_15day,821.8,656.94,656.94,655.82,-164.86
+2024-11-06,0.25,flood_report_data_2024-11-06_0.25.csv,bwma_flood_report_2024-11-06_0.25.html,composite,composite_15day,906.59,724.8,724.8,723.47,-181.79
+2024-11-06,0.27,flood_report_data_2024-11-06_0.27.csv,bwma_flood_report_2024-11-06_0.27.html,composite,composite_15day,1364.16,1088.32,1088.32,1088.61,-275.84
+2024-11-06,0.3,flood_report_data_2024-11-06_0.3.csv,bwma_flood_report_2024-11-06_0.3.html,composite,composite_15day,2526.97,2016.55,2016.55,2016.52,-510.42
+2024-11-08,0.22,flood_report_data_2024-11-08_0.22.csv,bwma_flood_report_2024-11-08_0.22.html,composite,composite_15day,588.8,470.54,470.54,469.87,-118.26
+2024-11-13,0.22,flood_report_data_2024-11-13_0.22.csv,bwma_flood_report_2024-11-13_0.22.html,unresolved,20241116T184641_20241116T184644_T11SLA,598.83,496.14,496.14,477.88,-102.69
+2024-11-16,0.22,flood_report_data_2024-11-16_0.22.csv,bwma_flood_report_2024-11-16_0.22.html,unresolved,20241118T183549_20241118T184253_T11SLA,554.61,482.25,482.25,442.58,-72.36
+2024-11-18,0.22,flood_report_data_2024-11-18_0.22.csv,bwma_flood_report_2024-11-18_0.22.html,single scene,20241118T183549_20241118T184253_T11SLA,535.92,428.31,486.35,427.67,-107.61
+2024-11-28,0.2,flood_report_data_2024-11-28_0.2.csv,bwma_flood_report_2024-11-28_0.2.html,single scene,20241128T183639_20241128T183633_T11SLA,587.38,469.48,501.05,468.73,-117.9
+2024-11-28,0.21,flood_report_data_2024-11-28_0.21.csv,bwma_flood_report_2024-11-28_0.21.html,single scene,20241128T183639_20241128T183633_T11SLA,667.72,533.81,570.01,532.86,-133.91
+2024-11-28,0.22,flood_report_data_2024-11-28_0.22.csv,bwma_flood_report_2024-11-28_0.22.html,single scene,20241128T183639_20241128T183633_T11SLA,782.7,625.63,658.03,624.61,-157.07
+2024-12-06,0.2,flood_report_data_2024-12-06_0.2.csv,bwma_flood_report_2024-12-06_0.2.html,single scene,20241206T184751_20241206T184751_T11SLA,614.7,491.17,547.58,490.56,-123.53
+2024-12-06,0.22,flood_report_data_2024-12-06_0.22.csv,bwma_flood_report_2024-12-06_0.22.html,single scene,20241206T184751_20241206T184751_T11SLA,799.29,638.62,701.71,637.86,-160.67
+2025-01-05,0.18,flood_report_data_2025-01-05_0.18.csv,bwma_flood_report_2025-01-05_0.18.html,composite,composite_15day,571.16,456.18,456.18,455.81,-114.98
+2025-01-05,0.2,flood_report_data_2025-01-05_0.2.csv,bwma_flood_report_2025-01-05_0.2.html,composite,composite_15day,656.31,524.44,524.44,523.75,-131.87
+2025-02-21,0.16,flood_report_data_2025-02-21_0.16.csv,bwma_flood_report_2025-02-21_0.16.html,single scene,20250301T184219_20250301T184659_T11SLA,670.73,536.12,520.77,535.26,-134.61
+2025-03-01,0.16,flood_report_data_2025-03-01_0.16.csv,bwma_flood_report_2025-03-01_0.16.html,single scene,20250301T184219_20250301T184659_T11SLA,671.51,536.12,445.6,535.89,-135.39
+2025-03-01,0.17,flood_report_data_2025-03-01_0.17.csv,bwma_flood_report_2025-03-01_0.17.html,single scene,20250301T184219_20250301T184659_T11SLA,715.56,571.6,480.28,571.05,-143.96
+2025-03-01,0.18,flood_report_data_2025-03-01_0.18.csv,bwma_flood_report_2025-03-01_0.18.html,single scene,20250301T184219_20250301T184659_T11SLA,766.37,612.17,516.17,611.59,-154.2
+2025-03-01,0.19,flood_report_data_2025-03-01_0.19.csv,bwma_flood_report_2025-03-01_0.19.html,single scene,20250301T184219_20250301T184659_T11SLA,825.94,660.29,552.87,659.12,-165.65
+2025-03-01,0.2,flood_report_data_2025-03-01_0.2.csv,bwma_flood_report_2025-03-01_0.2.html,single scene,20250301T184219_20250301T184659_T11SLA,904.28,722.26,594.27,721.65,-182.02
+2025-03-01,0.22,flood_report_data_2025-03-01_0.22.csv,bwma_flood_report_2025-03-01_0.22.html,single scene,20250301T184219_20250301T184659_T11SLA,1119.6,894.43,700.21,893.47,-225.17
+2025-03-08,0.16,flood_report_data_2025-03-08_0.16.csv,bwma_flood_report_2025-03-08_0.16.html,single scene,20250308T183119_20250308T184359_T11SLA,558.58,446.47,337.97,451.15,-112.11
+2025-03-08,0.17,flood_report_data_2025-03-08_0.17.csv,bwma_flood_report_2025-03-08_0.17.html,single scene,20250308T183119_20250308T184359_T11SLA,606.5,484.72,365.97,489.88,-121.78
+2025-03-08,0.18,flood_report_data_2025-03-08_0.18.csv,bwma_flood_report_2025-03-08_0.18.html,single scene,20250308T183119_20250308T184359_T11SLA,654.88,523.22,398.63,528.99,-131.66
+2025-03-08,0.19,flood_report_data_2025-03-08_0.19.csv,bwma_flood_report_2025-03-08_0.19.html,single scene,20250308T183119_20250308T184359_T11SLA,699.97,559.83,437.79,565.46,-140.14
+2025-03-08,0.2,flood_report_data_2025-03-08_0.2.csv,bwma_flood_report_2025-03-08_0.2.html,single scene,20250308T183119_20250308T184359_T11SLA,752.29,601.97,486.73,607.8,-150.32
+2025-03-15,0.2,flood_report_data_2025-03-15_0.2.csv,bwma_flood_report_2025-03-15_0.2.html,single scene,20250315T183821_20250315T183823_T11SLA,634.3,507.33,453.18,506.19,-126.97
+2025-03-15,0.205,flood_report_data_2025-03-15_0.205.csv,bwma_flood_report_2025-03-15_0.205.html,single scene,20250315T183821_20250315T183823_T11SLA,664.61,532.11,483.06,530.38,-132.5
+2025-03-15,0.22,flood_report_data_2025-03-15_0.22.csv,bwma_flood_report_2025-03-15_0.22.html,single scene,20250315T183821_20250315T183823_T11SLA,779.39,623.13,606.58,621.96,-156.26
+2025-03-26,0.14,flood_report_data_2025-03-26_0.14.csv,bwma_flood_report_2025-03-26_0.14.html,single scene,20250326T184031_20250326T185018_T11SLA,370.18,295.2,252.4,295.42,-74.98
+2025-03-26,0.15,flood_report_data_2025-03-26_0.15.csv,bwma_flood_report_2025-03-26_0.15.html,single scene,20250326T184031_20250326T185018_T11SLA,399.83,318.57,268.11,319.08,-81.26
+2025-03-26,0.16,flood_report_data_2025-03-26_0.16.csv,bwma_flood_report_2025-03-26_0.16.html,single scene,20250326T184031_20250326T185018_T11SLA,431.4,344.13,285.41,344.26,-87.27
+2025-03-26,0.18,flood_report_data_2025-03-26_0.18.csv,bwma_flood_report_2025-03-26_0.18.html,single scene,20250326T184031_20250326T185018_T11SLA,508.92,406.82,325.44,406.14,-102.1
+2025-03-26,0.2,flood_report_data_2025-03-26_0.2.csv,bwma_flood_report_2025-03-26_0.2.html,single scene,20250326T184031_20250326T185018_T11SLA,624.13,497.92,373.85,498.08,-126.21
+2025-04-04,0.16,flood_report_data_2025-04-04_0.16.csv,bwma_flood_report_2025-04-04_0.16.html,unresolved,20250405T183941_20250405T184854_T11SLA,354.82,270.18,270.18,283.15,-84.64
+2025-04-04,0.18,flood_report_data_2025-04-04_0.18.csv,bwma_flood_report_2025-04-04_0.18.html,single scene,20250405T183941_20250405T184854_T11SLA,402.09,319.04,306.14,320.87,-83.05
+2025-05-02,0.08,flood_report_data_2025-05-02_0.08.csv,bwma_flood_report_2025-05-02_0.08.html,single scene,20250502T182941_20250502T183741_T11SLA,188.73,150.33,117.48,150.62,-38.4
+2025-05-02,0.1,flood_report_data_2025-05-02_0.1.csv,bwma_flood_report_2025-05-02_0.1.html,single scene,20250502T182941_20250502T183741_T11SLA,213.42,169.61,135.17,170.31,-43.81
+2025-05-02,0.14,flood_report_data_2025-05-02_0.14.csv,bwma_flood_report_2025-05-02_0.14.html,single scene,20250502T182941_20250502T183741_T11SLA,269.81,214.77,175.52,215.32,-55.04
+2025-05-02,0.15,flood_report_data_2025-05-02_0.15.csv,bwma_flood_report_2025-05-02_0.15.html,single scene,20250502T182941_20250502T183741_T11SLA,286.08,227.56,188.17,228.3,-58.52
+2025-05-02,0.22,flood_report_data_2025-05-02_0.22.csv,bwma_flood_report_2025-05-02_0.22.html,single scene,20250502T182941_20250502T183741_T11SLA,463.59,370.31,312.8,369.96,-93.28
+2025-05-20,0.1,"(none; page bwma_flood_report_2025-05-20_0.1.html, values from its map labels)",bwma_flood_report_2025-05-20_0.1.html,single scene,20250520T183919_20250520T184534_T11SLA,118.0,94.81,94.81,94.18,-23.19
+2025-06-04,0.1,flood_report_data_2025-06-04_0.1.csv,bwma_flood_report_2025-06-04_0.1.html,single scene,20250604T183941_20250604T184500_T11SLA,38.72,30.86,7.29,30.9,-7.86
+2025-07-01,0.1,flood_report_data_2025-07-01_0.1.csv,bwma_flood_report_2025-07-01_0.1.html,composite,composite_15day,0.0,0.0,0.0,0.0,0.0
+2025-08-02,0.1,flood_report_data_2025-08-02_0.1.csv,bwma_flood_report_2025-08-02_0.1.html,composite,20250802T183831_20250802T184316_T11SLA,0.02,0.0,0.0,0.02,-0.02
+2025-09-04,0.15,flood_report_data_2025-09-04_0.15.csv,bwma_flood_report_2025-09-04_0.15.html,composite,composite_15day,0.05,0.05,0.05,0.04,0.0
+2025-09-17,0.15,flood_report_data_2025-09-17_0.15.csv,bwma_flood_report_2025-09-17_0.15.html,unresolved,composite_15day,66.22,71.61,71.61,52.85,5.39
+2025-09-29,0.15,flood_report_data_2025-09-29_0.15.csv,bwma_flood_report_2025-09-29_0.15.html,single scene,20250929T183201_20250929T183703_T11SLA,123.33,98.57,174.55,98.67,-24.76
+2025-10-17,0.2,flood_report_data_2025-10-17_0.2.csv,bwma_flood_report_2025-10-17_0.2.html,composite,composite_15day,392.97,313.95,313.95,313.6,-79.02
+2025-11-01,0.2,flood_report_data_2025-11-01_0.2.csv,bwma_flood_report_2025-11-01_0.2.html,single scene,20251101T184541_20251101T185411_T11SLA,460.88,368.23,360.65,367.8,-92.65
+2025-11-01,0.21,flood_report_data_2025-11-01_0.21.csv,bwma_flood_report_2025-11-01_0.21.html,single scene,20251101T184541_20251101T185411_T11SLA,493.16,394.28,379.06,393.55,-98.88
+2025-11-01,0.22,flood_report_data_2025-11-01_0.22.csv,bwma_flood_report_2025-11-01_0.22.html,single scene,20251101T184541_20251101T185411_T11SLA,545.74,435.85,407.13,435.51,-109.89
+2025-11-10,0.21,flood_report_data_2025-11-10_0.21.csv,bwma_flood_report_2025-11-10_0.21.html,single scene,20251110T183831_20251110T183825_T11SLA,468.94,374.33,389.71,374.23,-94.61
+2025-12-01,0.16,flood_report_data_2025-12-01_0.16.csv,bwma_flood_report_2025-12-01_0.16.html,single scene,20251201T184751_20251201T185407_T11SLA,534.81,424.96,431.89,426.79,-109.85
+2025-12-08,0.18,flood_report_data_2025-12-08_0.18.csv,bwma_flood_report_2025-12-08_0.18.html,single scene,20251208T183801_20251208T184411_T11SLA,596.51,476.42,475.89,476.04,-120.09
+2026-01-02,0.14,flood_report_data_2026-01-02_0.14.csv,bwma_flood_report_2026-01-02_0.14.html,composite,composite_15day,668.94,534.39,534.39,533.82,-134.55
+2026-02-01,0.14,flood_report_data_2026-02-01_0.14.csv,bwma_flood_report_2026-02-01_0.14.html,composite,composite_15day,708.82,566.54,566.54,565.65,-142.28
+2026-03-01,0.14,flood_report_data_2026-03-01_0.14.csv,bwma_flood_report_2026-03-01_0.14.html,single scene,20260301T184311_20260301T184837_T11SLA,788.46,624.66,574.62,629.2,-163.8
+2026-03-16,0.14,flood_report_data_2026-03-16_0.14.csv,bwma_flood_report_2026-03-16_0.14.html,single scene,20260316T185059_20260316T185059_T11SLA,590.44,471.87,428.52,471.2,-118.57
+2026-04-02,0.14,flood_report_data_2026-04-02_0.14.csv,bwma_flood_report_2026-04-02_0.14.html,composite,composite_15day,327.36,261.52,261.52,261.24,-65.84
+2026-05-07,0.14,flood_report_data_2026-05-07_0.14.csv,bwma_flood_report_2026-05-07_0.14.html,unresolved,20260510T183921_20260510T185341_T11SLA,160.95,102.65,102.65,128.45,-58.3
+2026-06-01,0.14,flood_report_data_2026-06-01_0.14.csv,bwma_flood_report_2026-06-01_0.14.html,unresolved,composite_15day,8.5,6.4,6.4,6.78,-2.1
+2026-07-01,0.14,flood_report_data_2026-07-01_0.14.csv,bwma_flood_report_2026-07-01_0.14.html,composite,composite_15day,0.02,0.02,0.02,0.02,0.0
+2026-08-03,0.14,flood_report_data_2026-08-03_0.14.csv,bwma_flood_report_2026-08-03_0.14.html,composite,composite_15day,0.0,0.0,0.0,0.0,0.0
+2026-09-22,0.14,flood_report_data_2026-09-22_0.14.csv,bwma_flood_report_2026-09-22_0.14.html,unresolved,20260924T183111_20260924T184240_T11SLA,85.67,87.36,87.36,68.36,1.69
+2026-09-26,0.14,flood_report_data_2026-09-26_0.14.csv,bwma_flood_report_2026-09-26_0.14.html,unresolved,20260927T184141_20260927T184710_T11SLA,114.15,128.46,128.46,91.09,14.31
+2026-10-02,0.14,flood_report_data_2026-10-02_0.14.csv,bwma_flood_report_2026-10-02_0.14.html,unresolved,composite_15day,186.12,153.72,153.72,148.52,-32.4

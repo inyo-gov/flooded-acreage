@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BWMA flooded acreage · Notes &amp; methods · Nov 11, 2026</title>
+  <style>
+    :root {
+      --rs-nasa-blue: #0b3d91;
+      --rs-nasa-red: #fc3d21;
+      --rs-dark: #0d1117;
+      --rs-border: #c5cdd8;
+      --rs-muted: #5a6578;
+      --rs-mono: ui-monospace, "SF Mono", Menlo, monospace;
+      --rs-sans: "Segoe UI", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--rs-sans);
+      font-size: 14px;
+      line-height: 1.45;
+      color: #1a2332;
+      background-color: #eef1f5;
+      background-image:
+        linear-gradient(rgba(11, 61, 145, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(11, 61, 145, 0.06) 1px, transparent 1px);
+      background-size: 18px 18px;
+    }
+    .report-wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0.75rem 1rem 1.5rem;
+    }
+    .report-header {
+      padding: 0.55rem 0.75rem;
+      margin-bottom: 0.65rem;
+      border: 1px solid #8a96a8;
+      border-left: 4px solid var(--rs-nasa-blue);
+      border-radius: 3px;
+      background: var(--rs-dark);
+      color: #e8ecf2;
+    }
+    .report-tag {
+      font-family: var(--rs-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #7eb8ff;
+      margin-bottom: 0.15rem;
+    }
+    .report-header h1 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .report-meta {
+      margin: 0.25rem 0 0;
+      font-family: var(--rs-mono);
+      font-size: 0.68rem;
+      color: #9aa8bc;
+    }
+    .report-meta strong {
+      color: #dce8f8;
+      font-weight: 600;
+    }
+    .report-grid {
+      display: grid;
+      grid-template-columns: minmax(440px, 46%) 1fr;
+      gap: 0.55rem;
+      align-items: stretch;
+    }
+    .report-panel {
+      background: #fff;
+      border: 1px solid var(--rs-border);
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.03);
+    }
+    .report-panel h2 {
+      margin: 0;
+      padding: 0.4rem 0.65rem;
+      font-family: var(--rs-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--rs-dark);
+      border-bottom: 2px solid var(--rs-nasa-blue);
+    }
+    .report-panel h2::before {
+      content: "▸ ";
+      color: var(--rs-nasa-red);
+    }
+    .report-table-wrap {
+      padding: 0.35rem 0.5rem 0.5rem;
+    }
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+    .report-table th {
+      font-family: var(--rs-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: left;
+      color: var(--rs-muted);
+      padding: 0.35rem 0.45rem;
+      border-bottom: 2px solid var(--rs-border);
+    }
+    .report-table th:last-child {
+      text-align: right;
+    }
+    .report-table td {
+      padding: 0.32rem 0.45rem;
+      border-bottom: 1px solid #e4e9ef;
+    }
+    .report-table tr:nth-child(even) td {
+      background: #f7f9fc;
+    }
+    .report-table .unit-name {
+      font-family: var(--rs-mono);
+      font-size: 0.72rem;
+      color: #1a2332;
+    }
+    .report-table .unit-acres {
+      text-align: right;
+      font-family: var(--rs-mono);
+      font-size: 0.68rem;
+      color: var(--rs-muted);
+    }
+    .report-table .acres-num {
+      font-family: Georgia, Cambria, serif;
+      font-variant-numeric: tabular-nums;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--rs-nasa-blue);
+    }
+    .report-table tr.total-row td {
+      border-top: 2px solid var(--rs-nasa-blue);
+      background: #eef3fa !important;
+      font-weight: 700;
+    }
+    .report-table tr.total-row .acres-num {
+      font-size: 1.05rem;
+      color: var(--rs-nasa-red);
+    }
+    .report-table tr.excluded-from-total td {
+      color: var(--rs-muted);
+    }
+    .report-table tr.excluded-from-total .acres-num {
+      color: var(--rs-muted);
+    }
+    .report-table tr.group-row td { font-weight: 700; background: #f6f8fb; }
+    .report-table tr.group-member .unit-name { padding-left: 1.2rem; }
+    .report-table .unit-note {
+      font-family: var(--rs-mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--rs-muted);
+      margin-left: 0.35rem;
+    }
+    .report-drew-note {
+      margin: 0.65rem 0 0;
+      font-size: 0.78rem;
+      color: var(--rs-muted);
+      line-height: 1.4;
+    }
+    .report-map-panel iframe {
+      display: block;
+      width: 100%;
+      height: min(860px, 92vh);
+      border: none;
+      background: #fff;
+    }
+    .report-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.75rem;
+      padding: 0.45rem 0.65rem;
+      border-top: 1px solid var(--rs-border);
+      background: #f7f9fc;
+      font-family: var(--rs-mono);
+      font-size: 0.65rem;
+      color: var(--rs-muted);
+    }
+    .report-summary span {
+      white-space: nowrap;
+    }
+    .report-footer {
+      margin-top: 0.65rem;
+      padding: 0.55rem 0.65rem;
+      background: #fff;
+      border: 1px solid var(--rs-border);
+      border-left: 3px solid var(--rs-nasa-blue);
+      border-radius: 3px;
+    }
+    .report-footer h3 {
+      margin: 0 0 0.35rem;
+      font-family: var(--rs-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--rs-nasa-blue);
+    }
+    .report-footer p {
+      margin: 0.2rem 0;
+      font-size: 0.78rem;
+      color: var(--rs-muted);
+    }
+    .report-footer a {
+      color: var(--rs-nasa-blue);
+      font-family: var(--rs-mono);
+      font-size: 0.72rem;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .report-footer a:hover {
+      color: var(--rs-nasa-red);
+    }
+    .download-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.75rem;
+      margin-top: 0.35rem;
+    }
+    @media (max-width: 820px) {
+      .report-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .report-table th { font-size: 0.66rem; white-space: normal !important; vertical-align: bottom; }
+  .report-table th, .report-table td.unit-acres { text-align: right; white-space: nowrap; font-size: 0.92em; }
+  .report-table th:first-child { text-align: left; }
+
+    .best-secondary { margin: 0.55rem 0.65rem 0.35rem; font-size: 0.86rem; color: #233; }
+    .source-block { margin: 0.4rem 0.65rem 0.85rem; padding: 0.55rem 0.65rem; border: 1px solid #0b3d91; background: #f3f7fc; }
+    .source-block h3 { margin: 0 0 0.35rem; font-size: 0.95rem; color: #0b3d91; }
+    .source-block p { margin: 0 0 0.45rem; font-size: 0.82rem; line-height: 1.4; }
+    .source-table { font-size: 0.78rem; }
+    .source-table th, .source-table td { text-align: right; }
+    .source-table td.unit-name, .source-table th:first-child { text-align: left; }
+    .source-foot { margin: 0.4rem 0 0 !important; font-size: 0.75rem !important; color: #334; }
+    .inventory-note { margin: 0.55rem 0.65rem 0.75rem; padding: 0.55rem 0.65rem; border: 1px solid #0b3d91; background: #f3f7fc; font-size: 0.86rem; }
+    .inventory-note strong { color: #0b3d91; }
+    .secondary-link { font-size: 0.82rem; margin: 0.4rem 0.65rem 0.8rem; }
+    .secondary-link a { color: #0b3d91; }
+    .hist-box { margin: 0.55rem 0.65rem 0.85rem; padding: 0.5rem 0.65rem; border: 1px dashed #8a96a8; background: #fafbfc; font-size: 0.82rem; color: #334; }
+
+
+    .report-table td.unit-notes {
+      text-align: left;
+      white-space: normal !important;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      font-size: 0.78rem;
+      line-height: 1.25;
+      max-width: 18rem;
+    }
+    .report-table-wrap { overflow: visible; }
+    .report-panel { overflow: visible; }
+
+</style>
+</head>
+<body>
+  <div class="report-wrap">
+    <header class="report-header">
+      <div class="report-tag">Notes &amp; methods · auxiliary to the Nov 1, 2026 report</div>
+      <h1>BWMA flooded acreage · Notes &amp; methods</h1>
+      <p class="report-meta">Supporting detail for the Estimate of <strong>499.60 ac</strong> (latest scene Nov 11, 2026). The report itself shows only the Estimate; this page keeps the full breakdown. <a href="./bwma_flood_report_2026-11-01_official.html" style="color:#9ec5ff">Back to the report</a></p>
+    </header>
+    <div class="report-grid" style="grid-template-columns:1fr">
+      <section class="report-panel">
+        <h2>Method and comparability</h2>
+        <p class="secondary-link">The November 2026 entry is the official cumulative inventory (Sentinel-2 open water plus radar flooded vegetation, accepted scene by scene from the corrected Oct 24 base), not a monthly Sentinel-2 NIR 15-day median composite. It is not comparable with the earlier monthly bars on the dashboard. The Estimate is the upper end of the inventory (499.60 ac). Earlier monthly composites (Aug 2024 to Oct 2026) also carry the composite pixel-area rule, which overstated area by about 25%; those values have not been restated on the dashboard.</p>
+        <h2>Component breakdown (as previously shown in the report)</h2>
+        <div class="report-table-wrap"><table class="report-table">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Acres</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="unit-name">Corrected base</td>
+                <td class="unit-acres"><span class="acres-num">292.40</span> ac</td>
+                <td class="unit-notes">Oct 24 inventory after the approved base corrections. Of this, 17.35 ac are still basemap ditches; 275.05 ac are Oct 24 imagery (open water).</td>
+              </tr>
+              <tr>
+                <td class="unit-name">Accepted additions (upper)</td>
+                <td class="unit-acres"><span class="acres-num">207.20</span> ac</td>
+                <td class="unit-notes">All from imagery: Nov 1, 3, 5, 8, and 11 satellite scenes (optical and radar), manual wet-soil patches (6.50 ac), and the Nov 12 north Waggoner fill (10.63 ac). None of these are basemap ditches.</td>
+              </tr>
+              <tr class="total-row">
+                <td class="unit-name">Upper estimate (Estimate)</td>
+                <td class="unit-acres"><span class="acres-num">499.60</span> ac</td>
+                <td class="unit-notes">292.40 + 207.20. 17.35 ac still from basemap ditches; 482.25 ac derived from imagery. 0.40 ac below 500.</td>
+              </tr>
+            </tbody>
+          </table></div>
+        <h2>Best estimate (conservative)</h2>
+        <p class="best-secondary">Best estimate (conservative): <strong>410.62 ac</strong> (89.38 ac below 500) — also shown on the map, inside the upper footprint, not added on top. Of that, 17.35 ac are the same basemap ditches and 393.27 ac are imagery-derived (275.05 ac Oct 24 open water + 118.22 ac later additions).</p>
+        <h2>Basemap ditches and imagery</h2>
+        <div class="source-block">
+          <h3>Basemap ditches vs imagery</h3>
+          <p>The official totals include correction #4 (Nov 16, +2.57 ac, West Winterton). The split below is from the official 10&nbsp;m pixels. 17.35 + 275.30 + 207.20 = 499.84 display acres (best 410.86); the official ledger is 499.60 / 410.62 / 292.40. The 0.24 ac difference is the usual pixel vs ledger recon and sits in the inherited base; it is assigned to Oct 24 open water (275.05 ac) when the lines are added back to the official totals. Magenta and teal on the map (on by default; toggle in Layers) are the basemap-ditch pixels and the imagery-derived pixels.</p>
+          <table class="report-table source-table">
+            <thead>
+              <tr>
+                <th>Unit</th>
+                <th>Basemap ditches</th>
+                <th>Oct 24 imagery</th>
+                <th>Later imagery (upper)</th>
+                <th>Upper</th>
+                <th>Later imagery (best)</th>
+                <th>Best</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="unit-name">Thibaut</td><td>3.61</td><td>53.52</td><td>62.17</td><td>119.30</td><td>29.13</td><td>86.26</td></tr>
+              <tr><td class="unit-name">Waggoner</td><td>4.30</td><td>101.31</td><td>94.00</td><td>199.61</td><td>66.47</td><td>172.08</td></tr>
+              <tr><td class="unit-name">West Winterton</td><td>4.00</td><td>59.95</td><td>34.27</td><td>98.22</td><td>18.58</td><td>82.53</td></tr>
+              <tr><td class="unit-name">South Winterton</td><td>0.00</td><td>0.00</td><td>0.57</td><td>0.57</td><td>0.00</td><td>0.00</td></tr>
+              <tr><td class="unit-name">Thibaut Ponds</td><td>5.44</td><td>60.52</td><td>16.19</td><td>82.14</td><td>4.03</td><td>69.98</td></tr>
+              <tr class="total-row"><td class="unit-name">Pixel total</td><td>17.35</td><td>275.30</td><td>207.20</td><td>499.84</td><td>118.22</td><td>410.86</td></tr>
+            </tbody>
+          </table>
+          <p class="source-foot">Later imagery (upper 207.20): Nov 1/3/5/8/11 scenes 187.50 (Nov 11 +7.12), manual wet-soil 6.50 (all Thibaut), north Waggoner fill 10.63, West Winterton north-arm correction #4 2.57 (Nov 16). Later imagery (best 118.22 / official 118.22): scenes 96.47 (Nov 11 +7.09), wet-soil 6.50, north Waggoner fill 12.68 (includes 2.05 ac promoted from upper-only), West Winterton correction #4 2.57. Drew and East Winterton are not in the official counted total.</p>
+        </div>
+        <h2>Historical reference</h2>
+        <div class="hist-box">
+          <strong>Historical single-scene reference (unchanged):</strong> Oct 24, 2026 scene report total <strong>345.65 ac</strong>
+          (open water 279.27 + ditches/channels 67.99 − overlap 1.61).
+          That scene page is preserved separately and is not relabeled as the current inventory.
+        </div>
+        <p class="secondary-link"><a href="./flooded_area_map_2026-11-01_notes_all_layers.html">Full map with all layers</a> (Estimate, best estimate, basemap ditches, imagery-derived source, unit outlines).</p>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

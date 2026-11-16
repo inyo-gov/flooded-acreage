@@ -1,0 +1,9 @@
+{
+ "best": 410.86,
+ "upper": 499.84,
+ "upper_only": 88.98,
+ "accounting_best": 410.62,
+ "accounting_upper": 499.6,
+ "accounting_base": 292.4,
+ "note": "Display acres are polygonized official-after masks plus the Nov 11 accepted masks and correction #4; accounting acres come from running_total."
+}

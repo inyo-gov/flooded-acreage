@@ -25,7 +25,7 @@ The **Near Infrared (NIR)** band is thresholded to separate open water from vege
 
 **Since April 2026**, that composite workflow is the official monthly procedure (mid-month run, start date `YYYY-MM-01`, threshold 0.14). Earlier archived reports used the same median code but were often generated on ad-hoc dates; their file names and legacy pages may show a label date that is not a single scene.
 
-Field crews validate predictions during avian surveys across the flooding cycle (typically September through April).
+Field crews check flooded areas during avian surveys across the flooding cycle (typically September through April).
 :::
 
 ::: {.about-card}
@@ -41,4 +41,14 @@ Monthly reports include per-unit acreage for Thibaut, Drew, Waggoner, Winterton 
 
 Sentinel-1 SAR and optical–SAR fusion scripts exist in the repository for emergent-vegetation masking but are **not** part of the published monthly workflow yet.
 :::
+:::
+
+::: {.about-card #notes-november-2026 style="margin-top:1rem"}
+### Notes on the November 2026 entry
+
+The November 2026 bar and the Estimate (**499.60 ac**, latest scene Nov 11, 2026) come from the official cumulative inventory: Sentinel-2 open water plus radar flooded vegetation, accepted scene by scene on top of the corrected Oct 24 base. It includes official correction #4 (Nov 16, 2026): +2.57 ac in the West Winterton north arm from the Nov 11 scene. The November entry is a cumulative inventory, while the earlier bars are monthly Sentinel-2 NIR 15-day median composites. The month-over-month change on the dashboard compares the November Estimate with our best estimate of earlier months, restated with true pixel area: October 2026 is 153.7 ac (Oct 1–16, 6 scenes), so the change is +345.9 ac.
+
+All acreages from the monthly composite reports (2023 through October 2026) are restated (Nov 2026) for the pixel-area correction: the old code counted pixels on a latitude-longitude grid, so totals read about 25% high. Each report was rerun on true 10 m pixel area with its original NIR threshold. Where the original scene (or 15-day composite) could be reproduced within 1.5%, the restated value is the same scene on true area (75 of 88 report files). For 13 report files the original scene set could not be reproduced from the current image archive; those use the 15-day composite rerun and say so on the report page. Every archived report page, its CSV, and its map labels show the restated acres with the originally reported value. Sentinel-1 test pages are not restated and carry a note.
+
+The report shows a single number, the Estimate. The component breakdown, the conservative best estimate, the basemap-ditch versus imagery split, and the display-versus-ledger difference (0.24 ac) are kept in [Notes & methods](flood_reports/reports/bwma_flood_estimate_notes_2026-11-11.html). The Estimate footprint is available as [GeoJSON](flood_reports/reports/bwma_flood_estimate_2026-11-11.geojson) and as a [zipped shapefile](flood_reports/reports/bwma_flood_estimate_2026-11-11_shapefile.zip) (EPSG:32611).
 :::

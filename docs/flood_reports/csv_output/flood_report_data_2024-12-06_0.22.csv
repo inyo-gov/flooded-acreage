@@ -1,9 +1,9 @@
-Flood_Unit,total_pixels,flooded_pixels,unit_acres,acres_flooded,flooded_percentage
-Thibaut,99955,14991,1971.07,370.44,15.0
-Drew,25462,1196,502.65,29.55,4.7
-Waggoner,63197,8424,1246.13,208.16,13.33
-West Winterton,40855,3992,805.68,98.64,9.77
-East Winterton,17010,198,335.14,4.89,1.16
-South Winterton,26032,3470,513.46,85.75,13.33
-Thibaut Ponds,26753,1271,527.63,31.41,4.75
-Total,273802,32346,5399.11,799.29,14.8
+Flood_Unit,total_pixels,flooded_pixels,unit_acres,acres_flooded,flooded_percentage,original_acres_flooded,original_flooded_pixels,restatement_note
+Thibaut,99955,11983,1971.07,296.11,15.02,370.44,14991,restated Nov 2026 for pixel-area correction; originally reported 370.44 ac
+Drew,25462,960,502.65,23.72,4.72,29.55,1196,restated Nov 2026 for pixel-area correction; originally reported 29.55 ac
+Waggoner,63197,6696,1246.13,165.46,13.28,208.16,8424,restated Nov 2026 for pixel-area correction; originally reported 208.16 ac
+West Winterton,40855,3206,805.68,79.22,9.83,98.64,3992,restated Nov 2026 for pixel-area correction; originally reported 98.64 ac
+East Winterton,17010,150,335.14,3.71,1.11,4.89,198,restated Nov 2026 for pixel-area correction; originally reported 4.89 ac
+South Winterton,26032,2794,513.46,69.04,13.45,85.75,3470,restated Nov 2026 for pixel-area correction; originally reported 85.75 ac
+Thibaut Ponds,26753,1015,527.63,25.08,4.75,31.41,1271,restated Nov 2026 for pixel-area correction; originally reported 31.41 ac
+Total,273802,25844,5399.11,638.62,11.83,799.29,32346,restated Nov 2026 for pixel-area correction; originally reported 799.29 ac

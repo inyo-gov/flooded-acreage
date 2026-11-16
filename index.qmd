@@ -18,6 +18,7 @@ format:
     <div class="hero-meta">
       <span>NIR threshold</span>
       <span>15-day composite</span>
+      <span>Nov 2026: cumulative inventory</span>
     </div>
   </div>
 </div>
@@ -65,201 +66,18 @@ monthly_raw <- lapply(seq_len(nrow(csv_meta)), function(i) {
 }) %>%
   bind_rows() %>%
   select(Flood_Unit, acres_flooded, report_date)
-```
 
-```{r dashboard_stats, echo=FALSE, message=FALSE, warning=FALSE}
-#| classes: stat-chunk
-library(dplyr)
-library(lubridate)
-library(htmltools)
-
-fmt_acres <- function(x) format(round(x, 1), nsmall = 1, trim = TRUE)
-
-acres_value <- function(x, unit = "ac") {
-  tags$span(
-    class = "stat-value",
-    style = "font-size:1.15rem;font-weight:700;line-height:1.15;white-space:nowrap;",
-    tags$span(class = "stat-acres-num", style = "font-family:Georgia,Cambria,serif;font-variant-numeric:tabular-nums;font-size:1.25rem;color:#0b3d91;", x),
-    tags$span(class = "stat-acres-unit", style = "font-family:ui-monospace,monospace;font-size:0.78rem;font-weight:600;color:#5a6578;margin-left:0.1rem;", unit)
-  )
-}
-
-stat_card_style <- "background:#f8f9fb;border:1px solid #c5cdd8;border-left:3px solid #0b3d91;border-radius:3px;padding:0.5rem 0.6rem;"
-stat_highlight_style <- paste0(stat_card_style, "border-left-color:#fc3d21;background:#fff;")
-stat_grid_style <- "display:grid;grid-template-columns:repeat(3,1fr);gap:0.45rem;margin-bottom:0.45rem;"
-stat_units_style <- "display:flex;flex-wrap:wrap;align-items:baseline;gap:0.35rem 0.65rem;margin-bottom:1rem;padding:0.45rem 0.6rem;background:#f8f9fb;border:1px solid #c5cdd8;border-left:3px solid #0b3d91;border-radius:3px;"
-stat_label_style <- "font-family:ui-monospace,monospace;font-size:0.58rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5a6578;margin-bottom:0.2rem;"
-stat_detail_style <- "margin-top:0.25rem;font-size:0.68rem;color:#5a6578;line-height:1.25;"
-stat_units_list_style <- "font-family:ui-monospace,monospace;font-size:0.68rem;color:#5a6578;line-height:1.35;"
-
-# KPI totals exclude Drew (not in current rotation; often Blackrock ditch FPs).
-# Recompute from unit rows so historical CSVs whose Total still included Drew stay correct.
-totals <- monthly_raw %>%
-  filter(!Flood_Unit %in% c("Total", "Drew")) %>%
-  group_by(report_date) %>%
-  summarise(acres_flooded = sum(acres_flooded, na.rm = TRUE), .groups = "drop") %>%
-  arrange(desc(report_date))
-
-latest <- totals %>% slice(1)
-prev   <- totals %>% slice(2)
-
-latest_month <- floor_date(latest$report_date, "month")
-
-# Current flood season only (Nov 1 – Mar 31). Do not take all-time Nov–Mar max.
-# Apr–Oct → just-completed season; Nov–Dec → season starting this year;
-# Jan–Mar → season that started the prior November.
-today <- Sys.Date()
-# Nov–Dec: season starts this calendar year; Jan–Oct: season started prior Nov.
-season_start_year <- if (month(today) >= 11) year(today) else year(today) - 1L
-season_start <- as.Date(sprintf("%d-11-01", season_start_year))
-season_end   <- as.Date(sprintf("%d-03-31", season_start_year + 1L))
-season_label <- paste0(
-  season_start_year, "–",
-  substr(as.character(season_start_year + 1L), 3, 4)
-)
-
-season_peak <- totals %>%
-  filter(report_date >= season_start, report_date <= season_end) %>%
-  mutate(month_date = floor_date(report_date, "month")) %>%
-  slice_max(acres_flooded, n = 1, with_ties = FALSE)
-
-delta_detail <- if (nrow(prev) == 1) {
-  delta <- latest$acres_flooded - prev$acres_flooded
-  cls <- if (delta >= 0) "stat-delta-up" else "stat-delta-down"
-  sign <- if (delta >= 0) "+" else ""
-  tags$span(
-    class = cls,
-    paste0(sign, fmt_acres(delta), " ac vs prior month")
-  )
-} else {
-  tags$span("First report in series")
-}
-
-season_value <- if (nrow(season_peak) == 1) {
-  tags$span(
-    acres_value(fmt_acres(season_peak$acres_flooded)),
-    tags$span(
-      class = "stat-acres-unit",
-      style = "font-family:ui-monospace,monospace;font-size:0.78rem;font-weight:600;color:#5a6578;margin-left:0.25rem;",
-      paste0("in ", format(season_peak$month_date[1], "%b %Y"))
-    )
-  )
-} else {
-  tags$span(class = "stat-value", "—")
-}
-
-mom_value <- if (nrow(prev) == 1) {
-  acres_value(fmt_acres(abs(latest$acres_flooded - prev$acres_flooded)), "ac change")
-} else {
-  tags$span(class = "stat-value", "—")
-}
-
-tagList(
-  tags$div(
-    class = "stat-grid",
-    style = stat_grid_style,
-    tags$div(
-      class = "stat-card stat-highlight",
-      style = stat_highlight_style,
-      tags$div(class = "stat-label", style = stat_label_style, "Latest flooded"),
-      acres_value(fmt_acres(latest$acres_flooded)),
-      tags$div(
-        class = "stat-detail",
-        style = paste0(stat_detail_style, "white-space:nowrap;"),
-        paste0(format(latest_month, "%b %Y"), " · 15-day composite")
-      )
-    ),
-    tags$div(
-      class = "stat-card",
-      style = stat_card_style,
-      tags$div(class = "stat-label", style = stat_label_style, "Month-over-month change"),
-      mom_value,
-      tags$div(class = "stat-detail", style = stat_detail_style, delta_detail)
-    ),
-    tags$div(
-      class = "stat-card",
-      style = stat_card_style,
-      tags$div(class = "stat-label", style = stat_label_style, "Season peak"),
-      if (nrow(season_peak) == 1) season_value else tags$span(class = "stat-value", "—"),
-      tags$div(
-        class = "stat-detail",
-        style = stat_detail_style,
-        if (nrow(season_peak) == 1) {
-          paste0(season_label, " · Nov–Mar · 500 ac target")
-        } else {
-          paste0(season_label, " · Nov–Mar · no peak yet · 500 ac target")
-        }
-      )
-    )
-  ),
-  tags$div(
-    class = "stat-units-bar",
-    style = stat_units_style,
-    tags$span(class = "stat-label", style = paste0(stat_label_style, "margin-bottom:0;"), "Reporting units"),
-    tags$span(
-      class = "stat-units-list",
-      style = stat_units_list_style,
-      "Waggoner · West Winterton · East Winterton · South Winterton · Thibaut Ponds · Thibaut · Drew (shown, excluded from Total — not in rotation; Blackrock ditch / reddish FPs)"
-    )
-  )
-)
-```
-
-```{r latest_scene_card, echo=FALSE, message=FALSE, warning=FALSE}
-library(htmltools)
-library(jsonlite)
-
-scene_file <- "includes/latest_scene.json"
-if (file.exists(scene_file)) {
-  s <- jsonlite::fromJSON(scene_file)
-  acres_txt <- format(round(as.numeric(s$acres), 1), nsmall = 1, trim = TRUE)
-  lead_txt <- if (!is.null(s$lead) && nzchar(s$lead)) {
-    s$lead
-  } else {
-    "Newest clear Sentinel-2 pass over BWMA since wet-up began — for release calibration, not the monthly composite."
-  }
-  method_txt <- if (!is.null(s$method_details) && nzchar(s$method_details)) {
-    s$method_details
-  } else {
-    s$cloud_rule
-  }
-  map_note <- if (!is.null(s$map_note) && nzchar(s$map_note)) s$map_note else NULL
-  details_body <- method_txt
-  if (!is.null(map_note)) {
-    details_body <- paste0(details_body, " ", map_note)
-  }
-  tagList(
-    tags$div(
-      class = "scene-card",
-      tags$div(class = "scene-card-kicker", "Latest usable scene · release calibration"),
-      tags$div(
-        class = "scene-card-row",
-        tags$div(
-          tags$div(class = "scene-card-acres", paste0(acres_txt, " ac")),
-          tags$div(
-            class = "scene-card-date",
-            paste0("Scene date ", s$scene_date, " · NIR ", s$threshold)
-          )
-        ),
-        tags$a(
-          class = "scene-card-link",
-          href = s$report_href,
-          target = "_blank",
-          rel = "noopener",
-          "Open scene report"
-        )
-      ),
-      tags$p(class = "scene-card-lead", lead_txt),
-      if (!is.null(s$drew_note) && nzchar(s$drew_note)) {
-        tags$p(class = "scene-card-drew-note", s$drew_note)
-      },
-      tags$details(
-        class = "scene-card-details",
-        tags$summary("Scene selection & NIR method"),
-        tags$p(details_body)
-      )
-    )
-  )
+# All composite report dates restated with true 10 m pixel area (Nov 13, 2026; same scene and threshold
+# as the original run where reproducible). The CSVs in csv_output now carry the restated acres plus
+# original_acres_flooded; this file repeats the restated values keyed by report_date + unit (idempotent).
+restated_file <- "includes/restated_area_fix_only_2024-09_2026-10.csv"
+if (file.exists(restated_file)) {
+  restated <- read_csv(restated_file, show_col_types = FALSE) %>%
+    transmute(report_date = as.Date(report_date), Flood_Unit, acres_restated = acres_flooded)
+  monthly_raw <- monthly_raw %>%
+    left_join(restated, by = c("report_date", "Flood_Unit")) %>%
+    mutate(acres_flooded = coalesce(acres_restated, acres_flooded)) %>%
+    select(-acres_restated)
 }
 ```
 
@@ -267,7 +85,7 @@ if (file.exists(scene_file)) {
 ::: {.dashboard-section-header}
 ## Monthly flooded acreage by unit
 
-Stacked totals by flood unit (Drew kept in the stack for QA). KPI cards above exclude Drew from Total. Dashed line marks the **500 ac** seasonal target (Nov-Mar).
+Stacked totals by flood unit (Drew kept in the stack for QA). Months before November 2026 are restated with true 10 m pixel area (Nov 2026); see About. KPI cards below exclude Drew from Total. Dashed line marks the **500 ac** seasonal target (Nov-Mar).
 :::
 
 ::: {.dashboard-card .chart-card}
@@ -367,6 +185,232 @@ monthly_avg %>%
 ```
 :::
 :::
+
+
+```{r dashboard_stats, echo=FALSE, message=FALSE, warning=FALSE}
+#| classes: stat-chunk
+library(dplyr)
+library(lubridate)
+library(htmltools)
+
+fmt_acres <- function(x) format(round(x, 1), nsmall = 1, trim = TRUE)
+
+acres_value <- function(x, unit = "ac") {
+  tags$span(
+    class = "stat-value",
+    style = "font-size:1.15rem;font-weight:700;line-height:1.15;white-space:nowrap;",
+    tags$span(class = "stat-acres-num", style = "font-family:Georgia,Cambria,serif;font-variant-numeric:tabular-nums;font-size:1.25rem;color:#0b3d91;", x),
+    tags$span(class = "stat-acres-unit", style = "font-family:ui-monospace,monospace;font-size:0.78rem;font-weight:600;color:#5a6578;margin-left:0.1rem;", unit)
+  )
+}
+
+stat_card_style <- "background:#f8f9fb;border:1px solid #c5cdd8;border-left:3px solid #0b3d91;border-radius:3px;padding:0.5rem 0.6rem;"
+stat_highlight_style <- paste0(stat_card_style, "border-left-color:#fc3d21;background:#fff;")
+stat_grid_style <- "display:grid;grid-template-columns:repeat(3,1fr);gap:0.45rem;margin-bottom:0.45rem;"
+stat_units_style <- "display:flex;flex-wrap:wrap;align-items:baseline;gap:0.35rem 0.65rem;margin-bottom:1rem;padding:0.45rem 0.6rem;background:#f8f9fb;border:1px solid #c5cdd8;border-left:3px solid #0b3d91;border-radius:3px;"
+stat_label_style <- "font-family:ui-monospace,monospace;font-size:0.58rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#5a6578;margin-bottom:0.2rem;"
+stat_detail_style <- "margin-top:0.25rem;font-size:0.68rem;color:#5a6578;line-height:1.25;"
+stat_units_list_style <- "font-family:ui-monospace,monospace;font-size:0.68rem;color:#5a6578;line-height:1.35;"
+
+# KPI totals exclude Drew (not in current rotation; often Blackrock ditch FPs).
+# Recompute from unit rows so historical CSVs whose Total still included Drew stay correct.
+totals <- monthly_raw %>%
+  filter(!Flood_Unit %in% c("Total", "Drew")) %>%
+  group_by(report_date) %>%
+  summarise(acres_flooded = sum(acres_flooded, na.rm = TRUE), .groups = "drop") %>%
+  arrange(desc(report_date))
+
+latest <- totals %>% slice(1)
+prev   <- totals %>% slice(2)
+
+latest_month <- floor_date(latest$report_date, "month")
+
+# Current flood season only (Nov 1 – Mar 31). Do not take all-time Nov–Mar max.
+# Apr–Oct → just-completed season; Nov–Dec → season starting this year;
+# Jan–Mar → season that started the prior November.
+today <- Sys.Date()
+# Nov–Dec: season starts this calendar year; Jan–Oct: season started prior Nov.
+season_start_year <- if (month(today) >= 11) year(today) else year(today) - 1L
+season_start <- as.Date(sprintf("%d-11-01", season_start_year))
+season_end   <- as.Date(sprintf("%d-03-31", season_start_year + 1L))
+season_label <- paste0(
+  season_start_year, "–",
+  substr(as.character(season_start_year + 1L), 3, 4)
+)
+
+season_peak <- totals %>%
+  filter(report_date >= season_start, report_date <= season_end) %>%
+  mutate(month_date = floor_date(report_date, "month")) %>%
+  slice_max(acres_flooded, n = 1, with_ties = FALSE)
+
+is_nov_inventory <- nrow(prev) == 1 && identical(as.character(latest$report_date[1]), "2026-11-01")
+nov_estimate_ac <- 499.60
+delta_detail <- if (is_nov_inventory) {
+  delta <- nov_estimate_ac - prev$acres_flooded
+  cls <- if (delta >= 0) "stat-delta-up" else "stat-delta-down"
+  sign <- if (delta >= 0) "+" else ""
+  tags$span(
+    class = cls,
+    paste0(sign, fmt_acres(delta), " ac vs our best estimate for ",
+           format(prev$report_date, "%B %Y"), " (", fmt_acres(prev$acres_flooded),
+           " ac, restated with true pixel area)")
+  )
+} else if (nrow(prev) == 1) {
+  delta <- latest$acres_flooded - prev$acres_flooded
+  cls <- if (delta >= 0) "stat-delta-up" else "stat-delta-down"
+  sign <- if (delta >= 0) "+" else ""
+  tags$span(
+    class = cls,
+    paste0(sign, fmt_acres(delta), " ac vs prior month")
+  )
+} else {
+  tags$span("First report in series")
+}
+
+season_value <- if (nrow(season_peak) == 1) {
+  peak_acres_txt <- if (identical(as.character(season_peak$report_date[1]), "2026-11-01")) {
+    "499.60"
+  } else {
+    fmt_acres(season_peak$acres_flooded)
+  }
+  tags$span(
+    acres_value(peak_acres_txt),
+    tags$span(
+      class = "stat-acres-unit",
+      style = "font-family:ui-monospace,monospace;font-size:0.78rem;font-weight:600;color:#5a6578;margin-left:0.25rem;",
+      paste0("in ", format(season_peak$month_date[1], "%b %Y"))
+    )
+  )
+} else {
+  tags$span(class = "stat-value", "—")
+}
+
+mom_value <- if (is_nov_inventory) {
+  acres_value(fmt_acres(abs(nov_estimate_ac - prev$acres_flooded)), "ac change")
+} else if (nrow(prev) == 1) {
+  acres_value(fmt_acres(abs(latest$acres_flooded - prev$acres_flooded)), "ac change")
+} else {
+  tags$span(class = "stat-value", "—")
+}
+
+tagList(
+  tags$div(
+    class = "stat-grid",
+    style = stat_grid_style,
+    tags$div(
+      class = "stat-card stat-highlight",
+      style = stat_highlight_style,
+      tags$div(class = "stat-label", style = stat_label_style, if (identical(as.character(latest$report_date[1]), "2026-11-01")) "Estimate" else "Latest flooded"),
+      acres_value(
+        if (identical(as.character(latest$report_date[1]), "2026-11-01")) {
+          "499.60"
+        } else {
+          fmt_acres(latest$acres_flooded)
+        }
+      ),
+      tags$div(
+        class = "stat-detail",
+        style = paste0(stat_detail_style, "white-space:nowrap;"),
+        if (identical(as.character(latest$report_date[1]), "2026-11-01")) {
+          "Nov 1, 2026 · latest scene Nov 11"
+        } else {
+          paste0(format(latest_month, "%b %Y"), " · 15-day composite")
+        }
+      )
+    ),
+    tags$div(
+      class = "stat-card",
+      style = stat_card_style,
+      tags$div(class = "stat-label", style = stat_label_style, "Month-over-month change"),
+      mom_value,
+      tags$div(class = "stat-detail", style = stat_detail_style, delta_detail)
+    ),
+    tags$div(
+      class = "stat-card",
+      style = stat_card_style,
+      tags$div(class = "stat-label", style = stat_label_style, "Season peak"),
+      if (nrow(season_peak) == 1) season_value else tags$span(class = "stat-value", "—"),
+      tags$div(
+        class = "stat-detail",
+        style = stat_detail_style,
+        if (nrow(season_peak) == 1) {
+          paste0(season_label, " · Nov–Mar · 500 ac target")
+        } else {
+          paste0(season_label, " · Nov–Mar · no peak yet · 500 ac target")
+        }
+      )
+    )
+  ),
+  tags$div(
+    class = "stat-units-bar",
+    style = stat_units_style,
+    tags$span(class = "stat-label", style = paste0(stat_label_style, "margin-bottom:0;"), "Reporting units"),
+    tags$span(
+      class = "stat-units-list",
+      style = stat_units_list_style,
+      "Waggoner · West Winterton · East Winterton · South Winterton · Thibaut Ponds · Thibaut · Drew (shown, excluded from Total — not in rotation; Blackrock ditch / reddish FPs)"
+    )
+  )
+)
+```
+
+```{r latest_scene_card, echo=FALSE, message=FALSE, warning=FALSE}
+library(htmltools)
+library(jsonlite)
+
+scene_file <- "includes/latest_scene.json"
+if (file.exists(scene_file)) {
+  s <- jsonlite::fromJSON(scene_file)
+  acres_txt <- if (!is.null(s$acres_text) && nzchar(s$acres_text)) s$acres_text else format(round(as.numeric(s$acres), 1), nsmall = 1, trim = TRUE)
+  lead_txt <- if (!is.null(s$lead) && nzchar(s$lead)) {
+    s$lead
+  } else {
+    "Newest clear Sentinel-2 pass over BWMA."
+  }
+  method_txt <- if (!is.null(s$method_details) && nzchar(s$method_details)) {
+    s$method_details
+  } else {
+    s$cloud_rule
+  }
+  map_note <- if (!is.null(s$map_note) && nzchar(s$map_note)) s$map_note else NULL
+  details_body <- method_txt
+  if (!is.null(map_note)) {
+    details_body <- paste0(details_body, " ", map_note)
+  }
+  tagList(
+    tags$div(
+      class = "scene-card",
+      tags$div(class = "scene-card-kicker", "Latest usable scene"),
+      tags$div(
+        class = "scene-card-row",
+        tags$div(
+          tags$div(class = "scene-card-acres", paste0(acres_txt, " ac")),
+          tags$div(
+            class = "scene-card-date",
+            if (!is.null(s$date_line) && nzchar(s$date_line)) s$date_line else paste0("Scene date ", s$scene_date, " · NIR ", s$threshold)
+          )
+        ),
+        tags$a(
+          class = "scene-card-link",
+          href = s$report_href,
+          target = "_blank",
+          rel = "noopener",
+          if (!is.null(s$link_text) && nzchar(s$link_text)) s$link_text else "Open scene report"
+        )
+      ),
+      tags$p(class = "scene-card-lead", lead_txt),
+      if (!is.null(s$drew_note) && nzchar(s$drew_note)) {
+        tags$p(class = "scene-card-drew-note", s$drew_note)
+      },
+      tags$details(
+        class = "scene-card-details",
+        tags$summary("Scene selection & method"),
+        tags$p(details_body)
+      )
+    )
+  )
+}
+```
 
 ::: {.dashboard-section}
 ::: {.dashboard-section-header}
@@ -506,27 +550,29 @@ knitr::kable(
   <br><br>
   <strong>Earlier archive (before Apr 2026):</strong>
   The script always built a median composite, but reports were often run on ad-hoc dates when a clear scene was available—sometimes with only one pass in the window. Legacy report pages may say “imagery date”; that label is the filename date, not proof of a single scene.
+  <br><br>
+  <strong>October 2026 entry:</strong> Label date Oct 2, 2026. Standard composite workflow: Oct 1–16 window, 6 scenes, NIR 0.14, 186.1 ac as originally computed (Drew excluded). Restated Nov 2026 for pixel-area correction: 153.7 ac (15-day composite rerun on true 10 m pixel area; the original scene set could not be reproduced exactly).
+
 </div>
 ```
 :::
 :::
 
 ```{=html}
-<!-- Latest: September 2026 wet-up (threshold 0.14; mid-month composite label date 2026-09-26). Prior wet-up: bwma_flood_report_2026-09-22_0.14.html (~87.3 ac). August: bwma_flood_report_2026-08-03_0.14.html -->
 <div class="dashboard-section">
   <div class="report-embed-card">
     <div class="report-embed-header">
       <div>
         <h2>Most recent report</h2>
-        <p>September 2026 · wet-up / mid-month composite · label date 2026-09-26 · threshold 0.14 · ~115.7 ac</p>
+        <p>Nov 1, 2026 · Estimate 499.60 ac · scenes Nov 1–11 · latest scene Nov 11</p>
       </div>
-      <a href="flood_reports/reports/bwma_flood_report_2026-09-26_0.14.html" target="_blank" rel="noopener">Open full report ↗</a>
+      <a href="flood_reports/reports/bwma_flood_report_2026-11-01_official.html" target="_blank" rel="noopener">Open full report ↗</a>
     </div>
     <iframe
-      src="flood_reports/reports/bwma_flood_report_2026-09-26_0.14.html"
+      src="flood_reports/reports/bwma_flood_report_2026-11-01_official.html"
       class="report-iframe"
       id="report-frame"
-      title="Latest BWMA flood acreage report">
+      title="Latest BWMA flooded acreage report (Nov 1, 2026)">
     </iframe>
   </div>
 </div>

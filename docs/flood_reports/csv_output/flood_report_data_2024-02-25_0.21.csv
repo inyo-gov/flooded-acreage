@@ -1,9 +1,9 @@
-Flood_Unit,total_pixels,flooded_pixels,unit_acres,acres_flooded,flooded_percentage
-Thibaut,99955,49320,1971.07,1218.72,49.34
-Drew,25462,9091,502.65,224.64,35.7
-Waggoner,63198,24484,1246.13,605.01,38.74
-West Winterton,40855,10425,805.68,257.61,25.52
-East Winterton,17010,7149,335.14,176.66,42.03
-South Winterton,26035,9288,513.46,229.51,35.68
-Thibaut Ponds,26753,8392,527.63,207.37,31.37
-Total,273806,109058,5399.11,2694.88,49.91
+Flood_Unit,total_pixels,flooded_pixels,unit_acres,acres_flooded,flooded_percentage,original_acres_flooded,original_flooded_pixels,restatement_note
+Thibaut,99955,38170,1971.07,943.2,47.85,1218.72,49320,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 1218.72 ac
+Drew,25462,6816,502.65,168.43,33.51,224.64,9091,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 224.64 ac
+Waggoner,63198,18627,1246.13,460.28,36.94,605.01,24484,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 605.01 ac
+West Winterton,40855,7173,805.68,177.25,22.0,257.61,10425,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 257.61 ac
+East Winterton,17010,5264,335.14,130.08,38.81,176.66,7149,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 176.66 ac
+South Winterton,26035,6913,513.46,170.82,33.27,229.51,9288,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 229.51 ac
+Thibaut Ponds,26753,6094,527.63,150.59,28.54,207.37,8392,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 207.37 ac
+Total,273806,82241,5399.11,2032.22,37.64,2694.88,109058,restated Nov 2026 for pixel-area correction; originally reported 2694.88 ac

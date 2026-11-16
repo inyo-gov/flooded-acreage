@@ -1,0 +1,9 @@
+Flood_Unit,total_pixels,flooded_pixels,unit_acres,acres_flooded,flooded_percentage,original_acres_flooded,original_flooded_pixels,restatement_note
+Thibaut,99950,1701,1971.05,42.03,2.13,52.93,2142,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 52.93 ac
+Drew,25472,38,502.73,0.94,0.19,1.04,42,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 1.04 ac
+Waggoner,63203,2439,1246.13,60.27,4.84,74.35,3009,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 74.35 ac
+West Winterton,40854,1121,805.67,27.7,3.44,31.14,1260,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 31.14 ac
+East Winterton,17008,0,335.14,0.0,0.0,0.0,0,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 0.00 ac
+South Winterton,26034,0,513.46,0.0,0.0,0.0,0,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 0.00 ac
+Thibaut Ponds,26755,960,527.63,23.72,4.5,27.7,1121,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 27.70 ac
+Total,273804,6221,5399.08,153.72,2.85,186.12,7532,restated Nov 2026 for pixel-area correction; originally reported 186.12 ac

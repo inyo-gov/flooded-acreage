@@ -1,9 +1,9 @@
-Flood_Unit,total_pixels,flooded_pixels,unit_acres,acres_flooded,flooded_percentage
-Thibaut,99955,56368,1971.07,1392.88,56.39
-Drew,25462,11061,502.65,273.32,43.44
-Waggoner,63198,27670,1246.13,683.74,43.78
-West Winterton,40855,13558,805.68,335.02,33.19
-East Winterton,17010,8268,335.14,204.31,48.61
-South Winterton,26035,10529,513.46,260.18,40.44
-Thibaut Ponds,26753,10088,527.63,249.28,37.71
-Total,273806,126481,5399.11,3125.41,57.89
+Flood_Unit,total_pixels,flooded_pixels,unit_acres,acres_flooded,flooded_percentage,original_acres_flooded,original_flooded_pixels,restatement_note
+Thibaut,99955,44052,1971.07,1088.55,55.23,1392.88,56368,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 1392.88 ac
+Drew,25462,8330,502.65,205.84,40.95,273.32,11061,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 273.32 ac
+Waggoner,63198,21160,1246.13,522.87,41.96,683.74,27670,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 683.74 ac
+West Winterton,40855,9541,805.68,235.76,29.26,335.02,13558,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 335.02 ac
+East Winterton,17010,6128,335.14,151.43,45.18,204.31,8268,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 204.31 ac
+South Winterton,26035,7874,513.46,194.57,37.89,260.18,10529,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 260.18 ac
+Thibaut Ponds,26753,7617,527.63,188.22,35.67,249.28,10088,restated Nov 2026 for pixel-area correction (original scene set not reproducible; 15-day composite rerun); originally reported 249.28 ac
+Total,273806,96372,5399.11,2381.4,44.11,3125.41,126481,restated Nov 2026 for pixel-area correction; originally reported 3125.41 ac
