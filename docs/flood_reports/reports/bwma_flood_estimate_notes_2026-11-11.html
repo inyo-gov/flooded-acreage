@@ -277,7 +277,7 @@
     <div class="report-grid" style="grid-template-columns:1fr">
       <section class="report-panel">
         <h2>Method and comparability</h2>
-        <p class="secondary-link">The November 2026 entry is the official cumulative inventory (Sentinel-2 open water plus radar flooded vegetation, accepted scene by scene from the corrected Oct 24 base), not a monthly Sentinel-2 NIR 15-day median composite. It is not comparable with the earlier monthly bars on the dashboard. The Estimate is the upper end of the inventory (499.60 ac). Earlier monthly composites (Aug 2024 to Oct 2026) also carry the composite pixel-area rule, which overstated area by about 25%; those values have not been restated on the dashboard.</p>
+        <p class="secondary-link">The November 2026 entry is the official cumulative inventory (Sentinel-2 open water plus radar flooded vegetation, accepted scene by scene from the corrected Oct 24 base), not a monthly Sentinel-2 NIR 15-day median composite. It is not comparable with the earlier monthly bars on the dashboard. The Estimate is the upper end of the inventory (499.60 ac). Earlier monthly composites (Aug 2024 to Oct 2026) are restated on the dashboard with true 10&nbsp;m pixel area (same-scene reruns where the original scene could be reproduced); the old composite pixel-area rule had overstated area by about 25%.</p>
         <h2>Component breakdown (as previously shown in the report)</h2>
         <div class="report-table-wrap"><table class="report-table">
             <thead>
@@ -296,7 +296,7 @@
               <tr>
                 <td class="unit-name">Accepted additions (upper)</td>
                 <td class="unit-acres"><span class="acres-num">207.20</span> ac</td>
-                <td class="unit-notes">All from imagery: Nov 1, 3, 5, 8, and 11 satellite scenes (optical and radar), manual wet-soil patches (6.50 ac), and the Nov 12 north Waggoner fill (10.63 ac). None of these are basemap ditches.</td>
+                <td class="unit-notes">All from imagery: accepted Nov 1, 3, 5, 8, and 11 satellite scenes (optical and radar) 188.36 ac, plus approved manual corrections 18.84 ac (manual wet-soil patches 6.50 ac, all Thibaut; Nov 12 north Waggoner fill 10.63 ac; correction #3 debit of upper-only mixed Winterton remnants &minus;0.86 ac; Nov 16 West Winterton north-arm correction #4 2.57 ac). None of these are basemap ditches.</td>
               </tr>
               <tr class="total-row">
                 <td class="unit-name">Upper estimate (Estimate)</td>
@@ -332,7 +332,7 @@
               <tr class="total-row"><td class="unit-name">Pixel total</td><td>17.35</td><td>275.30</td><td>207.20</td><td>499.84</td><td>118.22</td><td>410.86</td></tr>
             </tbody>
           </table>
-          <p class="source-foot">Later imagery (upper 207.20): Nov 1/3/5/8/11 scenes 187.50 (Nov 11 +7.12), manual wet-soil 6.50 (all Thibaut), north Waggoner fill 10.63, West Winterton north-arm correction #4 2.57 (Nov 16). Later imagery (best 118.22 / official 118.22): scenes 96.47 (Nov 11 +7.09), wet-soil 6.50, north Waggoner fill 12.68 (includes 2.05 ac promoted from upper-only), West Winterton correction #4 2.57. Drew and East Winterton are not in the official counted total.</p>
+          <p class="source-foot">Later imagery (upper 207.20): Nov 1/3/5/8/11 scenes 188.36 (Nov 11 +7.12), approved manual corrections 18.84 (manual wet-soil 6.50, all Thibaut; north Waggoner fill 10.63; correction #3 debit of upper-only mixed Winterton remnants &minus;0.86; West Winterton north-arm correction #4 2.57, Nov 16). Later imagery (best 118.22 / official 118.22): scenes 96.47 (Nov 11 +7.09), wet-soil 6.50, north Waggoner fill 12.68 (includes 2.05 ac promoted from upper-only), West Winterton correction #4 2.57. Drew and East Winterton are not in the official counted total.</p>
         </div>
         <h2 id="reflectance-conversion">Sentinel-2 reflectance conversion check</h2>
         <p class="secondary-link">Since January 2022 (ESA processing baseline 04.00), Sentinel-2 surface reflectance carries a &minus;1000 digital-number offset. Our scripts have always used Earth Engine&rsquo;s harmonized collection (<code>COPERNICUS/S2_SR_HARMONIZED</code>), which removes that offset, and divide band 8 by 10,000; the repository history shows no change in collection or scaling since the first version (June 2024).</p>
